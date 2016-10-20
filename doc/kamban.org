@@ -10,30 +10,4 @@
 + T1 : 
 **** UserStories
 inscription/connexion
-+ US#1 : En tant que visiteur je souhaite m’inscrire en tant que développeur.
-+ US#2 : En tant que visiteur je souhaite m’identifier en tant que développeur.
-+ US#3 : En tant que développeur je souhaite visualiser/modifier mon profil.
-+ US#4 : En tant que visiteur/développeur je souhaite visualiser la liste des projets.
-
-projet
-+ US#5 : En tant que visiteur/développeur je souhaite visualiser la fiche récapitulative d’un projet.
-+ US#6 : En tant que développeur je souhaite ajouter/éditer/supprimer mes projets.
-+ US#7 : En tant que développeur je souhaite ajouter des développeurs à mes projets (via leur identifiant) et sélectionner un ScrumMaster et un ProductOwner.
-
-backlog
-+ US#8 : En tant que visiteur/développeur je souhaite visualiser le backlog d’un projet.
-+ US#9 : En tant que développeur je souhaite ajouter/éditer/supprimer une US des projets auxquels je suis inscrit
-+ US#10 : En tant que ProductOwner je souhaite modifier la priorité des US
-
-sprints
-+ US#11 : En tant que visiteur/développeur je souhaite visualiser les sprints d’un projet.
-+ US#12 : En tant que développeur je souhaite ajouter/éditer/supprimer un sprint dans les projets auxquels je suis inscrit.
-+ US#13 : En tant que développeur je souhaite sélectionner les US du backlog dans l’édition des sprints dans les projets auxquels je suis inscrit.
-
-kanban
-+ US#14 : En tant que visiteur/développeur je souhaite visualiser le kanban d’un sprint d’un projet.
-+ US#15 : En tant que développeur je souhaite ajouter/modifier/supprimer une tâche dans une US dans les projets auxquels je suis inscrit.
-
-traçabilité
-+ US#16 : En tant que visiteur/développeur je souhaite visualiser la traçabilité d’un projet.
-+ US#17 : En tant que développeur je souhaite éditer le commit et la date d’une US dans les projets auxquels je suis inscrit.
++ US#1 :
