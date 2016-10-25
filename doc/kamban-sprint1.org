@@ -46,7 +46,7 @@ inscription/connexion
 + US#2 : En tant que visiteur je souhaite m’identifier en tant que développeur.
 + US#3 : En tant que développeur je souhaite visualiser/modifier mon profil.
 + US#4 : En tant que visiteur/développeur je souhaite visualiser la liste des projets.
-+ US#5 : En tant que développeur je souhaite repérer et accéder de partout sur le site aux projets auxquels je suis associé et à ceux auxquels je ne le suis pas.
++ US#5 : En tant que développeur je souhaite repérer et accéder partout sur le site aux projets auxquels je suis associé et à ceux auxquels je ne le suis pas.
 
 projet
 + US#6 : En tant que visiteur/développeur je souhaite visualiser la fiche récapitulative d’un projet.
