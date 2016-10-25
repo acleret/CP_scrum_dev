@@ -1,8 +1,26 @@
 * Traçabilité
 
-| US#  | #commit |
-|------+---------|
-| US#1 |         |
+| US#   | #commit | date |
+|-------+---------+------|
+| US#1  |         |      |
+| US#2  |         |      |
+| US#3  |         |      |
+| US#4  |         |      |
+| US#5  |         |      |
+| US#6  |         |      |
+| US#7  |         |      |
+| US#8  |         |      |
+| US#9  |         |      |
+| US#10 |         |      |
+| US#11 |         |      |
+| US#12 |         |      |
+| US#13 |         |      |
+| US#14 |         |      |
+| US#15 |         |      |
+| US#16 |         |      |
+| US#17 |         |      |
+| US#18 |         |      |
+| US#19 |         |      |
 
 **** UserStories
 inscription/connexion
@@ -10,26 +28,30 @@ inscription/connexion
 + US#2 : En tant que visiteur je souhaite m’identifier en tant que développeur.
 + US#3 : En tant que développeur je souhaite visualiser/modifier mon profil.
 + US#4 : En tant que visiteur/développeur je souhaite visualiser la liste des projets.
++ US#5 : En tant que développeur je souhaite repérer et accéder partout sur le site aux projets auxquels je suis associé et à ceux auxquels je ne le suis pas.
 
 projet
-+ US#5 : En tant que visiteur/développeur je souhaite visualiser la fiche récapitulative d’un projet.
-+ US#6 : En tant que développeur je souhaite ajouter/éditer/supprimer mes projets.
-+ US#7 : En tant que développeur je souhaite ajouter des développeurs à mes projets (via leur identifiant) et sélectionner un ScrumMaster et un ProductOwner.
++ US#6 : En tant que visiteur/développeur je souhaite visualiser la fiche récapitulative d’un projet.
++ US#7 : En tant que développeur je souhaite ajouter/éditer/supprimer mes projets.
++ US#8: En tant que développeur je souhaite sélectionner/retirer des développeurs à mes projets (via leurs identifiants) et identifier le ScrumMaster et le ProductOwner.
 
 backlog
-+ US#8 : En tant que visiteur/développeur je souhaite visualiser le backlog d’un projet.
-+ US#9 : En tant que développeur je souhaite ajouter/éditer/supprimer une US des projets auxquels je suis inscrit
-+ US#10 : En tant que ProductOwner je souhaite modifier la priorité des US
++ US#9 : En tant que visiteur/développeur je souhaite visualiser le backlog d’un projet.
++ US#10 : En tant que développeur je souhaite ajouter/éditer/supprimer une US d'un sprint d'un projet auquel je suis associé.
++ US#11 : En tant que ProductOwner je souhaite modifier la priorité des US auxquelles je suis associé.
 
 sprints
-+ US#11 : En tant que visiteur/développeur je souhaite visualiser les sprints d’un projet.
-+ US#12 : En tant que développeur je souhaite ajouter/éditer/supprimer un sprint dans les projets auxquels je suis inscrit.
-+ US#13 : En tant que développeur je souhaite sélectionner les US du backlog dans l’édition des sprints dans les projets auxquels je suis inscrit.
++ US#12 : En tant que visiteur/développeur je souhaite visualiser les sprints d’un projet.
++ US#13 : En tant que développeur je souhaite ajouter/éditer/supprimer un sprint dans un projet auquel je suis associé.
++ US#14 : En tant que développeur je souhaite sélectionner/retirer une US du backlog dans l’édition des sprints d'un projet auquel je suis associé.
 
 kanban
-+ US#14 : En tant que visiteur/développeur je souhaite visualiser le kanban d’un sprint d’un projet.
-+ US#15 : En tant que développeur je souhaite ajouter/modifier/supprimer une tâche dans une US dans les projets auxquels je suis inscrit.
++ US#15 : En tant que visiteur/développeur je souhaite visualiser le kanban d’un sprint d’un projet.
++ US#16 : En tant que développeur je souhaite ajouter/modifier/supprimer une tâche d'une US d'un projet auquel je suis associé.
 
 traçabilité
-+ US#16 : En tant que visiteur/développeur je souhaite visualiser la traçabilité d’un projet.
-+ US#17 : En tant que développeur je souhaite éditer le commit et la date d’une US dans les projets auxquels je suis inscrit.
++ US#17 : En tant que visiteur/développeur je souhaite visualiser la traçabilité d’un projet.
++ US#18 : En tant que développeur je souhaite éditer le commit et la date d’une US dans les projets auxquels je suis inscrit.
+
+avancement
++ US#19 : En tant que visiteur/développeur je souhaite visualiser l’avancement (burdown chart) d’un projet en temps réel.
