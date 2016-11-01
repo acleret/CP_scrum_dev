@@ -1,7 +1,8 @@
 <?php
 session_start(); // cette fonction est obligatoire dans toute les pages avant le code html
 
-require_once('../web/requetes.php');
+require_once("../web/requetes.php");
+require_once("../web/structure.php");
 
 /******* Configuration BD local *******/
 $DBhost  = "localhost";  // serveur de la bdd
@@ -24,9 +25,12 @@ $DBname  = "acleret"; // nom de la bdd
 */
 
 /******* Etablissement de la connexion SQL *******/
-$db = new requetes($DBhost, $DBowner, $DBpwd, $DBname);
+$db = new Requetes($DBhost, $DBowner, $DBpwd, $DBname);
 
 if ($db->verifConnexion()) {
-  die("Connection failed: " .$test->verifConnexion());
+  die ("Connection failed: ".$test->verifConnexion());
 }
+
+/******* Creation structure d'une page *******/
+$s = new Structure();
 ?>

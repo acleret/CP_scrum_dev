@@ -13,9 +13,9 @@
 
 
 **** Liste des tâches
-+ T1 : menu importé depuis un fichier séparé (on devra utiliser infosDeveloppeur(id_dev) et listeProjetsDev(id_dev))
++ T1 : menu importé depuis un fichier séparé (on devra utiliser infosDeveloppeur(id_dev) et listeProjetsDeveloppeur(id_dev))
 
-+ T2 : MySql : nouveauDeveloppeur(prenom, nom, pseudo, mail, mdp, url_avatar)
++ T2 : MySql : ajoutNouveauDeveloppeur(prenom, nom, pseudo, mail, mdp, url_avatar)
 + T3 : Web : page d’inscription
 + T4 : Test E2E US#1
 

@@ -65,10 +65,20 @@ while ($row = $result->fetch_assoc()) {
 }
 echo "<br>\n";
 
+// test nombreProjetsDeveloppeur
+echo "dev ".$id_dev." lié à ".$test->nombreProjetsDeveloppeur($id_dev)." projets<br>\n";
+echo "<br>\n";
+
 // test listeProjets
 $result = $test->listeProjets();
 while ($row = $result->fetch_assoc()) {
   echo $row["PRO_id"]." | ".$row["PRO_nom"]." | ".$row["PRO_client"]." | ".$row["PRO_description"]." | ".$row["PRO_date_creation"]." | ".$row["DEV_idProductOwner"]." | ".$row["DEV_idScrumMaster"]."<br>\n";
 }
+echo "<br>\n";
+
+// test nombreProjets
+echo $test->nombreProjets()." projets<br>\n";
+  // on peut faire comme ça aussi:
+echo $test->listeProjets()->num_rows." projets<br>\n";
 echo "<br>\n";
 ?>
