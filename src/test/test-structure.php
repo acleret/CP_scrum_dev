@@ -1,25 +1,11 @@
 <?php
 require_once("../web/config.php");
+
+$s->head("test bootstrap structure example");
+$s->header();
+$s->nav($db);
 ?>
-
-<!doctype html>
-<html>
-
-<?php $s->head("test bootstrap structure example");?>
-
-  <body>
-
-<?php $s->header();?>
-
-    <div class="container-fluid text-center">
-      <div class="row content">
-
-<?php $s->nav();?>
-
-        <section>
-
           <article>
-            <!-- corps de la page -->
             <div class="col-sm-8 text-left">
               <h1>Welcome</h1>
               <p>
@@ -30,7 +16,6 @@ require_once("../web/config.php");
               <p>Lorem ipsum...</p>
             </div>
           </article>
-
           <aside>
             <div class="col-sm-2 sidenav">
               <div class="well">
@@ -41,13 +26,4 @@ require_once("../web/config.php");
               </div>
             </div>
           </aside>
-
-        </section>
-
-      </div>
-    </div>
-
 <?php $s->footer();?>
-
-  </body>
-</html>

@@ -81,4 +81,17 @@ echo $test->nombreProjets()." projets<br>\n";
   // on peut faire comme ça aussi:
 echo $test->listeProjets()->num_rows." projets<br>\n";
 echo "<br>\n";
+
+// test estMembreProjet
+if ($test->estMembreProjet(1, 1)) {
+  echo "le dev 1 est membre du projet 1<br>\n";
+} else {
+    echo "le dev 1 n'est pas membre du projet 1<br>\n";
+}
+if ($test->estMembreProjet(3, 1)) {
+  echo "le dev 1 est membre du projet 3<br>\n";
+} else {
+    echo "le dev 1 n'est pas membre du projet 3<br>\n";
+}
+echo "<br>\n";
 ?>

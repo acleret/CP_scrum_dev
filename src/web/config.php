@@ -1,6 +1,12 @@
 <?php
 session_start(); // cette fonction est obligatoire dans toute les pages avant le code html
 
+if (isset($_SESSION["expire"])) {
+  if (time() > $_SESSION["expire"]) {
+    session_destroy();
+  }
+}
+
 require_once("../web/requetes.php");
 require_once("../web/structure.php");
 

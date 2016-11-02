@@ -1,8 +1,10 @@
 <?php
 class Structure {
 
-  function head($titrePage) {
+  public function head($titrePage) {
 ?>
+<!doctype html>
+<html>
   <head>
     <title><?php echo $titrePage ?></title>
     <title>Bootstrap Example</title>
@@ -16,8 +18,9 @@ class Structure {
 <?php
   }
 
-  function header() {
+  public function header() {
 ?>
+  <body>
     <header>
       <nav class="navbar navbar-inverse">
         <div class="container-fluid">
@@ -27,42 +30,101 @@ class Structure {
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Logo</a>
+            <a class="navbar-brand" href="#">CdP</a>
           </div>
           <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#">About</a></li>
-              <li><a href="#">Projects</a></li>
-              <li><a href="#">Contact</a></li>
+              <li class="active"><a href="../web/listeProjets.php">Accueil</a></li>
+<?php
+  if(isset($_COOKIE["id_projet"])) {
+?>
+              <li><a href="../web/projet.php">Projet</a></li>
+              <li><a href="../web/backlog.php">Backlog</a></li>
+              <li><a href="../web/sprints.php">Sprints</a></li>
+              <li><a href="../web/tracabilite.php">Traçabilité</a></li>
+<?php
+  }
+?>
             </ul>
+            <!--
             <ul class="nav navbar-nav navbar-right">
-            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+              <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
             </ul>
+            -->
           </div>
         </div>
       </nav>
     </header>
+    <section>
+      <div class="container-fluid text-center">
+        <div class="row content">
 <?php
   }
 
-  function nav() {
+  public function nav($db) {
 ?>
     <nav>
       <div class="col-sm-2 sidenav">
-        <p><a href="#">Link</a></p>
-        <p><a href="#">Link</a></p>
-        <p><a href="#">Link</a></p>
+<?php
+  if (isset($_SESSION["id_dev"])) {
+    $id_dev = $_SESSION["id_dev"];
+    if ($db->testIDDeveloppeur($id_dev)) {
+      $result = $db->infosDeveloppeur($id_dev);
+      $row = $result->fetch_assoc();
+      if (empty($row["DEV_urlAvatar"])) {
+?>
+        <p><img src="../web/img/avatar-default.jpg" alt="Avatar" height="42" width="42"></img></p>
+<?php
+      } else {
+?>
+      <p><img src="<?php echo $row["DEV_urlAvatar"]; ?>" alt="Avatar" height="42" width="42"></img></p>
+<?php
+      }
+?>
+      <p>
+        <a href="../web/profil.php"><?php echo $row["DEV_pseudo"]; ?></a><br>
+        <a href="../web/deconnexion.php">déconnexion</a>
+      </p>
+      <p>Mes projets:</p>
+      <ul>
+<?php
+      $result = $db->listeProjetsDeveloppeur($id_dev);
+      while ($row = $result->fetch_assoc()) {
+?>
+        <form style="display: inline;" action="../web/setProjet.php" method="post">
+          <input type="hidden" name="id_projet" value="<?php echo $row["PRO_id"]; ?>"/>
+          <li><a><input class="url" type="submit" value="<?php echo substr($row["PRO_nom"], 0, 19); ?>" /></a></li>
+        </form>
+<?php
+      }
+?>
+      </ul>
+<?php
+    } else {
+      echo "<p>erreur dev ".$id_dev." inconnu<p>\n";
+    }
+  } else {
+?>
+        <p><a href="../web/connexion.php">connexion</a></p>
+        <p><a href="../web/inscription.php">inscription</a></p>
+<?php
+  }
+?>
       </div>
     </nav>
 <?php
   }
 
-  function footer() {
+  public function footer() {
 ?>
+        </div>
+      </div>
+    </section>
     <footer class="container-fluid text-center">
       <p>Footer Text</p>
     </footer>
+  </body>
+</html>
 <?php
   }
 }
