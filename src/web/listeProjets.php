@@ -54,7 +54,10 @@ while ($row = $result->fetch_assoc()) {
                   <tr>
                     <td>
                       <a>
-                        <input class="url2" type="submit" value="<?php echo $row["PRO_nom"]; ?>"/>
+                        <form style="display: inline;" action="../web/setProjet.php" method="post">
+                          <input type="hidden" name="id_projet" value="<?php echo $row["PRO_id"]; ?>"/>
+                          <input class="url2" type="submit" value="<?php echo $row["PRO_nom"]; ?>"/>
+                        </form>
                       </a>
                     </td>
 <?php
@@ -62,11 +65,11 @@ while ($row = $result->fetch_assoc()) {
     if ($db->estMembreProjet($row["PRO_id"], $_SESSION["id_dev"])) {
 ?>
                     <td>
-                      <form style="display: inline;" action="formulaireProjet.php" method="post">
+                      <form style="display: inline;" action="../web/formulaireProjet.php" method="post">
                         <input type="hidden" name="id_atelier" value="<?php echo $row["PRO_id"]; ?>"/>
                         <input class="btn btn-default" type="submit" value="Modifier"/>
                       </form>
-                      <form style="display: inline;" action="supperssionProjet.php" method="post">
+                      <form style="display: inline;" action="../web/supperssionProjet.php" method="post">
                         <input type="hidden" name="id_atelier" value="<?php echo $row["PRO_id"]; ?>"/>
                         <input type="hidden" name="page_actuelle" value="<?php echo $page_actuelle; ?>"/>
                         <input class="btn btn-default" type="submit" value="Supprimer"/>
@@ -98,7 +101,11 @@ for ($i = 1; $i <= $nombre_de_pages; $i++) {
             </div>
           </article>
           <aside>
+<?php
+  if (isset($_SESSION["id_dev"])) {
+?>
             <div class="col-sm-2 sidenav">
+
               <div class="well">
                 <form style="display: inline;" action="formulaireProjet.php" method="post">
           				  <input type="hidden" name="action_page" value="ajouter"/>
@@ -106,5 +113,8 @@ for ($i = 1; $i <= $nombre_de_pages; $i++) {
           			</form>
               </div>
             </div>
+<?php
+  }
+?>
           </aside>
 <?php $s->footer();?>
