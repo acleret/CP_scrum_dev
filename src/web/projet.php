@@ -11,6 +11,6 @@ if(isset($_COOKIE["id_projet"])) {
   $s->footer();
 } else {
   $url = $_SERVER["REQUEST_URI"];
-	header("Location: ../web/listeProjets.php?url=".$url);
+  header("Location: ../web/listeProjets.php?url=".$url);
 }
 ?>
