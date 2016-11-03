@@ -32,7 +32,7 @@ class Requetes {
   }
 
   // si le pseudo d'un developpeur existe retourne vrai
-  private function testPseudoDeveloppeur($pseudo) {
+  public function testPseudoDeveloppeur($pseudo) {
     $sql = "SELECT * FROM DEVELOPPEUR WHERE DEV_pseudo = '".$pseudo."';";
     if (!$result = $this->conn->query($sql)) {
       printf("Message d'erreur: %s<br>\n", $this->conn->error);
@@ -45,7 +45,7 @@ class Requetes {
   }
 
   // si le mail d'un developpeur existe retourne vrai
-  private function testMailDeveloppeur($mail) {
+  public function testMailDeveloppeur($mail) {
     $sql = "SELECT * FROM DEVELOPPEUR WHERE DEV_mail = '".$mail."';";
     if (!$result = $this->conn->query($sql)) {
       printf("Message d'erreur: %s<br>\n", $this->conn->error);

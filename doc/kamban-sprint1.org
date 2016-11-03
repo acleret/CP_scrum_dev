@@ -1,16 +1,14 @@
 * KanBan sprint 1
 
-|      | to do             | on going | test   | done       |
-|------+-------------------+----------+--------+------------|
-| All  |                   |          |        | [T1]T      |
-| US#1 | [T4]              | [T3]A    |        | [T2]A      |
-| US#2 | [T5 T6]N  T7      |          |        |            |
-| US#3 | [T8 T9 T10]N  T11 |          |        |            |
-| US#4 | T14               |          |        | [T12 T13]T |
-| US#5 | T17               |          |        | [T15 T16]T |
-| US#6 | [T18 T19]A  T20   |          |        |            |
-
-
+|      | to do             | on going | test | done       |
+|------+-------------------+----------+------+------------|
+| All  |                   |          |      | [T1]T      |
+| US#1 | [T4]              |          |      | [T2 T3]A   |
+| US#2 | [T5 T6]N  T7      |          |      |            |
+| US#3 | [T8 T9 T10]N  T11 |          |      |            |
+| US#4 | T14               |          |      | [T12 T13]T |
+| US#5 | T17               |          |      | [T15 T16]T |
+| US#6 | [T18 T19]A  T20   |          |      |            | 
 
 **** Liste des tâches
 + T1 : menu importé depuis un fichier séparé (on devra utiliser infosDeveloppeur(id_dev) et listeProjetsDeveloppeur(id_dev))
@@ -50,3 +48,4 @@ inscription/connexion
 
 projet
 + US#6 : En tant que visiteur/développeur je souhaite visualiser la fiche récapitulative d’un projet.
+ 
