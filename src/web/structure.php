@@ -100,10 +100,15 @@ class Structure {
       } else {
         echo "<p>erreur dev ".$id_dev." inconnu<p>\n";
       }
+?>
+              <br>
+<?php
     } else {
 ?>
-              <p><a href="../web/connexion.php">connexion</a></p>
-              <p><a href="../web/inscription.php">inscription</a></p>
+              <p>
+                <a href="../web/connexion.php">connexion</a><br>
+                <a href="../web/inscription.php">inscription</a>
+              </p>
 <?php
     }
 ?>

@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `DEVELOPPEUR` (
   `DEV_pseudo` varchar(20) NOT NULL,
   `DEV_mdp` varchar(255) NOT NULL,
   `DEV_mail` varchar(255) NOT NULL,
-  `DEV_urlAvatar` varchar(255),
+  `DEV_urlAvatar` text,
   `DEV_date_creation` date DEFAULT NULL,
   PRIMARY KEY (`DEV_id`),
   CONSTRAINT UC_DEVELOPPEUR_PSEUDO UNIQUE (`DEV_pseudo`),
