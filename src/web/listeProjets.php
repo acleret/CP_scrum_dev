@@ -13,21 +13,21 @@ $s->nav($db);
 ?>
           <article>
             <div class="col-sm-8 text-left">
-              <h1>Projets</h1>
+              <h2>Projets</h2>
               <table class="table table-bordered">
-            		<thead>
-            		  <tr>
-            			<th>Titre</th>
+                <thead>
+                  <tr>
+                    <th>Titre</th>
 <?php
 if (isset($_SESSION["id_dev"])) {
 ?>
-            			<th>Actions</th>
+                    <th>Actions</th>
 <?php
 }
 ?>
-            		  </tr>
-            		</thead>
-            	  <tbody>
+                  </tr>
+                </thead>
+                <tbody>
 <?php
 // calcul du nombre de pages
 $nb_projets_par_pages = 20;
@@ -53,18 +53,18 @@ while ($row = $result->fetch_assoc()) {
 ?>
                   <tr>
                     <td>
-                      <a>
-                        <form style="display: inline;" action="../web/setProjet.php" method="post">
-                          <input type="hidden" name="id_projet" value="<?php echo $row["PRO_id"]; ?>"/>
-                          <input class="url2" type="submit" value="<?php echo $row["PRO_nom"]; ?>"/>
-                        </form>
-                      </a>
+                      <form style="display: inline;" action="../web/setProjet.php" method="post">
+                        <input type="hidden" name="id_projet" value="<?php echo $row["PRO_id"]; ?>"/>
+                        <input class="url2" type="submit" value="<?php echo $row["PRO_nom"]; ?>"/>
+                      </form>
                     </td>
 <?php
   if (isset($_SESSION["id_dev"])) {
-    if ($db->estMembreProjet($row["PRO_id"], $_SESSION["id_dev"])) {
 ?>
                     <td>
+<?php
+    if ($db->estMembreProjet($row["PRO_id"], $_SESSION["id_dev"])) {
+?>
                       <form style="display: inline;" action="../web/formulaireProjet.php" method="post">
                         <input type="hidden" name="id_atelier" value="<?php echo $row["PRO_id"]; ?>"/>
                         <input class="btn btn-default" type="submit" value="Modifier"/>
@@ -74,9 +74,11 @@ while ($row = $result->fetch_assoc()) {
                         <input type="hidden" name="page_actuelle" value="<?php echo $page_actuelle; ?>"/>
                         <input class="btn btn-default" type="submit" value="Supprimer"/>
                       </form>
-                    </td>
 <?php
     }
+?>
+                    </td>
+<?php
   }
 ?>
                   </tr>
@@ -102,19 +104,19 @@ for ($i = 1; $i <= $nombre_de_pages; $i++) {
           </article>
           <aside>
 <?php
-  if (isset($_SESSION["id_dev"])) {
+if (isset($_SESSION["id_dev"])) {
 ?>
             <div class="col-sm-2 sidenav">
 
               <div class="well">
                 <form style="display: inline;" action="formulaireProjet.php" method="post">
-          				  <input type="hidden" name="action_page" value="ajouter"/>
-          				  <input class="btn btn-primary" type="submit" value="Ajouter Projet"/>
-          			</form>
+                    <input type="hidden" name="action_page" value="ajouter"/>
+                    <input class="btn btn-primary" type="submit" value="Ajouter Projet"/>
+                </form>
               </div>
             </div>
 <?php
-  }
+}
 ?>
           </aside>
 <?php $s->footer();?>

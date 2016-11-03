@@ -7,7 +7,6 @@ class Structure {
 <html>
   <head>
     <title><?php echo $titrePage ?></title>
-    <title>Bootstrap Example</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -36,14 +35,14 @@ class Structure {
             <ul class="nav navbar-nav">
               <li class="active"><a href="../web/listeProjets.php">Accueil</a></li>
 <?php
-  if(isset($_COOKIE["id_projet"])) {
+    if(isset($_COOKIE["id_projet"])) {
 ?>
               <li><a href="../web/projet.php">Projet</a></li>
               <li><a href="../web/backlog.php">Backlog</a></li>
               <li><a href="../web/sprints.php">Sprints</a></li>
               <li><a href="../web/tracabilite.php">Traçabilité</a></li>
 <?php
-  }
+    }
 ?>
             </ul>
             <!--
@@ -63,55 +62,53 @@ class Structure {
 
   public function nav($db) {
 ?>
-    <nav>
-      <div class="col-sm-2 sidenav">
+          <nav>
+            <div class="col-sm-2 sidenav">
 <?php
-  if (isset($_SESSION["id_dev"])) {
-    $id_dev = $_SESSION["id_dev"];
-    if ($db->testIDDeveloppeur($id_dev)) {
-      $result = $db->infosDeveloppeur($id_dev);
-      $row = $result->fetch_assoc();
-      if (empty($row["DEV_urlAvatar"])) {
+    if (isset($_SESSION["id_dev"])) {
+      $id_dev = $_SESSION["id_dev"];
+      if ($db->testIDDeveloppeur($id_dev)) {
+        $result = $db->infosDeveloppeur($id_dev);
+        $row = $result->fetch_assoc();
+        if (empty($row["DEV_urlAvatar"])) {
 ?>
-        <p><img src="../web/img/avatar-default.jpg" alt="Avatar" height="42" width="42"></img></p>
+              <p><img src="../web/img/avatar-default.jpg" alt="Avatar" height="42" width="42"/></p>
 <?php
-      } else {
+        } else {
 ?>
-      <p><img src="<?php echo $row["DEV_urlAvatar"]; ?>" alt="Avatar" height="42" width="42"></img></p>
+              <p><img src="<?php echo $row["DEV_urlAvatar"]; ?>" alt="Avatar" height="42" width="42"/></p>
 <?php
-      }
+        }
 ?>
-      <p>
-        <a href="../web/profil.php"><?php echo $row["DEV_pseudo"]; ?></a><br>
-        <a href="../web/deconnexion.php">déconnexion</a>
-      </p>
-      <p>Mes projets:</p>
-      <ul>
+              <p>
+                <a href="../web/profil.php"><?php echo $row["DEV_pseudo"]; ?></a><br>
+                <a href="../web/deconnexion.php">déconnexion</a>
+              </p>
+              <br>
+              <p>Mes projets:</p>
 <?php
       $result = $db->listeProjetsDeveloppeur($id_dev);
-      while ($row = $result->fetch_assoc()) {
+        while ($row = $result->fetch_assoc()) {
 ?>
-        <form style="display: inline;" action="../web/setProjet.php" method="post">
-          <input type="hidden" name="id_projet" value="<?php echo $row["PRO_id"]; ?>"/>
-          <li><a><input class="url" type="submit" value="<?php echo substr($row["PRO_nom"], 0, 19); ?>" /></a></li>
-        </form>
+              <form style="display: inline;" action="../web/setProjet.php" method="post">
+                <input type="hidden" name="id_projet" value="<?php echo $row["PRO_id"]; ?>"/>
+                <input class="url" type="submit" value="<?php echo substr($row["PRO_nom"], 0, 19); ?>" />
+              </form>
+              <br>
 <?php
+        }
+      } else {
+        echo "<p>erreur dev ".$id_dev." inconnu<p>\n";
       }
-?>
-      </ul>
-<?php
     } else {
-      echo "<p>erreur dev ".$id_dev." inconnu<p>\n";
-    }
-  } else {
 ?>
-        <p><a href="../web/connexion.php">connexion</a></p>
-        <p><a href="../web/inscription.php">inscription</a></p>
+              <p><a href="../web/connexion.php">connexion</a></p>
+              <p><a href="../web/inscription.php">inscription</a></p>
 <?php
-  }
+    }
 ?>
-      </div>
-    </nav>
+            </div>
+          </nav>
 <?php
   }
 
