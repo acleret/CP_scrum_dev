@@ -88,7 +88,8 @@ while ($row = $result->fetch_assoc()) {
                 </tbody>
               </table>
               <hr>
-              <p style="text-align:center">Page :
+              <p style="text-align:center">
+                Page :
 <?php
 // affichage de la liste des pages
 for ($i = 1; $i <= $nombre_de_pages; $i++) {
@@ -98,6 +99,7 @@ for ($i = 1; $i <= $nombre_de_pages; $i++) {
     echo ' <a href="listeProjets.php?page='.$i.'\">'.$i.'</a> ';
   }
 }
+echo "\n";
 ?>
               </p>
             </div>
@@ -107,7 +109,6 @@ for ($i = 1; $i <= $nombre_de_pages; $i++) {
 if (isset($_SESSION["id_dev"])) {
 ?>
             <div class="col-sm-2 sidenav">
-
               <div class="well">
                 <form style="display: inline;" action="formulaireProjet.php" method="post">
                     <input type="hidden" name="action_page" value="ajouter"/>
