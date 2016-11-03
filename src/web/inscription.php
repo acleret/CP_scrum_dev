@@ -8,9 +8,10 @@ if (!isset($_SESSION["id_dev"])){
     $s->nav($db);
 ?>
 
-
+    <article>
+    <div class="col-sm-8 text-left">
+    <h2>Inscription</h2>
     <form class="col-xs-offset-2" method="post" action="../web/creationDeveloppeur.php">
-    <h1>Inscription</h1>
 <?php
     if (isset($_GET["erreur"])){
         if(!strcmp($_GET["erreur"], "dev"))
@@ -66,10 +67,12 @@ if (!isset($_SESSION["id_dev"])){
     <input type="text" name="url" maxlength="255" placeholder="URL image avatar"/>
     </p>
     <p>
-    <input type="submit" value="S'inscrire">
+    <input class="btn btn-primary" type="submit" value="S'inscrire">
     </p>
   
     </form>
+    </div>
+    </article>
 
 <?php $s->footer();
 }

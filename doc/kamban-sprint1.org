@@ -8,7 +8,8 @@
 | US#3 | [T8 T9 T10]N  T11 |          |      |            |
 | US#4 | T14               |          |      | [T12 T13]T |
 | US#5 | T17               |          |      | [T15 T16]T |
-| US#6 | [T18 T19]A  T20   |          |      |            | 
+| US#6 | T20               |          |      | [T18 T19]A |
+
 
 **** Liste des tâches
 + T1 : menu importé depuis un fichier séparé (on devra utiliser infosDeveloppeur(id_dev) et listeProjetsDeveloppeur(id_dev))

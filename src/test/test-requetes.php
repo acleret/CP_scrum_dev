@@ -40,17 +40,17 @@ if ($test->testIDDeveloppeur($id_dev)) {
 }
 
 /***** Jeux de test (temporaire)******
-INSERT INTO `developpeur` (`DEV_id`, `DEV_prenom`, `DEV_nom`, `DEV_pseudo`, `DEV_mdp`, `DEV_mail`, `DEV_urlAvatar`, `DEV_date_creation`) VALUES
+INSERT INTO `DEVELOPPEUR` (`DEV_id`, `DEV_prenom`, `DEV_nom`, `DEV_pseudo`, `DEV_mdp`, `DEV_mail`, `DEV_urlAvatar`, `DEV_date_creation`) VALUES
 (1, 'ptest2', 'ntest', 'pstest', 'mdptest', 'mtest', 'urltest', Now()),
 (2, 'ptest2', 'ntest', 'pstest2', 'mdptest', 'mtest2', 'urltest', Now());
 
-INSERT INTO `projet` (`PRO_id`, `PRO_nom`, `PRO_client`, `PRO_description`, `PRO_date_creation`, `DEV_idProductOwner`, `DEV_idScrumMaster`) VALUES
+INSERT INTO `PROJET` (`PRO_id`, `PRO_nom`, `PRO_client`, `PRO_description`, `PRO_date_creation`, `DEV_idProductOwner`, `DEV_idScrumMaster`) VALUES
 (1, 'projet1', 'client1', 'description1', Now(), 1, 1),
 (2, 'projet2', 'client2', 'description2', Now(), 1, 2),
 (3, 'projet3', 'client3', 'description3', Now(), 2, 2),
 (4, 'projet4', 'client4', 'description4', Now(), 2, 1);
 
-INSERT INTO `inter_dev_projet` (`DEV_id`, `PRO_id`) VALUES
+INSERT INTO `INTER_DEV_PROJET` (`DEV_id`, `PRO_id`) VALUES
 (1, 1),
 (2, 1),
 (1, 2),
@@ -94,4 +94,25 @@ if ($test->estMembreProjet(3, 1)) {
     echo "le dev 1 n'est pas membre du projet 3<br>\n";
 }
 echo "<br>\n";
+
+// test infosProjet
+$id_pro = 1;
+if ($test->testIDProjet($id_pro)) {
+  $result = $test->infosProjet($id_pro);
+  $row = $result->fetch_assoc();
+  echo $row["PRO_id"]." | ".$row["PRO_nom"]." | ".$row["PRO_client"]." | ".$row["PRO_description"]." | ".$row["PRO_date_creation"]." | ".$row["DEV_idProductOwner"]." | ".$row["DEV_idScrumMaster"]."<br>\n";
+} else {
+  echo "erreur dev ".$id_dev." inconnu<br>\n";
+}
+echo "<br>\n";
+
+// test listeDeveloppeursProjet
+$id_pro = 1; // le projet contient plusieurs développeurs
+$result = $test->listeDeveloppeursProjet($id_pro);
+while ($row = $result->fetch_assoc()) {
+  echo $row["DEV_id"]." | ".$row["DEV_prenom"]." | ".$row["DEV_nom"]." | ".$row["DEV_pseudo"]." | ".$row["DEV_mdp"]." | ".$row["DEV_mail"]." | ".$row["DEV_urlAvatar"]." | ".$row["DEV_date_creation"]."<br>\n";
+}
+echo "<br>\n";
+
+
 ?>
