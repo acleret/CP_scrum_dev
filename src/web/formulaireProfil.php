@@ -1,21 +1,42 @@
 <?php
 require_once("../web/config.php");
 
-if (!isset($_SESSION["session"])){
+if (isset($_SESSION["session"]) and $_SESSION["session"] == true){
 
-    $s->head("Inscription");
+    $s->head("Mon profil - Édition");
     $s->header();
     $s->nav($db);
 ?>
+   <SCRIPT language="JavaScript">
+function verifMail() {
+	a = document.Co.mail.value;
+	valide1 = false;
+	
+	for(var j=1;j<(a.length);j++){
+		if(a.charAt(j)=='@'){
+			if(j<(a.length-4)){
+				for(var k=j;k<(a.length-2);k++){
+					if(a.charAt(k)=='.') valide1=true;
+				}
+			}
+		}
+	}
+	if(valide1==false) header("Location:../web/formulaireProfil.php?erreur=mail2");
+	return valide1;
+}
+function VerifFormulaire() {
+	return verifMail();
+}
+</SCRIPT>
 
     <article>
     <div class="col-sm-8 text-left">
-    <h2>Inscription</h2>
-    <form class="col-xs-offset-2" method="post" name="Co" action="../web/validationDeveloppeur.php">
+    <h2>Édition de mon profil</h2>
+    <form class="col-xs-offset-2" method="post" name="Co" action="../web/validationDeveloppeur.php"> <!--onsubmit="VerifFormulaire()"-->
 <?php
     if (isset($_GET["erreur"])){
         if(!strcmp($_GET["erreur"], "dev"))
-            echo "Erreur : le developpeur n'a pas été créé";
+            echo "Erreur : le développeur n'a pas été trouvé.";
     }
 ?>    
     <p>
@@ -29,7 +50,7 @@ if (!isset($_SESSION["session"])){
 <?php
     if (isset($_GET["erreur"])){
         if(!strcmp($_GET["erreur"], "pseudo"))
-            echo "Erreur : le pseudo existe déjà";
+            echo "Erreur : le pseudo existe déjà.";
     }
 ?>  
     </p>
@@ -41,16 +62,18 @@ if (!isset($_SESSION["session"])){
 <?php
     if (isset($_GET["erreur"])){
         if(!strcmp($_GET["erreur"], "repetemdp"))
-            echo "Erreur : les mots de passe sont différents";
+            echo "Erreur : les mots de passe sont différents.";
     }
 ?>
     </p>
     <p>
-    <input type="text" name="mail" maxlength="255" placeholder="Adresse Email" required/>
+    <input type="text" name="mail" maxlength="255" placeholder="Adresse mail" required/>
 <?php
     if (isset($_GET["erreur"])){
         if(!strcmp($_GET["erreur"], "mail1"))
-            echo "Erreur : le mail existe déjà";
+            echo "Erreur : le mail existe déjà.";
+		else if(!strcmp($_GET["erreur"], "mail2"))
+			echo "Erreur de format : veuillez saisir une adresse mail valide.";
     }
 ?>  
     </p>
@@ -59,7 +82,7 @@ if (!isset($_SESSION["session"])){
 <?php
     if (isset($_GET["erreur"])){
         if(!strcmp($_GET["erreur"], "repetemail"))
-            echo "Erreur : les mails sont différents";
+            echo "Erreur : les mails sont différents.";
     }
 ?>  
     </p>
@@ -67,17 +90,15 @@ if (!isset($_SESSION["session"])){
     <input type="text" name="url" maxlength="255" placeholder="URL image avatar"/>
     </p>
     <p>
-    <input class="btn btn-primary" type="submit" value="S'inscrire">
+    <input class="btn btn-primary" type="submit" value="Valider">
     </p>
   
     </form>
     </div>
     </article>
 
-<?php $s->footer();
-}
-else
-    header("Location: connexion.php");
-?> 
-
-
+<?php 
+	$s->footer();
+} else
+    header("Location: index.php");
+?>

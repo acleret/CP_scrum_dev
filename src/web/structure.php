@@ -62,58 +62,53 @@ class Structure {
 
   public function nav($db) {
 ?>
-          <nav>
-            <div class="col-sm-2 sidenav">
+    <nav>
+        <div class="col-sm-2 sidenav">
 <?php
-    if (isset($_SESSION["id_dev"])) {
-      $id_dev = $_SESSION["id_dev"];
-      if ($db->testIDDeveloppeur($id_dev)) {
-        $result = $db->infosDeveloppeur($id_dev);
-        $row = $result->fetch_assoc();
-        if (empty($row["DEV_urlAvatar"])) {
+    if (isset($_SESSION["session"]) and $_SESSION["session"] == true) {
+        if (empty($_SESSION["image_co"])) {
 ?>
-              <p><img src="../web/img/avatar-default.jpg" alt="Avatar" height="42" width="42"/></p>
+            <p><img src="../web/img/avatar-default.jpg" alt="Avatar" height="42" width="42"/><br>
 <?php
         } else {
 ?>
-              <p><img src="<?php echo $row["DEV_urlAvatar"]; ?>" alt="Avatar" height="42" width="42"/></p>
+            <p><img src="<?php echo $_SESSION["image_co"]; ?>" alt="Avatar" height="42" width="42"/><br>
 <?php
         }
 ?>
-              <p>
-                <a href="../web/profil.php"><?php echo $row["DEV_pseudo"]; ?></a><br>
-                <a href="../web/deconnexion.php">déconnexion</a>
-              </p>
-              <br>
-              <p>Mes projets:</p>
+			<a href="profil.php"><?php echo $_SESSION["pseudo_co"]; ?></a>
+		</p>
+		<p> - </p>		
+		<p>
+			<a href="../web/deconnexion.php">Déconnexion</a>
+		</p>
+		<p> - </p>		
+		<p>Mes projets:</p>
 <?php
-      $result = $db->listeProjetsDeveloppeur($id_dev);
+		$id_dev = $_SESSION["id_co"];
+		// temporaire $result = $db->listeProjetsDeveloppeur($id_dev);
+		$result = $db->listeProjetsParDev($id_dev);
         while ($row = $result->fetch_assoc()) {
 ?>
-              <form style="display: inline;" action="../web/setProjet.php" method="post">
-                <input type="hidden" name="id_projet" value="<?php echo $row["PRO_id"]; ?>"/>
-                <input class="url" type="submit" value="<?php echo substr($row["PRO_nom"], 0, 19); ?>" />
-              </form>
-              <br>
+			<form style="display: inline;" action="../web/setProjet.php" method="post">
+			<input type="hidden" name="id_projet" value="<?php echo $row["PRO_id"]; ?>"/>
+			<input class="url" type="submit" value="<?php echo substr($row["PRO_nom"], 0, 19); ?>" />
+			</form>
+			<br>
+            <br>
 <?php
         }
-      } else {
-        echo "<p>erreur dev ".$id_dev." inconnu<p>\n";
-      }
-?>
-              <br>
-<?php
-    } else {
+	} else {
 ?>
               <p>
-                <a href="../web/connexion.php">connexion</a><br>
-                <a href="../web/inscription.php">inscription</a>
+                <a href="../web/connexion.php">Connexion</a><br>
+                <a href="../web/inscription.php">Inscription</a>
               </p>
 <?php
-    }
+	}
 ?>
-            </div>
-          </nav>
+        </div>
+    </nav>
 <?php
   }
 

@@ -3,7 +3,7 @@ class Requetes {
 
     private $conn;
 
-    // créé la connexion
+    // crée la connexion
     public function __construct($servername, $username, $password, $dbname) {
         $this->conn = new mysqli($servername, $username, $password, $dbname);
     }
@@ -18,13 +18,24 @@ class Requetes {
         return $this->conn->connect_error;
     }
 
-    // ajoute un developpeur dans la BD (si le pseudo et le mail sont libre) et retourne vrai si il est ajouté
+    // ajoute un développeur dans la BD (si le pseudo et le mail sont libres) et retourne vrai si il est ajouté
     public function ajoutNouveauDeveloppeur($prenom, $nom, $pseudo, $mail, $mdp, $url_avatar) {
         if ($this->testPseudoDeveloppeur($pseudo) || $this->testMailDeveloppeur($mail)) {
             return false;
         }
         $sql = "INSERT INTO DEVELOPPEUR (DEV_prenom, DEV_nom, DEV_pseudo, DEV_mail, DEV_mdp, DEV_urlAvatar, DEV_date_creation)
             VALUES ('".$prenom."', '".$nom."', '".$pseudo."', '".$mail."', '".$mdp."', '".$url_avatar."', Now());";
+        if (!$result = $this->conn->query($sql)) {
+            printf("Message d'erreur: %s<br>\n", $this->conn->error);
+        }
+        return true;
+    }
+
+    // modifie les données du développeur connecté et retourne vrai quand c'est bien fait
+    public function modifDeveloppeur($id, $prenom, $nom, $pseudo, $mdp, $mail, $url_avatar) {
+        $sql = "UPDATE `DEVELOPPEUR` 
+				SET `DEV_prenom`='".$prenom."',`DEV_nom`='".$nom."',`DEV_pseudo`='".$pseudo."',`DEV_mdp`='".$mdp."',`DEV_mail`='".$mail."', `DEV_urlAvatar`='".$url_avatar."' 
+				WHERE DEV_id=".$id.";";
         if (!$result = $this->conn->query($sql)) {
             printf("Message d'erreur: %s<br>\n", $this->conn->error);
         }
@@ -90,7 +101,19 @@ class Requetes {
         }
         return $result;
     }
-
+    
+	/* temporaire */
+	// retourne la liste des projets lié à un developpeur
+    public function listeProjetsParDev($id_dev) {
+        $sql = "SELECT * FROM PROJET
+            WHERE DEV_idProductOwner = ".$id_dev."
+            ORDER BY PRO_date_creation ASC;";
+        if (!$result = $this->conn->query($sql)) {
+            printf("Message d'erreur: %s<br>\n", $this->conn->error);
+        }
+        return $result;
+    }
+	
     // retourne le nombre de projets lié à un developpeur
     public function nombreProjetsDeveloppeur($id_dev) {
         $sql = "SELECT * FROM PROJET as P
@@ -169,7 +192,31 @@ class Requetes {
         }
         return $result;     
     }
-      
-  
+    
+    // retourne le développeur aux pseudo et mot de passe rentrés
+	public function verifDevExistant($pseudo, $mdp){
+		$sql = "SELECT *, count(*) AS nb_devs FROM DEVELOPPEUR 
+				WHERE DEV_pseudo='".$pseudo."' AND DEV_mdp='".$mdp."';";
+        if (!$result = $this->conn->query($sql)) {
+            printf("Message d'erreur: %s<br>\n", $this->conn->error);
+        }
+		return $result;
+	}
+	
+	// retourne vrai si le développeur id_dev est le ScrumMaster
+	// du projet id_pro
+	public function estScrumMaster($id_dev, $id_pro){
+		$sql = "SELECT * FROM PROJET
+				WHERE PRO_id=".$id_pro." AND DEV_idScrumMaster=".$id_dev.";";
+		if (!$result = $this->conn->query($sql)) {
+            printf("Message d'erreur: %s<br>\n", $this->conn->error);
+        }
+		if ($result->num_rows == 1)
+			return true;
+		else
+			return false;
+		
+	}
+
 }
 ?>

@@ -58,8 +58,8 @@ if(isset($_COOKIE["id_projet"])) {
     
         <aside>
 <?php
-        if (isset($_SESSION["id_dev"])) {
-            if ($db->estMembreProjet($row["PRO_id"], $_SESSION["id_dev"])) {
+        if (isset($_SESSION["session"]) && $_SESSION["session"]==true) {
+            if ($db->estMembreProjet($row["PRO_id"], $_SESSION["id_co"])) {
 ?>
                 <div class="col-sm-2 sidenav">
                 <div class="well">
@@ -75,7 +75,7 @@ if(isset($_COOKIE["id_projet"])) {
 <?php
             }
         }
-            
+
 ?>
         </aside>
    

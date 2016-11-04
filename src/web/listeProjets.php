@@ -1,7 +1,7 @@
 <?php
 require_once("../web/config.php");
 
-// supperssion du cookie qui contient l'id du projet courrant
+// suppression du cookie qui contient l'id du projet courant
 if (isset($_COOKIE["id_projet"])){
   setcookie("id_projet", false, time() - 3600);
   unset($_COOKIE["id_projet"]);
@@ -10,6 +10,7 @@ if (isset($_COOKIE["id_projet"])){
 $s->head("Liste des Projets");
 $s->header();
 $s->nav($db);
+
 ?>
           <article>
             <div class="col-sm-8 text-left">
@@ -19,7 +20,7 @@ $s->nav($db);
                   <tr>
                     <th>Titre</th>
 <?php
-if (isset($_SESSION["id_dev"])) {
+if (isset($_SESSION["session"]) and $_SESSION['session'] == true) {
 ?>
                     <th>Actions</th>
 <?php
@@ -59,11 +60,11 @@ while ($row = $result->fetch_assoc()) {
                       </form>
                     </td>
 <?php
-  if (isset($_SESSION["id_dev"])) {
+  if (isset($_SESSION["session"]) and $_SESSION['session'] == true) {
 ?>
                     <td>
 <?php
-    if ($db->estMembreProjet($row["PRO_id"], $_SESSION["id_dev"])) {
+    if ($db->estMembreProjet($row["PRO_id"], $_SESSION["id_co"])) {
 ?>
                       <form style="display: inline;" action="../web/formulaireProjet.php" method="post">
                         <input type="hidden" name="id_atelier" value="<?php echo $row["PRO_id"]; ?>"/>
@@ -106,7 +107,7 @@ echo "\n";
           </article>
           <aside>
 <?php
-if (isset($_SESSION["id_dev"])) {
+if (isset($_SESSION["session"]) and $_SESSION['session'] == true) {
 ?>
             <div class="col-sm-2 sidenav">
               <div class="well">

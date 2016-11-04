@@ -1,9 +1,9 @@
 <?php
 require_once("../web/config.php");
 
-if (isset($_SESSION["id_dev"]) || time() > $_SESSION["expire"]) {
+if ((isset($_SESSION["session"]) and $_SESSION["session"] == true) || (time() > $_SESSION["expire"])) {
   session_destroy();
 }
 
-header("Location: ../web/listeProjets.php");
+header("Location: index.php");
 ?>
