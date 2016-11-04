@@ -3,11 +3,13 @@ require_once("../web/config.php");
 
 /********** pour tester avec un developpeur connecté **********/
 /*$_SESSION["id_co"] = 1;*/
-$_SESSION["expire"] = time() + (30 * 60); // 30 mn plus tard
+if (!isset($_SESSION["session"])){
 
-$s->head("Connexion");
-$s->header();
-$s->nav($db);
+    $_SESSION["expire"] = time() + (30 * 60); // 30 mn plus tard
+
+    $s->head("Connexion");
+    $s->header();
+    $s->nav($db);
 ?>
 
     <article>
@@ -31,6 +33,8 @@ $s->nav($db);
         
 
 <?php
-/***header("Location: ../web/listeProjets.php");
-/********** ***************************************** **********/
+    $s->footer();
+}
+else
+    header("Location: ../web/index.php");
 ?>

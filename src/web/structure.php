@@ -86,8 +86,7 @@ class Structure {
 		<p>Mes projets:</p>
 <?php
 		$id_dev = $_SESSION["id_co"];
-		// temporaire $result = $db->listeProjetsDeveloppeur($id_dev);
-		$result = $db->listeProjetsParDev($id_dev);
+		$result = $db->listeProjetsDeveloppeur($id_dev);
         while ($row = $result->fetch_assoc()) {
 ?>
 			<form style="display: inline;" action="../web/setProjet.php" method="post">
@@ -95,9 +94,11 @@ class Structure {
 			<input class="url" type="submit" value="<?php echo substr($row["PRO_nom"], 0, 19); ?>" />
 			</form>
 			<br>
-            <br>
 <?php
         }
+?> 
+           <br>
+<?php
 	} else {
 ?>
               <p>

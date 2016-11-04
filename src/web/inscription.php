@@ -77,7 +77,7 @@ if (!isset($_SESSION["session"])){
 <?php $s->footer();
 }
 else
-    header("Location: connexion.php");
+    header("Location: ../web/index.php");
 ?> 
 
 
