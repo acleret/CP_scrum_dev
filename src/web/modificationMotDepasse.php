@@ -1,18 +1,19 @@
 <?php
 require_once("../web/config.php");
 
-if (!isset($_SESSION["session"])) {
+if (isset($_SESSION["session"])) {
   $_SESSION["expire"] = time() + (30 * 60); // 30 mn plus tard
   $s->suppressionCookies();
-  $s->head("Connexion");
+  $s->head("Modification de mon mot de passe");
   $s->header();
   $s->nav($db);
 ?>
           <article>
             <div class="col-sm-8 text-left">
-              <h2>Connexion</h2>
+              <h2>Modification de mon mot de passe</h2>
               <hr>
 <?php
+/*
   $erreurKO = false;
   if (isset($_GET["erreur"])) {
     if (!strcmp($_GET["erreur"], "KO")) {
@@ -24,12 +25,14 @@ if (!isset($_SESSION["session"])) {
     if (!strcmp($_GET["url"], "OK"))
       echo "le profil a été créé";
   }
+*/
 ?>
-              <form action="../web/verificationConnexion.php" class="form-horizontal" method="post" accept-charset="utf-8">
-                <div <?php if($erreurKO) echo 'class="form-group has-error"'; else echo 'class="form-group"'; ?>>
+<!--
+              <form action="../web/verificationMotDePasse.php" class="form-horizontal" method="post" accept-charset="utf-8">
+                <div <?php /* if($erreurKO) echo 'class="form-group has-error"'; else echo 'class="form-group"'; */ ?>>
                   <div class="col-md-8"><input name="identifiant" placeholder="Idenfiant" class="form-control" type="text" id="DevPseudo" required /></div>
                 </div>
-                <div <?php if($erreurKO) echo 'class="form-group has-error"'; else echo 'class="form-group"'; ?>>
+                <div <?php /* if($erreurKO) echo 'class="form-group has-error"'; else echo 'class="form-group"'; */ ?>>
                   <div class="col-md-8"><input name="motDePasse" placeholder="Mot de passe" class="form-control" type="password" id="DevMDP" required /></div>
                 </div>
                 <div class="form-group">
@@ -38,6 +41,7 @@ if (!isset($_SESSION["session"])) {
               </form>
             </div>
           </article>
+-->
 <?php
   $s->footer();
 } else {

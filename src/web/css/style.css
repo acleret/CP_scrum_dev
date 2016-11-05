@@ -32,24 +32,22 @@ footer {
 
 .url {
   border:none;
+  color: #337ab7;
   background-color: #f1f1f1;
 }
 
 .url:hover {
-  border:none;
   text-decoration: underline;
-  color: #337ab7;
-  background-color: #f1f1f1;
+  color: #333;
 }
 
 .url2 {
   border:none;
+  color: #337ab7;
   background-color: #ffffff;
 }
 
 .url2:hover {
-  border:none;
   text-decoration: underline;
-  color: #337ab7;
-  background-color: #ffffff;
+  color: #333;
 }
