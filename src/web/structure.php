@@ -62,54 +62,60 @@ class Structure {
 
   public function nav($db) {
 ?>
-    <nav>
-        <div class="col-sm-2 sidenav">
+          <nav>
+            <div class="col-sm-2 sidenav">
 <?php
-    if (isset($_SESSION["session"]) and $_SESSION["session"] == true) {
-        if (empty($_SESSION["image_co"])) {
+    if (isset($_SESSION["session"])) {
+      if (empty($_SESSION["image_co"])) {
 ?>
-            <p><img src="../web/img/avatar-default.jpg" alt="Avatar" height="42" width="42"/><br>
+              <p>
+                <img src="../web/img/avatar-default.jpg" alt="Avatar" height="60" width="60" class="img-rounded"/>
+                <br>
+                <br>
 <?php
-        } else {
+      } else {
 ?>
-            <p><img src="<?php echo $_SESSION["image_co"]; ?>" alt="Avatar" height="42" width="42"/><br>
+              <p>
+                <img src="<?php echo $_SESSION["image_co"]; ?>" alt="Avatar" height="60" width="60" class="img-rounded"/>
+                <br>
+                <br>
 <?php
-        }
+      }
 ?>
-			<a href="profil.php"><?php echo $_SESSION["pseudo_co"]; ?></a>
-		</p>
-		<p> - </p>		
-		<p>
-			<a href="../web/deconnexion.php">Déconnexion</a>
-		</p>
-		<p> - </p>		
-		<p>Mes projets:</p>
+                <a href="profil.php"><?php echo $_SESSION["pseudo_co"]; ?></a>
+              </p>
+              <p> - </p>
+              <p>
+                <a href="../web/deconnexion.php">Déconnexion</a>
+              </p>
+              <p> - </p>
+              <p>Mes collaborations:</p>
 <?php
-		$id_dev = $_SESSION["id_co"];
-		$result = $db->listeProjetsDeveloppeur($id_dev);
-        while ($row = $result->fetch_assoc()) {
+      $id_dev = $_SESSION["id_co"];
+      $result = $db->listeProjetsDeveloppeur($id_dev);
+      while ($row = $result->fetch_assoc()) {
 ?>
-			<form style="display: inline;" action="../web/setProjet.php" method="post">
-			<input type="hidden" name="id_projet" value="<?php echo $row["PRO_id"]; ?>"/>
-			<input class="url" type="submit" value="<?php echo substr($row["PRO_nom"], 0, 19); ?>" />
-			</form>
-			<br>
+              <form style="display: inline;" action="../web/setProjet.php" method="post">
+                <input type="hidden" name="id_projet" value="<?php echo $row["PRO_id"]; ?>"/>
+                <input class="url" type="submit" value="<?php echo substr($row["PRO_nom"], 0, 19); ?>"/>
+              </form>
+              <br>
 <?php
-        }
-?> 
-           <br>
+      }
+?>
+              <br>
 <?php
-	} else {
+   } else {
 ?>
               <p>
                 <a href="../web/connexion.php">Connexion</a><br>
                 <a href="../web/inscription.php">Inscription</a>
               </p>
 <?php
-	}
+   }
 ?>
-        </div>
-    </nav>
+            </div>
+          </nav>
 <?php
   }
 
@@ -125,5 +131,14 @@ class Structure {
 </html>
 <?php
   }
+
+  public function suppressionCookies() {
+    // suppression du cookie qui contient l'id du projet courant
+    if (isset($_COOKIE["id_projet"])){
+      setcookie("id_projet", false, time() - 3600);
+      unset($_COOKIE["id_projet"]);
+    }
+  }
+
 }
 ?>

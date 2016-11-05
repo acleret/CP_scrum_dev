@@ -1,3 +1,4 @@
 <?php
-	header('Location:listeProjets.php');
+  header("Location: ../web/listeProjets.php");
+  exit();
 ?>

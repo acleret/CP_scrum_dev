@@ -1,26 +1,21 @@
 <?php
 require_once("../web/config.php");
 
-// suppression du cookie qui contient l'id du projet courant
-if (isset($_COOKIE["id_projet"])){
-  setcookie("id_projet", false, time() - 3600);
-  unset($_COOKIE["id_projet"]);
-}
-
+$s->suppressionCookies();
 $s->head("Liste des Projets");
 $s->header();
 $s->nav($db);
-
 ?>
           <article>
             <div class="col-sm-8 text-left">
               <h2>Projets</h2>
+              <hr>
               <table class="table table-bordered">
                 <thead>
                   <tr>
                     <th>Titre</th>
 <?php
-if (isset($_SESSION["session"]) and $_SESSION['session'] == true) {
+if (isset($_SESSION["session"])) {
 ?>
                     <th>Actions</th>
 <?php
@@ -60,7 +55,7 @@ while ($row = $result->fetch_assoc()) {
                       </form>
                     </td>
 <?php
-  if (isset($_SESSION["session"]) and $_SESSION['session'] == true) {
+  if (isset($_SESSION["session"])) {
 ?>
                     <td>
 <?php
@@ -88,7 +83,6 @@ while ($row = $result->fetch_assoc()) {
 ?>
                 </tbody>
               </table>
-              <hr>
               <p style="text-align:center">
                 Page :
 <?php
@@ -107,7 +101,7 @@ echo "\n";
           </article>
           <aside>
 <?php
-if (isset($_SESSION["session"]) and $_SESSION['session'] == true) {
+if (isset($_SESSION["session"])) {
 ?>
             <div class="col-sm-2 sidenav">
               <div class="well">

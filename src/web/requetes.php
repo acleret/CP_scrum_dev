@@ -19,12 +19,12 @@ class Requetes {
     }
 
     // ajoute un développeur dans la BD (si le pseudo et le mail sont libres) et retourne vrai si il est ajouté
-    public function ajoutNouveauDeveloppeur($prenom, $nom, $pseudo, $mail, $mdp, $url_avatar) {
+    public function ajoutNouveauDeveloppeur($prenom, $nom, $pseudo, $mdp, $mail, $url_avatar) {
         if ($this->testPseudoDeveloppeur($pseudo) || $this->testMailDeveloppeur($mail)) {
             return false;
         }
-        $sql = "INSERT INTO DEVELOPPEUR (DEV_prenom, DEV_nom, DEV_pseudo, DEV_mail, DEV_mdp, DEV_urlAvatar, DEV_date_creation)
-            VALUES ('".$prenom."', '".$nom."', '".$pseudo."', '".$mail."', '".$mdp."', '".$url_avatar."', Now());";
+        $sql = "INSERT INTO DEVELOPPEUR (DEV_prenom, DEV_nom, DEV_pseudo, DEV_mdp, DEV_mail, DEV_urlAvatar, DEV_date_creation)
+                VALUES ('".$prenom."', '".$nom."', '".$pseudo."', '".$mdp."', '".$mail."', '".$url_avatar."', Now());";
         if (!$result = $this->conn->query($sql)) {
             printf("Message d'erreur: %s<br>\n", $this->conn->error);
         }
@@ -32,10 +32,10 @@ class Requetes {
     }
 
     // modifie les données du développeur connecté et retourne vrai quand c'est bien fait
-    public function modifDeveloppeur($id, $prenom, $nom, $pseudo, $mdp, $mail, $url_avatar) {
-        $sql = "UPDATE `DEVELOPPEUR` 
-				SET `DEV_prenom`='".$prenom."',`DEV_nom`='".$nom."',`DEV_pseudo`='".$pseudo."',`DEV_mdp`='".$mdp."',`DEV_mail`='".$mail."', `DEV_urlAvatar`='".$url_avatar."' 
-				WHERE DEV_id=".$id.";";
+    public function modifDeveloppeur($id, $prenom, $nom, $pseudo, $url_avatar) {
+        $sql = "UPDATE `DEVELOPPEUR`
+        SET `DEV_prenom`='".$prenom."',`DEV_nom`='".$nom."',`DEV_pseudo`='".$pseudo."', `DEV_urlAvatar`='".$url_avatar."'
+        WHERE DEV_id=".$id.";";
         if (!$result = $this->conn->query($sql)) {
             printf("Message d'erreur: %s<br>\n", $this->conn->error);
         }
@@ -93,32 +93,32 @@ class Requetes {
     // retourne la liste des projets lié à un developpeur
     public function listeProjetsDeveloppeur($id_dev) {
         $sql = "SELECT P.* FROM PROJET as P
-            INNER JOIN INTER_DEV_PROJET AS DV ON P.PRO_id = DV.PRO_id
-            WHERE DV.DEV_id = ".$id_dev."
-            ORDER BY P.PRO_date_creation ASC;";
+                INNER JOIN INTER_DEV_PROJET AS DV ON P.PRO_id = DV.PRO_id
+                WHERE DV.DEV_id = ".$id_dev."
+                ORDER BY P.PRO_date_creation ASC;";
         if (!$result = $this->conn->query($sql)) {
             printf("Message d'erreur: %s<br>\n", $this->conn->error);
         }
         return $result;
     }
-    
-	/* temporaire */
-	// retourne la liste des projets lié à un developpeur
-    public function listeProjetsParDev($id_dev) {
+
+    /* temporaire */
+    // retourne la liste des projets ou le developpeur est ProductOwner
+    public function listeProjetsDeveloppeurProductOwner($id_dev) {
         $sql = "SELECT * FROM PROJET
-            WHERE DEV_idProductOwner = ".$id_dev."
-            ORDER BY PRO_date_creation ASC;";
+                WHERE DEV_idProductOwner = ".$id_dev."
+                ORDER BY PRO_date_creation ASC;";
         if (!$result = $this->conn->query($sql)) {
             printf("Message d'erreur: %s<br>\n", $this->conn->error);
         }
         return $result;
     }
-	
+
     // retourne le nombre de projets lié à un developpeur
     public function nombreProjetsDeveloppeur($id_dev) {
         $sql = "SELECT * FROM PROJET as P
-            INNER JOIN INTER_DEV_PROJET AS DV ON P.PRO_id = DV.PRO_id
-            WHERE DV.DEV_id = ".$id_dev.";";
+                INNER JOIN INTER_DEV_PROJET AS DV ON P.PRO_id = DV.PRO_id
+                WHERE DV.DEV_id = ".$id_dev.";";
         if (!$result = $this->conn->query($sql)) {
             printf("Message d'erreur: %s<br>\n", $this->conn->error);
         }
@@ -128,8 +128,8 @@ class Requetes {
     // retourne la liste de tous les projets (parametres optionnels pour la pagination)
     public function listeProjets($id_premiere_ligne = 0, $nb_projets_par_pages = 2000) {
         $sql = "SELECT * FROM PROJET
-    ORDER BY PRO_date_creation ASC
-    LIMIT ".$id_premiere_ligne.", ".$nb_projets_par_pages.";";
+                ORDER BY PRO_date_creation ASC
+                LIMIT ".$id_premiere_ligne.", ".$nb_projets_par_pages.";";
         if (!$result = $this->conn->query($sql)) {
             printf("Message d'erreur: %s<br>\n", $this->conn->error);
         }
@@ -148,7 +148,7 @@ class Requetes {
     // retourne vrai si le developpeur est membre du projet
     public function estMembreProjet($id_projet, $id_dev) {
         $sql = "SELECT * FROM INTER_DEV_PROJET
-            WHERE PRO_id = ".$id_projet." AND DEV_id = ".$id_dev.";";
+                WHERE PRO_id = ".$id_projet." AND DEV_id = ".$id_dev.";";
         if (!$result = $this->conn->query($sql)) {
             printf("Message d'erreur: %s<br>\n", $this->conn->error);
         }
@@ -168,8 +168,8 @@ class Requetes {
         return $result;
     }
 
-    // retourne vrai si un projet existe 
-    public function testIDProjet($id_pro){
+    // retourne vrai si un projet existe
+    public function testIDProjet($id_pro) {
         $sql = "SELECT * FROM PROJET WHERE PRO_id = ".$id_pro.";";
         if (!$result = $this->conn->query($sql)) {
             printf("Message d'erreur: %s<br>\n", $this->conn->error);
@@ -181,42 +181,63 @@ class Requetes {
         return false;
     }
 
-    // retourne la liste des développeurs d'un projet
-    public function listeDeveloppeursProjet($id_pro){
+    // retourne la liste des développeurs
+    public function listeDeveloppeurs() {
         $sql = "SELECT D.* FROM DEVELOPPEUR as D
-            INNER JOIN INTER_DEV_PROJET AS IDP ON D.DEV_id = IDP.DEV_id
-            WHERE IDP.PRO_id = ".$id_pro."
-            ORDER BY D.DEV_pseudo ASC;";
+                ORDER BY D.DEV_pseudo ASC;";
         if (!$result = $this->conn->query($sql)) {
             printf("Message d'erreur: %s<br>\n", $this->conn->error);
         }
-        return $result;     
+        return $result;
     }
-    
-    // retourne le développeur aux pseudo et mot de passe rentrés
-	public function verifDevExistant($pseudo, $mdp){
-		$sql = "SELECT *, count(*) AS nb_devs FROM DEVELOPPEUR 
-				WHERE DEV_pseudo='".$pseudo."' AND DEV_mdp='".$mdp."';";
+
+    // retourne la liste des développeurs d'un projet
+    public function listeDeveloppeursProjet($id_pro) {
+        $sql = "SELECT D.* FROM DEVELOPPEUR as D
+                INNER JOIN INTER_DEV_PROJET AS IDP ON D.DEV_id = IDP.DEV_id
+                WHERE IDP.PRO_id = ".$id_pro."
+                ORDER BY D.DEV_pseudo ASC;";
         if (!$result = $this->conn->query($sql)) {
             printf("Message d'erreur: %s<br>\n", $this->conn->error);
         }
-		return $result;
-	}
-	
-	// retourne vrai si le développeur id_dev est le ScrumMaster
-	// du projet id_pro
-	public function estScrumMaster($id_dev, $id_pro){
-		$sql = "SELECT * FROM PROJET
-				WHERE PRO_id=".$id_pro." AND DEV_idScrumMaster=".$id_dev.";";
-		if (!$result = $this->conn->query($sql)) {
+        return $result;
+    }
+
+    // retourne les infos d'un développeur si le pseudo et mot de passe sont exact
+    public function testDeveloppeurConnexion($pseudo, $mdp) {
+        $sql = "SELECT * FROM DEVELOPPEUR
+                WHERE DEV_pseudo='".$pseudo."' AND DEV_mdp='".$mdp."';";
+        if (!$result = $this->conn->query($sql)) {
             printf("Message d'erreur: %s<br>\n", $this->conn->error);
         }
-		if ($result->num_rows == 1)
-			return true;
-		else
-			return false;
-		
-	}
+        return $result;
+    }
+
+    // retourne vrai si le développeur id_dev est le ScrumMaster
+    // du projet id_pro
+    public function estScrumMaster($id_dev, $id_pro) {
+        $sql = "SELECT * FROM PROJET
+                WHERE PRO_id=".$id_pro." AND DEV_idScrumMaster=".$id_dev.";";
+        if (!$result = $this->conn->query($sql)) {
+            printf("Message d'erreur: %s<br>\n", $this->conn->error);
+        }
+        if ($result->num_rows == 1)
+            return true;
+        else
+            return false;
+    }
+
+    public function estProductOwner($id_dev, $id_pro) {
+      $sql = "SELECT * FROM PROJET
+              WHERE PRO_id=".$id_pro." AND DEV_idProductOwner=".$id_dev.";";
+      if (!$result = $this->conn->query($sql)) {
+          printf("Message d'erreur: %s<br>\n", $this->conn->error);
+      }
+      if ($result->num_rows == 1)
+          return true;
+      else
+          return false;
+    }
 
 }
 ?>
