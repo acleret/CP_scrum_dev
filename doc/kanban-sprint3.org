@@ -1,0 +1,30 @@
+* KanBan - Sprint 3
+
+|       | to do | on going | test | done |
+|-------+-------+----------+------+------|
+| US#14 |       |          |      |      |
+| US#15 |       |          |      |      |
+| US#16 |       |          |      |      |
+| US#17 |       |          |      |      |
+| US#18 |       |          |      |      |
+| US#19 |       |          |      |      |
+
+
+
+**** Liste des tâches
+
+Tâches à définir.
+
+**** User Stories
+
+*sprint*
++ US#14 : En tant que développeur je souhaite sélectionner/retirer une US du backlog dans l’édition des sprints d'un projet auquel je suis associé.                           
+*kanban*                                                                                                                                                                                 
++ US#15 : En tant que visiteur/développeur je souhaite visualiser le kanban d’un sprint d’un projet.                                                                          
++ US#16 : En tant que développeur je souhaite ajouter/modifier/supprimer une tâche d'une US d'un projet auquel je suis associé.                                               
+*traçabilité*                                                                                                                                                                            
++ US#17 : En tant que visiteur/développeur je souhaite visualiser la traçabilité d’un projet.                                                                                 
++ US#18 : En tant que développeur je souhaite ajouter le commit et la date d’une US d'un projet auquel je suis associé.                                                       
+*avancement*                                                                                                                                                                             
++ US#19 : En tant que visiteur/développeur je souhaite visualiser l’avancement (burdown chart) d’un projet en temps réel.                                                     
+
