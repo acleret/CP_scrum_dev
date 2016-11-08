@@ -238,6 +238,36 @@ class Requetes {
       else
           return false;
     }
+    public function listeSprints($id_pro) {
+        $sql = "SELECT * FROM sprint 
+                WHERE PRO_id = ".$id_pro."
+                ORDER BY SPR_dateDebut ASC;";
+        if (!$result = $this->conn->query($sql)) {
+            printf("Message d'erreur: %s<br>\n", $this->conn->error);
+        }
+        return $result;
+    }
+
+    public function infosSprint($id_spr) {
+        $sql = "SELECT * FROM sprint WHERE SPR_id = ".$id_spr.";";
+        if (!$res = $this->conn->query($sql)) {
+            printf("Message d'erreur: %s<br>\n", $this->conn->error);
+        }
+        return $res;
+    }
+
+    // si l'id d'un sprint existe retourne vrai
+    public function testIDSprint($id_spr) {
+        $sql = "SELECT * FROM sprint WHERE SPR_id = ".$id_spr.";";
+        if (!$result = $this->conn->query($sql)) {
+            printf("Message d'erreur: %s<br>\n", $this->conn->error);
+        }
+        $row = $result->fetch_assoc();
+        if ($row["SPR_id"] == $id_spr) {
+            return true;
+        }
+        return false;
+    }
 
 }
 ?>

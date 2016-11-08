@@ -221,4 +221,27 @@ if ($test->estProductOwner($id_dev, $id_pro)) {
 } else {
   echo "dev ".$id_dev." n'est pas ProductOwner sur le projet ".$id_pro."<br><br>\n\n";
 }
+
+// test listeSprints
+echo "// test listeSprints<br>\n";
+$id_pro = 1;
+$result = $test->listeSprints($id_pro);
+while ($row = $result->fetch_assoc()) {
+  echo $row["SPR_id"]." | ".$row["SPR_nom"]." | ".$row["SPR_dateDebut"]." | ".$row["SPR_duree"]." | ".$row["PRO_id"]."<br>\n";
+}
+echo "<br>\n";
+
+/*// test infosSprint
+echo "// test infosSprint<br>\n";
+$id_spr = 2;
+$result = $test->infosProjet($id_spr);
+$row = $result->fetch_assoc();
+echo "bonjour";/*
+echo $result[1];//."SPR_id"]." | ".$row["SPR_nom"]." | ".$row["SPR_dateDebut"]." | ".$row["SPR_duree"]." | ".$row["PRO_id"]."<br>\n";
+echo "<br>\n";*/
+
+
+
+
+
 ?>
