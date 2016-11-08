@@ -100,24 +100,6 @@ if ($test->testIDDeveloppeur($id_dev)) {
   echo "erreur dev ".$id_dev." inconnu<br><br>\n\n";
 }
 
-/***** Jeux de test (temporaire)******
-INSERT INTO `DEVELOPPEUR` (`DEV_id`, `DEV_prenom`, `DEV_nom`, `DEV_pseudo`, `DEV_mdp`, `DEV_mail`, `DEV_urlAvatar`, `DEV_date_creation`) VALUES
-(1, 'ptest2', 'ntest', 'pstest', 'mdptest', 'mtest', 'urltest', Now()),
-(2, 'ptest2', 'ntest', 'pstest2', 'mdptest', 'mtest2', 'urltest', Now());
-
-INSERT INTO `PROJET` (`PRO_id`, `PRO_nom`, `PRO_client`, `PRO_description`, `PRO_date_creation`, `DEV_idProductOwner`, `DEV_idScrumMaster`) VALUES
-(1, 'projet1', 'client1', 'description1', Now(), 1, 1),
-(2, 'projet2', 'client2', 'description2', Now(), 1, 2),
-(3, 'projet3', 'client3', 'description3', Now(), 2, 2),
-(4, 'projet4', 'client4', 'description4', Now(), 2, 1);
-
-INSERT INTO `INTER_DEV_PROJET` (`DEV_id`, `PRO_id`) VALUES
-(1, 1),
-(2, 1),
-(1, 2),
-(2, 3),
-(1, 4);
-*/
 // test listeProjetsDeveloppeur
 echo "// test listeProjetsDeveloppeur<br>\n";
 $id_dev = 1; // le dev 1 est lié au projet 1, 2 et 4

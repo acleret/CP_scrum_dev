@@ -26,7 +26,7 @@ if (isset($_SESSION["session"])) {
                 <tbody>
 <?php
 // calcul du nombre de pages
-$nb_projets_par_pages = 20;
+$nb_projets_par_pages = 15;
 
 $nombre_lignes = $db->nombreProjets();
 $nombre_de_pages = ceil($nombre_lignes / $nb_projets_par_pages);
@@ -83,20 +83,29 @@ while ($row = $result->fetch_assoc()) {
 ?>
                 </tbody>
               </table>
-              <p style="text-align:center">
-                Page :
+              <div class="container">
+                <ul class="pagination">
 <?php
 // affichage de la liste des pages
-for ($i = 1; $i <= $nombre_de_pages; $i++) {
-  if ($i == $page_actuelle) {
-    echo ' [ '.$i.' ] ';
-  } else {
-    echo ' <a href="listeProjets.php?page='.$i.'\">'.$i.'</a> ';
-  }
-}
-echo "\n";
+if ($nombre_de_pages > 1) {
+  for ($i = 1; $i <= $nombre_de_pages; $i++) {
+    if ($i == $page_actuelle) {
 ?>
-              </p>
+                  <li class="active"><a href="#"><?php echo $i; ?></a></li>
+<?php
+    //echo ' [ '.$i.' ] ';
+    } else {
+?>
+                  <li><a href="listeProjets.php?page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
+<?php
+    // echo ' <a href="listeProjets.php?page='.$i.'\">'.$i.'</a> ';
+    }
+  }
+  echo "\n";
+}
+?>
+                </ul>
+              </div>
             </div>
           </article>
           <aside>

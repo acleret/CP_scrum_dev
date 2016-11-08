@@ -23,7 +23,7 @@ class Requetes {
         if ($this->testPseudoDeveloppeur($pseudo) || $this->testMailDeveloppeur($mail)) {
             return false;
         }
-        $sql = "INSERT INTO DEVELOPPEUR (DEV_prenom, DEV_nom, DEV_pseudo, DEV_mdp, DEV_mail, DEV_urlAvatar, DEV_date_creation)
+        $sql = "INSERT INTO developpeur (DEV_prenom, DEV_nom, DEV_pseudo, DEV_mdp, DEV_mail, DEV_urlAvatar, DEV_date_creation)
                 VALUES ('".$prenom."', '".$nom."', '".$pseudo."', '".$mdp."', '".$mail."', '".$url_avatar."', Now());";
         if (!$result = $this->conn->query($sql)) {
             printf("Message d'erreur: %s<br>\n", $this->conn->error);
@@ -33,7 +33,7 @@ class Requetes {
 
     // modifie les données du développeur connecté et retourne vrai quand c'est bien fait
     public function modifDeveloppeur($id, $prenom, $nom, $pseudo, $url_avatar) {
-        $sql = "UPDATE `DEVELOPPEUR`
+        $sql = "UPDATE developpeur
         SET `DEV_prenom`='".$prenom."',`DEV_nom`='".$nom."',`DEV_pseudo`='".$pseudo."', `DEV_urlAvatar`='".$url_avatar."'
         WHERE DEV_id=".$id.";";
         if (!$result = $this->conn->query($sql)) {
@@ -44,7 +44,7 @@ class Requetes {
 
     // si le pseudo d'un developpeur existe retourne vrai
     public function testPseudoDeveloppeur($pseudo) {
-        $sql = "SELECT * FROM DEVELOPPEUR WHERE DEV_pseudo = '".$pseudo."';";
+        $sql = "SELECT * FROM developpeur WHERE DEV_pseudo = '".$pseudo."';";
         if (!$result = $this->conn->query($sql)) {
             printf("Message d'erreur: %s<br>\n", $this->conn->error);
         }
@@ -57,7 +57,7 @@ class Requetes {
 
     // si le mail d'un developpeur existe retourne vrai
     public function testMailDeveloppeur($mail) {
-        $sql = "SELECT * FROM DEVELOPPEUR WHERE DEV_mail = '".$mail."';";
+        $sql = "SELECT * FROM developpeur WHERE DEV_mail = '".$mail."';";
         if (!$result = $this->conn->query($sql)) {
             printf("Message d'erreur: %s<br>\n", $this->conn->error);
         }
@@ -70,7 +70,7 @@ class Requetes {
 
     // si l'id d'un développeur existe retourne vrai
     public function testIDDeveloppeur($id_dev) {
-        $sql = "SELECT * FROM DEVELOPPEUR WHERE DEV_id = ".$id_dev.";";
+        $sql = "SELECT * FROM developpeur WHERE DEV_id = ".$id_dev.";";
         if (!$result = $this->conn->query($sql)) {
             printf("Message d'erreur: %s<br>\n", $this->conn->error);
         }
@@ -83,7 +83,7 @@ class Requetes {
 
     // retourne les données d'un développeur
     public function infosDeveloppeur($id_dev) {
-        $sql = "SELECT * FROM DEVELOPPEUR WHERE DEV_id = ".$id_dev.";";
+        $sql = "SELECT * FROM developpeur WHERE DEV_id = ".$id_dev.";";
         if (!$result = $this->conn->query($sql)) {
             printf("Message d'erreur: %s<br>\n", $this->conn->error);
         }
@@ -92,8 +92,8 @@ class Requetes {
 
     // retourne la liste des projets lié à un developpeur
     public function listeProjetsDeveloppeur($id_dev) {
-        $sql = "SELECT P.* FROM PROJET as P
-                INNER JOIN INTER_DEV_PROJET AS DV ON P.PRO_id = DV.PRO_id
+        $sql = "SELECT P.* FROM projet as P
+                INNER JOIN inter_dev_projet AS DV ON P.PRO_id = DV.PRO_id
                 WHERE DV.DEV_id = ".$id_dev."
                 ORDER BY P.PRO_date_creation ASC;";
         if (!$result = $this->conn->query($sql)) {
@@ -105,7 +105,7 @@ class Requetes {
     /* temporaire */
     // retourne la liste des projets ou le developpeur est ProductOwner
     public function listeProjetsDeveloppeurProductOwner($id_dev) {
-        $sql = "SELECT * FROM PROJET
+        $sql = "SELECT * FROM projet
                 WHERE DEV_idProductOwner = ".$id_dev."
                 ORDER BY PRO_date_creation ASC;";
         if (!$result = $this->conn->query($sql)) {
@@ -116,8 +116,8 @@ class Requetes {
 
     // retourne le nombre de projets lié à un developpeur
     public function nombreProjetsDeveloppeur($id_dev) {
-        $sql = "SELECT * FROM PROJET as P
-                INNER JOIN INTER_DEV_PROJET AS DV ON P.PRO_id = DV.PRO_id
+        $sql = "SELECT * FROM projet as P
+                INNER JOIN inter_dev_projet AS DV ON P.PRO_id = DV.PRO_id
                 WHERE DV.DEV_id = ".$id_dev.";";
         if (!$result = $this->conn->query($sql)) {
             printf("Message d'erreur: %s<br>\n", $this->conn->error);
@@ -127,7 +127,7 @@ class Requetes {
 
     // retourne la liste de tous les projets (parametres optionnels pour la pagination)
     public function listeProjets($id_premiere_ligne = 0, $nb_projets_par_pages = 2000) {
-        $sql = "SELECT * FROM PROJET
+        $sql = "SELECT * FROM projet
                 ORDER BY PRO_date_creation ASC
                 LIMIT ".$id_premiere_ligne.", ".$nb_projets_par_pages.";";
         if (!$result = $this->conn->query($sql)) {
@@ -138,7 +138,7 @@ class Requetes {
 
     // retourne le nombre de projets
     public function nombreProjets() {
-        $sql = "SELECT * FROM PROJET";
+        $sql = "SELECT * FROM projet";
         if (!$result = $this->conn->query($sql)) {
             printf("Message d'erreur: %s<br>\n", $this->conn->error);
         }
@@ -147,7 +147,7 @@ class Requetes {
 
     // retourne vrai si le developpeur est membre du projet
     public function estMembreProjet($id_projet, $id_dev) {
-        $sql = "SELECT * FROM INTER_DEV_PROJET
+        $sql = "SELECT * FROM inter_dev_projet
                 WHERE PRO_id = ".$id_projet." AND DEV_id = ".$id_dev.";";
         if (!$result = $this->conn->query($sql)) {
             printf("Message d'erreur: %s<br>\n", $this->conn->error);
@@ -161,7 +161,7 @@ class Requetes {
 
     // retourne les données d'un projet
     public function infosProjet($id_pro) {
-        $sql = "SELECT * FROM PROJET WHERE PRO_id = ".$id_pro.";";
+        $sql = "SELECT * FROM projet WHERE PRO_id = ".$id_pro.";";
         if (!$result = $this->conn->query($sql)) {
             printf("Message d'erreur: %s<br>\n", $this->conn->error);
         }
@@ -170,7 +170,7 @@ class Requetes {
 
     // retourne vrai si un projet existe
     public function testIDProjet($id_pro) {
-        $sql = "SELECT * FROM PROJET WHERE PRO_id = ".$id_pro.";";
+        $sql = "SELECT * FROM projet WHERE PRO_id = ".$id_pro.";";
         if (!$result = $this->conn->query($sql)) {
             printf("Message d'erreur: %s<br>\n", $this->conn->error);
         }
@@ -183,7 +183,7 @@ class Requetes {
 
     // retourne la liste des développeurs
     public function listeDeveloppeurs() {
-        $sql = "SELECT D.* FROM DEVELOPPEUR as D
+        $sql = "SELECT D.* FROM developpeur as D
                 ORDER BY D.DEV_pseudo ASC;";
         if (!$result = $this->conn->query($sql)) {
             printf("Message d'erreur: %s<br>\n", $this->conn->error);
@@ -193,8 +193,8 @@ class Requetes {
 
     // retourne la liste des développeurs d'un projet
     public function listeDeveloppeursProjet($id_pro) {
-        $sql = "SELECT D.* FROM DEVELOPPEUR as D
-                INNER JOIN INTER_DEV_PROJET AS IDP ON D.DEV_id = IDP.DEV_id
+        $sql = "SELECT D.* FROM developpeur as D
+                INNER JOIN inter_dev_projet AS IDP ON D.DEV_id = IDP.DEV_id
                 WHERE IDP.PRO_id = ".$id_pro."
                 ORDER BY D.DEV_pseudo ASC;";
         if (!$result = $this->conn->query($sql)) {
@@ -205,7 +205,7 @@ class Requetes {
 
     // retourne les infos d'un développeur si le pseudo et mot de passe sont exact
     public function testDeveloppeurConnexion($pseudo, $mdp) {
-        $sql = "SELECT * FROM DEVELOPPEUR
+        $sql = "SELECT * FROM developpeur
                 WHERE DEV_pseudo='".$pseudo."' AND DEV_mdp='".$mdp."';";
         if (!$result = $this->conn->query($sql)) {
             printf("Message d'erreur: %s<br>\n", $this->conn->error);
@@ -216,7 +216,7 @@ class Requetes {
     // retourne vrai si le développeur id_dev est le ScrumMaster
     // du projet id_pro
     public function estScrumMaster($id_dev, $id_pro) {
-        $sql = "SELECT * FROM PROJET
+        $sql = "SELECT * FROM projet
                 WHERE PRO_id=".$id_pro." AND DEV_idScrumMaster=".$id_dev.";";
         if (!$result = $this->conn->query($sql)) {
             printf("Message d'erreur: %s<br>\n", $this->conn->error);
@@ -228,7 +228,7 @@ class Requetes {
     }
 
     public function estProductOwner($id_dev, $id_pro) {
-      $sql = "SELECT * FROM PROJET
+      $sql = "SELECT * FROM projet
               WHERE PRO_id=".$id_pro." AND DEV_idProductOwner=".$id_dev.";";
       if (!$result = $this->conn->query($sql)) {
           printf("Message d'erreur: %s<br>\n", $this->conn->error);
