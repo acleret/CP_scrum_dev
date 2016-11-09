@@ -15,6 +15,7 @@ ALTER TABLE `us`
 TRUNCATE TABLE `projet`;
 TRUNCATE TABLE `developpeur`;
 TRUNCATE TABLE `inter_dev_projet`;
+TRUNCATE TABLE `sprint`;
 
 ALTER TABLE `inter_dev_projet`
   ADD CONSTRAINT `inter_dev_projet_ibfk_1` FOREIGN KEY (`DEV_id`) REFERENCES `developpeur` (`DEV_id`),
@@ -305,3 +306,16 @@ INSERT IGNORE INTO `inter_dev_projet` (`DEV_id`, `PRO_id`) VALUES
 (8, 1), (3, 50), (14, 23), (11, 41), (12, 75), (18, 55), (23, 5), (27, 39), (23, 75), (20, 74),
 (26, 24), (14, 19), (18, 79), (10, 38), (28, 96), (19, 39), (13, 88), (28, 44), (24, 104), (5, 34),
 (4, 37), (20, 61), (29, 105), (13, 109), (4, 43), (9, 32), (9, 81), (6, 92), (27, 24), (17, 31);
+
+
+INSERT INTO  `acleret`.`sprint` (
+`SPR_nom` ,
+`SPR_dateDebut` ,
+`SPR_duree` ,
+`PRO_id`
+)
+VALUES ('sprint1',  '2016-11-09',  '360:00:00',  '1'),
+('sprint1',  '2016-11-09',  '360:00:00',  '2'),
+('sprint2',  '2016-11-09',  '360:00:00',  '1'),
+('sprint3',  '2016-11-09',  '360:00:00',  '1'),
+('sprint2',  '2016-11-09',  '360:00:00',  '2');

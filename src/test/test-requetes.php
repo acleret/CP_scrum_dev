@@ -269,20 +269,19 @@ if ($test->estProductOwner($id_dev, $id_pro)) {
 
 // test listeSprints
 echo "// test listeSprints<br>";
-$id_pro = 1;
+$id_pro = 2;
 $result = $test->listeSprints($id_pro);
 while ($row = $result->fetch_assoc()) {
   echo $row["SPR_id"]." | ".$row["SPR_nom"]." | ".$row["SPR_dateDebut"]." | ".$row["SPR_duree"]." | ".$row["PRO_id"]."<br>";
 }
 echo "<br>";
 
-/*// test infosSprint
+// test infosSprint
 echo "// test infosSprint<br>";
-$id_spr = 2;
-$result = $test->infosProjet($id_spr);
+$id_spr = 5;
+$result = $test->infosSprint($id_spr);
 $row = $result->fetch_assoc();
-echo "bonjour";/*
-echo $result[1];//."SPR_id"]." | ".$row["SPR_nom"]." | ".$row["SPR_dateDebut"]." | ".$row["SPR_duree"]." | ".$row["PRO_id"]."<br>";
-echo "<br>";*/
+echo $row["SPR_id"]." | ".$row["SPR_nom"]." | ".$row["SPR_dateDebut"]." | ".$row["SPR_duree"]." | ".$row["PRO_id"]."<br>";
+echo "<br>";
 
 ?>

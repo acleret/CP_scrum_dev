@@ -112,7 +112,7 @@ if (!isset($_SESSION["session"])) {
 ?>
                 </div>
                 <div class="form-group">
-                  <div class="col-md-offset-0 col-md-8"><input class="form-control" type="text" name="url" maxlength="500" placeholder="URL image avatar"/></div>
+                  <div class="col-md-offset-0 col-md-8"><input class="form-control" type="url" name="url" maxlength="500" placeholder="URL image avatar"/></div>
                 </div>
                 <div class="form-group">
                   <div class="col-md-offset-0 col-md-8"><input class="btn btn-primary" type="submit" value="S'inscrire"></div>
