@@ -10,17 +10,11 @@
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
 --
 -- Base de données :  `cp_scrum`
 --
-CREATE DATABASE IF NOT EXISTS `cp_scrum` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `cp_scrum`;
+-- CREATE DATABASE IF NOT EXISTS `cp_scrum` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+-- USE `cp_scrum`;
 
 -- --------------------------------------------------------
 
@@ -74,9 +68,9 @@ CREATE TABLE `projet` (
 
 CREATE TABLE `sprint` (
   `SPR_id` int(11) NOT NULL,
-  `SPR_nom` varchar(255) NOT NULL,
+  `SPR_numero` varchar(255) NOT NULL,
   `SPR_dateDebut` date NOT NULL,
-  `SPR_duree` time NOT NULL,
+  `SPR_duree` int NOT NULL,
   `PRO_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -230,6 +224,3 @@ ALTER TABLE `tache`
 ALTER TABLE `us`
   ADD CONSTRAINT `us_ibfk_1` FOREIGN KEY (`SPR_id`) REFERENCES `sprint` (`SPR_id`);
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

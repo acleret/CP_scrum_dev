@@ -308,14 +308,16 @@ INSERT IGNORE INTO `inter_dev_projet` (`DEV_id`, `PRO_id`) VALUES
 (4, 37), (20, 61), (29, 105), (13, 109), (4, 43), (9, 32), (9, 81), (6, 92), (27, 24), (17, 31);
 
 
-INSERT INTO  `acleret`.`sprint` (
-`SPR_nom` ,
-`SPR_dateDebut` ,
-`SPR_duree` ,
-`PRO_id`
-)
-VALUES ('sprint1',  '2016-11-09',  '360:00:00',  '1'),
-('sprint1',  '2016-11-09',  '360:00:00',  '2'),
-('sprint2',  '2016-11-09',  '360:00:00',  '1'),
-('sprint3',  '2016-11-09',  '360:00:00',  '1'),
-('sprint2',  '2016-11-09',  '360:00:00',  '2');
+INSERT INTO  `acleret`.`sprint` (`SPR_numero` ,`SPR_dateDebut` ,`SPR_duree` ,`PRO_id`) VALUES
+('1',  '2016-11-09',  '7',  '1'),
+('1',  '2016-11-09',  '7',  '2'),
+('2',  '2016-11-09',  '7',  '1'),
+('3',  '2016-11-09',  '7',  '1'),
+('2',  '2016-11-09',  '7',  '2');
+
+INSERT INTO `acleret`.`us` (`US_id`, `US_nom`, `US_chiffrageAbstrait`, `US_priorite`, `US_dateDernierCommit`, `US_idDernierCommit`, `US_auteurDernierCommit`, `SPR_id`) VALUES
+(NULL, 'En tant que je souhaite', '5', '1', '', '', '', '1'),
+(NULL, 'En tant que je souhaite', '2', '2', '', '', '', '1'),
+(NULL, 'En tant que je souhaite', '1', '2', '', '', '', '1'),
+(NULL, 'En tant que je souhaite', '3', '3', '', '', '', '1'),
+(NULL, 'En tant que je souhaite', '2', '4', '', '', '', '1');
