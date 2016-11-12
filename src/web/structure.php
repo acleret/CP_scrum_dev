@@ -102,9 +102,6 @@ class Structure {
               <br>
 <?php
       }
-?>
-              <br>
-<?php
    } else {
 ?>
               <p>

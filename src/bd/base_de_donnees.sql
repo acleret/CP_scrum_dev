@@ -13,8 +13,8 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `cp_scrum`
 --
--- CREATE DATABASE IF NOT EXISTS `cp_scrum` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
--- USE `cp_scrum`;
+CREATE DATABASE IF NOT EXISTS `cp_scrum` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `cp_scrum`;
 
 -- --------------------------------------------------------
 
@@ -55,7 +55,7 @@ CREATE TABLE `projet` (
   `PRO_nom` varchar(255) NOT NULL,
   `PRO_client` varchar(255) NOT NULL,
   `PRO_description` text NOT NULL,
-  `PRO_date_creation` date DEFAULT NULL,
+  `PRO_date_creation` date NOT NULL,
   `DEV_idProductOwner` int(11) NOT NULL,
   `DEV_idScrumMaster` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -102,11 +102,12 @@ CREATE TABLE `us` (
   `US_id` int(11) NOT NULL,
   `US_nom` varchar(255) NOT NULL,
   `US_chiffrageAbstrait` int(11) NOT NULL,
-  `US_priorite` int(11) NOT NULL,
-  `US_dateDernierCommit` date NOT NULL,
-  `US_idDernierCommit` varchar(255) NOT NULL,
-  `US_auteurDernierCommit` varchar(255) NOT NULL,
-  `SPR_id` int(11) NOT NULL
+  `US_priorite` int(11) DEFAULT NULL,
+  `US_dateDernierCommit` date DEFAULT NULL,
+  `US_idDernierCommit` varchar(255) DEFAULT NULL,
+  `US_auteurDernierCommit` varchar(255) DEFAULT NULL,
+  `PRO_id` int(11) NOT NULL,
+  `SPR_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -156,7 +157,8 @@ ALTER TABLE `tache`
 --
 ALTER TABLE `us`
   ADD PRIMARY KEY (`US_id`),
-  ADD KEY `us_ibfk_1` (`SPR_id`);
+  ADD KEY `us_ibfk_1` (`PRO_id`),
+  ADD KEY `us_ibfk_2` (`SPR_id`);
 
 --
 -- AUTO_INCREMENT pour les tables exportées
@@ -222,5 +224,5 @@ ALTER TABLE `tache`
 -- Contraintes pour la table `us`
 --
 ALTER TABLE `us`
-  ADD CONSTRAINT `us_ibfk_1` FOREIGN KEY (`SPR_id`) REFERENCES `sprint` (`SPR_id`);
-
+  ADD CONSTRAINT `us_ibfk_1` FOREIGN KEY (`PRO_id`) REFERENCES `projet` (`PRO_id`),
+  ADD CONSTRAINT `us_ibfk_2` FOREIGN KEY (`SPR_id`) REFERENCES `sprint` (`SPR_id`);
