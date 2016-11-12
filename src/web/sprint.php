@@ -33,7 +33,7 @@ $row2 = $infos_spr->fetch_assoc();
 			        <th>Chiffrage abstrait</th>
 			        <th>Priorité</th>
 		  	        <th>Dernier commit</th>
-<?php if (isset($_SESSION["session"])) {?>
+<?php if (isset($_SESSION["session"]) && $db->estMembreProjet($row["PRO_id"], $_SESSION["id_co"])) {?>
 			        <th>Actions</th>
 <?php
     }
@@ -43,9 +43,7 @@ $row2 = $infos_spr->fetch_assoc();
                 <tbody>
 <?php
 $listeUS = $db->listeUserStorySprint($id_spr);
-$i=0;
-while ($i<2){
-    $row3 = $listeUS->fetch_assoc();
+while ($row3 = $listeUS->fetch_assoc()){
     $id_us = $row3["US_id"];
     $infos_us = $db->infosUserStory($id_us);
     $row3 = $infos_us->fetch_assoc();
@@ -56,20 +54,55 @@ while ($i<2){
                     <td><?php echo $row3["US_priorite"]; ?></td>
                     <td><?php echo $row3["US_dateDernierCommit"]; ?></td>
 <?php
-if (isset($_SESSION["session"])) {
+if (isset($_SESSION["session"]) && $db->estMembreProjet($row["PRO_id"], $_SESSION["id_co"])) {
 ?>
                     <td>
-<?php
-if ($db->estMembreProjet($row["PRO_id"], $_SESSION["id_co"])) {
-?>
                       <form style="display: inline;" action="../web/retirerUSSprint.php" method="post">
                         <input type="hidden" name="id_us" value="<?php echo $id_us; ?>"/>
                         <input class="btn btn-default" type="submit" value="Retirer"/>
                       </form>
+                    </td>
 <?php
 }
-}$i++;
+}
 ?>
+                  </tr>
+                </tbody>
+              </table>
+<?php
+if (isset($_SESSION["session"]) && $db->estMembreProjet($row["PRO_id"], $_SESSION["id_co"])) {
+?>
+              <hr>
+              <h3>User stories du Backlog restantes</h3>
+              <br>
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+			        <th>User story</th>
+			        <th>Chiffrage abstrait</th>
+			        <th>Priorité</th>
+		  	        <th>Dernier commit</th>
+			        <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+<?php
+$listeUS2 = $db->listeUserStoryOutOfSprint($id_spr, $id_pro);
+while ($row4 = $listeUS2->fetch_assoc()){
+    $id_us = $row4["US_id"];
+    $infos_us = $db->infosUserStory($id_us);
+    $row4 = $infos_us->fetch_assoc();
+?>            
+                  <tr>
+                    <td><?php echo $row4["US_nom"]; ?></td>
+                    <td><?php echo $row4["US_chiffrageAbstrait"]; ?></td>
+                    <td><?php echo $row4["US_priorite"]; ?></td>
+                    <td><?php echo $row4["US_dateDernierCommit"]; ?></td>
+                    <td>
+                      <form style="display: inline;" action="../web/ajouterUSSprint.php" method="post">
+                        <input type="hidden" name="id_us" value="<?php echo $id_us; ?>"/>
+                        <input class="btn btn-default" type="submit" value="Ajouter"/>
+                      </form>
                     </td>
                   </tr>
 <?php
@@ -78,23 +111,7 @@ if ($db->estMembreProjet($row["PRO_id"], $_SESSION["id_co"])) {
                 </tbody>
               </table>
             </div>
-          </article>
-          <aside>
-<?php
-if (isset($_SESSION["session"])) {
-?>
-            <div class="col-sm-2 sidenav">
-              <div class="well">
-                <form style="display: inline;" action="selectionUS.php" method="post">
-	              <input type="hidden" name="id_projet" value="<?php echo $id_pro; ?>"/>
-	              <input type="hidden" name="id_sprint" value="<?php echo $id_spr; ?>"/>
-	              <input type="hidden" name="nom_sprint" value="<?php echo $nom_spr; ?>"/>
-	              <input class="btn btn-primary" type="submit" value="Ajouter US"/>
-                </form>
-              </div>
-            </div>
 <?php
 }
 ?>
-          </aside>
 <?php $s->footer();?>

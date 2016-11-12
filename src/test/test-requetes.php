@@ -302,7 +302,7 @@ echo "<br>\n";
 
 // test listeUserStories
 echo "<b>// test listeUserStories</b><br>\n";
-$id_pro = 1;
+$id_pro = 4;
 $result = $test->listeUserStories($id_pro);
 while ($row = $result->fetch_assoc()) {
   echo $row["US_id"]." | ".$row["US_nom"]." | ".$row["US_chiffrageAbstrait"]." | ".$row["US_priorite"]." | ".$row["US_dateDernierCommit"]." | ".$row["US_idDernierCommit"]." | ".$row["US_auteurDernierCommit"]." |
@@ -316,6 +316,19 @@ echo "<b>// test listeUserStorySprint</b><br>";
 $id_spr = 1;
 $result = $test->listeUserStorySprint($id_spr);
 echo "US dans le sprint#".$id_spr."<br>";
+while ($row = $result->fetch_assoc()) {
+  echo $row["US_id"]." | ".$row["US_nom"]." | ".$row["US_chiffrageAbstrait"]." | ".$row["US_priorite"]." | ".$row["US_dateDernierCommit"]." | ".$row["US_idDernierCommit"]." | ".$row["US_auteurDernierCommit"]." |
+  ".$row["PRO_id"]." |
+  ".$row["SPR_id"]."<br>\n";
+}
+echo "<br>\n";
+
+// test listeUserStoryOutOfSprint
+echo "<b>// test listeUserStoryOutOfSprint</b><br>";
+$id_spr = 1;
+$id_pro = 1;
+$result = $test->listeUserStoryOutOfSprint($id_spr, $id_pro);
+echo "US dans du projet ".$id_pro." or du sprint#".$id_spr."<br>";
 while ($row = $result->fetch_assoc()) {
   echo $row["US_id"]." | ".$row["US_nom"]." | ".$row["US_chiffrageAbstrait"]." | ".$row["US_priorite"]." | ".$row["US_dateDernierCommit"]." | ".$row["US_idDernierCommit"]." | ".$row["US_auteurDernierCommit"]." |
   ".$row["PRO_id"]." |
@@ -355,24 +368,24 @@ if ($test->modifUserStoryTracabilite($id_us, "Now()", "commit_id", "developpeur 
 }
 echo "<br>\n";
 
-// test affecterUserStorySptrint
-echo "<b>// test affecterUserStorySptrint</b><br>\n";
+// test affecterUserStorySprint
+echo "<b>// test affecterUserStorySprint</b><br>\n";
 // expect "US affecté a u sprint"
 $id_us = $test->maxIDUserStory();
 $id_spr = 4;
-if ($test->affecterUserStorySptrint($id_us, $id_spr)) {
+if ($test->affecterUserStorySprint($id_us, $id_spr)) {
   echo "* US ".$id_us." affecté au sprint ".$id_spr."<br>\n";
 } else {
   echo "* Erreur dans la modification des données d'une US ".$id_us."<br>\n";
 }
 echo "<br>\n";
 
-// test retirerUserStorySptrint
-echo "<b>// test retirerUserStorySptrint</b><br>\n";
+// test retirerUserStorySprint
+echo "<b>// test retirerUserStorySprint</b><br>\n";
 // expect "US retiré du sprint"
 $id_us = $test->maxIDUserStory();
 $id_spr = 4;
-if ($test->retirerUserStorySptrint($id_us)) {
+if ($test->retirerUserStorySprint($id_us)) {
   echo "* US ".$id_us." retiré du sprint ".$id_spr."<br>\n";
 } else {
   echo "* Erreur dans la modification des données d'une US ".$id_us."<br>\n";
@@ -405,6 +418,8 @@ if ($test->testIDUserStory($id_us)) {
 }
 echo "<br>\n";
 
+
+
 /************************************************/
 /** Tests des fonctions concernant les sprints **/
 /************************************************/
@@ -416,7 +431,7 @@ echo "<br>\n";
 
 // test listeSprints
 echo "<b>// test listeSprints</b><br>\n";
-$id_pro = 2;
+$id_pro = 4;
 $result = $test->listeSprints($id_pro);
 while ($row = $result->fetch_assoc()) {
   echo $row["SPR_id"]." | ".$row["SPR_numero"]." | ".$row["SPR_dateDebut"]." | ".$row["SPR_duree"]." | ".$row["PRO_id"]."<br>\n";

@@ -16,9 +16,9 @@ $s->nav($db);
     <dl class="dl-horizontal">
       <dt>Durée des sprints</dt>
       <dd><?php $result = $db->listeSprints($id_pro);
-	$row = $result->fetch_assoc();
-	if ($row["SPR_duree"] == NULL) echo "-";
-	else echo $row["SPR_duree"]." jours";
+	$row2 = $result->fetch_assoc();
+	if ($row2["SPR_duree"] == NULL) echo "-";
+	else echo $row2["SPR_duree"]." jours";
 	?></dd>
     </dl>
     <table class="table table-bordered">
@@ -26,7 +26,8 @@ $s->nav($db);
 	<tr>
 	  <th>Numéro</th>
 	  <th>Début</th>
-	  <?php if (isset($_SESSION["session"])) {?>
+	  <?php 
+        if (isset($_SESSION["session"]) && $db->estMembreProjet($row["PRO_id"], $_SESSION["id_co"])) {?>
 	  <th>Actions</th>
 	  <?php
 	     }
@@ -36,55 +37,46 @@ $s->nav($db);
       <tbody>
 	<?php
 	   $result = $db->listeSprints($id_pro);
-	while ($row = $result->fetch_assoc()) {
+	while ($row3 = $result->fetch_assoc()) {
 	?>
 	<tr>
 	  <td>
 	    <form style="display: inline;" action="../web/sprint.php" method="post">
 	      <?php
-		 $id_spr = $row["SPR_id"];
+		 $id_spr = $row3["SPR_id"];
 		 $infos_spr = $db->infosSprint($id_spr);
-	      $row = $infos_spr->fetch_assoc();
-	      $nom_spr = "Sprint#".$row["SPR_numero"]; ?>
+	      $row3 = $infos_spr->fetch_assoc();
+	      $nom_spr = "Sprint#".$row3["SPR_numero"]; ?>
 	      <input type="hidden" name="id_sprint" value="<?php echo $id_spr;?>"/>
 	      <input class="url2" name="nom_sprint" type="submit" value="<?php echo $nom_spr;?>"/>
 	    </form>
 	  </td>
 	  <td>
-	    <?php echo $db->ordonnerDate($row["SPR_dateDebut"]); ?>
+	    <?php echo $db->ordonnerDate($row3["SPR_dateDebut"]); ?>
 	  </td>
-	  
-	  <?php
-	     if (isset($_SESSION["session"])) {
-	     ?>
-	  <td>
 	    <?php
-	       if ($db->estMembreProjet($row["PRO_id"], $_SESSION["id_co"])) {
+	       if (isset($_SESSION["session"]) && $db->estMembreProjet($row["PRO_id"], $_SESSION["id_co"])) {
 	    ?>
-	    <form style="display: inline;" action="../web/supperssionProjet.php" method="post">
-	      <input type="hidden" name="id_pro" value="<?php echo $row["PRO_id"]; ?>"/>
+   	  <td>
+	    <form style="display: inline;" action="../web/suppressionSprint.php" method="post">
 	      <input class="btn btn-default" type="submit" value="Supprimer"/>
 	    </form>
+	  </td>
 	    <?php
 	       }
 	       ?>
-	  </td>
-	  <?php
-	     }
-	     ?>
 	</tr>
 	<?php
 	   }
 	   ?>
       </tbody>
     </table>
-
   </div>
 </article>
 <aside>
   <?php
-     if (isset($_SESSION["session"])) {
-     ?>
+     if (isset($_SESSION["session"]) && $db->estMembreProjet($row["PRO_id"], $_SESSION["id_co"])) {
+  ?>
   <div class="col-sm-2 sidenav">
     <div class="well">
       <form style="display: inline;" action="formulaireSprint.php" method="post">

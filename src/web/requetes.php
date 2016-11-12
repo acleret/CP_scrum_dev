@@ -372,6 +372,24 @@ class Requetes {
         return $result;
     }
 
+    // retourne les US d'un sprint
+    public function listeUserStorySprint($id_spr) {
+        $sql = "SELECT * FROM us WHERE SPR_id = ".$id_spr." ORDER BY US_priorite;";
+         if (!$result = $this->conn->query($sql)) {
+            printf("Message d'erreur: %s<br>", $this->conn->error);
+        }
+        return $result;
+    }
+
+    // retourne les US du backlog qui ne sont pas dans le sprint
+    public function listeUserStoryOutOfSprint($id_spr, $id_pro) {
+        $sql = "SELECT * FROM us WHERE (SPR_id IS NULL && PRO_id = ".$id_pro.") ORDER BY US_priorite;";
+         if (!$result = $this->conn->query($sql)) {
+            printf("Message d'erreur: %s<br>", $this->conn->error);
+        }
+        return $result;
+    }
+    
     // ajout US
     public function ajoutUserStory($nom_us, $chiffrage, $priorite, $id_pro) {
         $sql = "INSERT INTO us (US_nom, US_chiffrageAbstrait, US_priorite, PRO_id)
@@ -407,7 +425,7 @@ class Requetes {
     }
 
     // affecter US à un sprint
-    public function affecterUserStorySptrint($id_us, $id_sprint) {
+    public function affecterUserStorySprint($id_us, $id_sprint) {
         $sql = "UPDATE us
         SET SPR_id = ".$id_sprint."
         WHERE US_id=".$id_us.";";
@@ -419,7 +437,7 @@ class Requetes {
     }
 
     // retirer US à un sprint
-    public function retirerUserStorySptrint($id_us) {
+    public function retirerUserStorySprint($id_us) {
         $sql = "UPDATE us
         SET SPR_id = NULL
         WHERE US_id=".$id_us.";";
@@ -524,25 +542,5 @@ class Requetes {
     public function ordonnerDate($date) {
         return $date[8].$date[9]."/".$date[5].$date[6]."/".$date[2].$date[3] ;
     }
-
-    // retourne les US d'un sprint
-    public function listeUserStorySprint($id_spr) {
-        $sql = "SELECT * FROM us WHERE SPR_id = ".$id_spr;
-         if (!$result = $this->conn->query($sql)) {
-            printf("Message d'erreur: %s<br>", $this->conn->error);
-        }
-        return $result;
-    }
-
-    /* public function retirerUSSprint($id_us) { */
-    /*     $sql = "SELECT * FROM us WHERE US_id = ".$id_us.";"; */
-    /*     if (!$res = $this->conn->query($sql)) { */
-    /*         printf("Message d'erreur: %s<br>", $this->conn->error); */
-    /*     } */
-    /*     return $res; */
-    /* } */
-
-    
-
 }
 ?>
