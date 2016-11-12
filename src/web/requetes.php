@@ -526,20 +526,12 @@ class Requetes {
     }
 
     // retourne les US d'un sprint
-    public function listeUSSprint($id_spr) {
+    public function listeUserStorySprint($id_spr) {
         $sql = "SELECT * FROM us WHERE SPR_id = ".$id_spr;
          if (!$result = $this->conn->query($sql)) {
             printf("Message d'erreur: %s<br>", $this->conn->error);
         }
         return $result;
-    }
-
-    public function infosUS($id_us) {
-        $sql = "SELECT * FROM us WHERE US_id = ".$id_us.";";
-        if (!$res = $this->conn->query($sql)) {
-            printf("Message d'erreur: %s<br>", $this->conn->error);
-        }
-        return $res;
     }
 
     /* public function retirerUSSprint($id_us) { */

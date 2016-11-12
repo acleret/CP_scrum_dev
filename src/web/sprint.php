@@ -42,12 +42,12 @@ $row2 = $infos_spr->fetch_assoc();
                 </thead>
                 <tbody>
 <?php
-$listeUS = $db->listeUSSprint($id_spr);
+$listeUS = $db->listeUserStorySprint($id_spr);
 $i=0;
 while ($i<2){
     $row3 = $listeUS->fetch_assoc();
     $id_us = $row3["US_id"];
-    $infos_us = $db->infosUS($id_us);
+    $infos_us = $db->infosUserStory($id_us);
     $row3 = $infos_us->fetch_assoc();
 ?>            
                   <tr>
