@@ -39,7 +39,7 @@ class Structure {
 ?>
               <li><a href="../web/projet.php">Projet</a></li>
               <li><a href="../web/backlog.php">Backlog</a></li>
-              <li><a href="../web/sprints.php">Sprints</a></li>
+              <li><a href="../web/listeSprints.php">Sprints</a></li>
               <li><a href="../web/tracabilite.php">Traçabilité</a></li>
 <?php
     }

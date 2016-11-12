@@ -419,4 +419,32 @@ $row = $result->fetch_assoc();
 echo $row["SPR_id"]." | ".$row["SPR_numero"]." | ".$row["SPR_dateDebut"]." | ".$row["SPR_duree"]." | ".$row["PRO_id"]."<br>\n";
 echo "<br>\n";
 
+// test ordonnerDate
+echo "<b>// test ordonnerDate</b><br>";
+$id_pro = 1;
+$id_spr = 1;
+$result = $test->infosSprint($id_spr);
+$date = $row["SPR_dateDebut"];
+echo $date." -> ";
+echo $test->ordonnerDate($date);
+echo "<br>\n<br>\n";
+
+// test listeUSSprint
+echo "<b>// test listeUSSprint</b><br>";
+$id_spr = 1;
+$result = $test->listeUSSprint($id_spr);
+while ($row = $result->fetch_assoc()) {
+    echo $row["US_id"]." | ".$row["US_nom"]." | ".$row["US_chiffrageAbstrait"]." | ".$row["US_priorite"]." | ".$row["US_dateDernierCommit"]." | ".$row["US_idDernierCommit"]." | ".$row["US_auteurDernierCommit"]."<br>\n";
+}
+echo "<br>\n";
+
+// test infosUS
+echo "<b>// test infosUS</b><br>";
+$id_us = 4;
+$result = $test->infosUS($id_us);
+$row = $result->fetch_assoc();
+echo $row["US_id"]." | ".$row["US_nom"]." | ".$row["US_chiffrageAbstrait"]." | ".$row["US_priorite"]." | ".$row["US_dateDernierCommit"]." | ".$row["US_idDernierCommit"]." | ".$row["US_auteurDernierCommit"]."<br>\n";
+echo "<br>\n";
+
+
 ?>

@@ -510,5 +510,47 @@ class Requetes {
         return false;
     }
 
+   // retourne vrai après avoir ajouté un sprint, sinon faux
+    public function ajoutSprint($nom, $dateDebut, $duree, $id_pro) {
+        $sql = "INSERT INTO sprint (SPR_nom, SPR_dateDebut, SPR_duree, PRO_id)
+                VALUES ('".$nom."', '".$dateDebut."', '".$duree."', '".$id_pro."', Now());";
+        if (!$result = $this->conn->query($sql)) {
+            printf("Message d'erreur: %s<br>", $this->conn->error);
+        }
+        return true;
+    }
+
+    // ordonne une date : 2000-10-01 -> 01/10/00
+    public function ordonnerDate($date) {
+        return $date[8].$date[9]."/".$date[5].$date[6]."/".$date[2].$date[3] ;
+    }
+
+    // retourne les US d'un sprint
+    public function listeUSSprint($id_spr) {
+        $sql = "SELECT * FROM us WHERE SPR_id = ".$id_spr;
+         if (!$result = $this->conn->query($sql)) {
+            printf("Message d'erreur: %s<br>", $this->conn->error);
+        }
+        return $result;
+    }
+
+    public function infosUS($id_us) {
+        $sql = "SELECT * FROM us WHERE US_id = ".$id_us.";";
+        if (!$res = $this->conn->query($sql)) {
+            printf("Message d'erreur: %s<br>", $this->conn->error);
+        }
+        return $res;
+    }
+
+    /* public function retirerUSSprint($id_us) { */
+    /*     $sql = "SELECT * FROM us WHERE US_id = ".$id_us.";"; */
+    /*     if (!$res = $this->conn->query($sql)) { */
+    /*         printf("Message d'erreur: %s<br>", $this->conn->error); */
+    /*     } */
+    /*     return $res; */
+    /* } */
+
+    
+
 }
 ?>
