@@ -65,7 +65,7 @@ while ($row = $result->fetch_assoc()) {
                         <input type="hidden" name="id_atelier" value="<?php echo $row["PRO_id"]; ?>"/>
                         <input class="btn btn-default" type="submit" value="Modifier"/>
                       </form>
-                      <form style="display: inline;" action="../web/supperssionProjet.php" method="post">
+                      <form style="display: inline;" action="../web/suppressionProjet.php" method="post">
                         <input type="hidden" name="id_atelier" value="<?php echo $row["PRO_id"]; ?>"/>
                         <input type="hidden" name="page_actuelle" value="<?php echo $page_actuelle; ?>"/>
                         <input class="btn btn-default" type="submit" value="Supprimer"/>
@@ -113,12 +113,12 @@ if ($nombre_de_pages > 1) {
 if (isset($_SESSION["session"])) {
 ?>
             <div class="col-sm-2 sidenav">
-              <div class="well">
+            <!--<div class="well">-->
                 <form style="display: inline;" action="formulaireProjet.php" method="post">
-                    <input type="hidden" name="action_page" value="ajouter"/>
+                    <input type="hidden" name="action" value="ajouter"/>
                     <input class="btn btn-primary" type="submit" value="Ajouter Projet"/>
                 </form>
-              </div>
+              <!--</div>-->
             </div>
 <?php
 }
