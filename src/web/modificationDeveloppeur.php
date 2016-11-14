@@ -1,7 +1,7 @@
 <?php
 require_once("../web/config.php");
 if (isset($_SESSION["session"])) {
-  if (isset($_POST["prenom"]) && isset($_POST["nom"]) && isset($_POST["pseudo"]) && isset($_POST["url"])) {
+  if (isset($_POST["prenom"]) && isset($_POST["nom"]) /*&& isset($_POST["pseudo"])*/ && isset($_POST["url"])) {
     if (empty($_POST["prenom"])) {
       $prenom = $_SESSION["prenom_co"];
     } else {

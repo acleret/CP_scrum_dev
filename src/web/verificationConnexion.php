@@ -16,6 +16,8 @@ if($result->num_rows == 1) {
   $_SESSION["image_co"] = $donnees["DEV_urlAvatar"];
   $_SESSION["nom_co"] = $donnees["DEV_nom"];
   $_SESSION["prenom_co"] = $donnees["DEV_prenom"];
+	$_SESSION["mdp_co"] = $donnees["DEV_mdp"];
+	
   header("Location: ../web/index.php");
   exit();
 } else {

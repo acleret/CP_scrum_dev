@@ -1,7 +1,7 @@
 <?php
 class Requetes {
 
-    private $conn;
+  private $conn;
 
 	/******************************************************/
 	/** Fonctions pour la connexion à la Base de Données **/
@@ -95,14 +95,54 @@ class Requetes {
   	// retourne vrai quand c'est exécuté
     public function modifDeveloppeur($id, $prenom, $nom, $pseudo, $url_avatar) {
         $sql = "UPDATE developpeur
-				SET `DEV_prenom`='".$prenom."',`DEV_nom`='".$nom."',`DEV_pseudo`='".$pseudo."', `DEV_urlAvatar`='".$url_avatar."'
-				WHERE DEV_id=".$id.";";
+								SET DEV_prenom='".$prenom."',DEV_nom='".$nom."',DEV_pseudo='".$pseudo."', DEV_urlAvatar='".$url_avatar."'
+								WHERE DEV_id=".$id.";";
         if (!$result = $this->conn->query($sql)) {
             printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
             return NULL;
         }
         return true;
     }
+
+		// retourne vrai si le mot de passe de l'id a bien été mis à jour
+	  public function modifDeveloppeurMDP($id, $nouveauMotDePasse) {
+				$sql="UPDATE developpeur 
+							SET DEV_mdp='$nouveauMotDePasse' 
+							WHERE DEV_id='$id'";
+        if (!$result = $this->conn->query($sql)) {
+            printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
+            return NULL;
+        }
+        return true;
+		}
+	
+		// retourne vrai si le compte du développeur connecté,
+		// à l'identifiant $id_dev, est bien supprimé de la BDD
+		public function supprDeveloppeur($id_dev) {
+				$sql1="DELETE FROM developpeur 
+							WHERE DEV_id='$id_dev'";
+				$sql2="DELETE FROM inter_dev_projet 
+							WHERE DEV_id='$id_dev'";
+				$sql3="DELETE FROM projet 
+							WHERE DEV_idProductOwner='$id_dev'";
+				/* TODO : Que faire quand il est le ScrumMaster */
+				/* TODO : Que faire quand il est le responsable d'une tâche */
+        if (!$result = $this->conn->query($sql1)) {
+            printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
+            return NULL;
+        } else {
+						if (!$result = $this->conn->query($sql2)) {
+								printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
+								return NULL;
+						} else {
+								if (!$result = $this->conn->query($sql3)) {
+										printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
+										return NULL;	
+								}
+						}
+						return true;
+				}
+		}
 
     // retourne vrai si le développeur est membre du projet
     public function estMembreProjet($id_projet, $id_dev) {
@@ -260,7 +300,7 @@ class Requetes {
     }
 
     // ajoute un projet dans la BD et retourne vrai si il est ajouté
-	// sa date de création est celle du jour où il est enregistré
+		// sa date de création est celle du jour où il est enregistré
     public function ajoutNouveauProjet($nom, $client, $description, $idPO, $idSM){
         $sql = "INSERT INTO projet (PRO_nom, PRO_client, PRO_description, PRO_date_creation, DEV_idProductOwner, DEV_idScrumMaster)
                 VALUES ('".$nom."', '".$client."', '".$description."', Now(), '".$idPO."', '".$idSM."');";
@@ -271,7 +311,7 @@ class Requetes {
         return true;
     }
 
-	// modifie les données du projet et retourne vrai quand c'est fait
+		// modifie les données du projet et retourne vrai quand c'est fait
     public function modifProjet($id_pro, $nom, $client, $description, $idPO, $idSM){
         $sql = "UPDATE projet
                 SET PRO_nom='".$nom."', PRO_client='".$client."', PRO_description='".$description."', DEV_idProductOwner='".$idPO."', DEV_idScrumMaster='".$idSM."'
@@ -283,29 +323,32 @@ class Requetes {
         return true;
     }
 
-	// retire de la BD tous les liens avec le projet en paramètre puis lui-même
-	// retourne vrai une fois exécuté
+		// retire de la BD tous les liens avec le projet en paramètre puis lui-même
+		// retourne vrai une fois exécuté
     public function suppressionProjet($id_pro){
-		$sql_InterDevProjet = "DELETE FROM inter_dev_projet WHERE PRO_id=".$id_pro.";";
-		$sql_Sprint = "DELETE FROM sprint WHERE PRO_id=".$id_pro.";";
-	    $sql_Projet = "DELETE FROM projet WHERE PRO_id=".$id_pro.";";
+				$sql_InterDevProjet = "DELETE FROM inter_dev_projet 
+															WHERE PRO_id=".$id_pro.";";
+				$sql_Sprint = "DELETE FROM sprint 
+											WHERE PRO_id=".$id_pro.";";
+				$sql_Projet = "DELETE FROM projet 
+											WHERE PRO_id=".$id_pro.";";
         if (!$result = $this->conn->query($sql_InterDevProjet)) {
-			printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
-			return NULL;
-		} else {
-			if (!$result = $this->conn->query($sql_Sprint)) {
-				printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
-				return NULL;
-			} else {
-				if (!$result = $this->conn->query($sql_Projet)) {
 					printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
 					return NULL;
 				} else {
-					return true;
-				}
-			}
+					if (!$result = $this->conn->query($sql_Sprint)) {
+					printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
+					return NULL;
+					} else {
+						if (!$result = $this->conn->query($sql_Projet)) {
+							printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
+							return NULL;
+						} else {
+							return true;
+						}
+					}
         }
-	}
+		}
 
     // retourne la liste des développeurs du projet $id_pro
     public function listeDeveloppeursProjet($id_pro) {

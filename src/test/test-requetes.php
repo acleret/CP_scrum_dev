@@ -58,6 +58,26 @@ if ($test->ajoutNouveauDeveloppeur('ptest2', 'ntest2', 'pstest2', 'mdptest2', 'm
   echo "* Erreur pseudo ou mail déjà pris<br>\n<br>\n";
 }
 
+$nbDevs = $test->listeDeveloppeurs()->num_rows; /* id du developpeur 'ptest2' */
+
+// test modifDeveloppeurMDP
+echo "<b>// test modifDeveloppeurMDP</b><br>\n";
+//expect "Le développeur ptest2 a un nouveau de passe !"
+if ($test->modifDeveloppeurMDP($nbDevs, "nmpdtest2")) {
+  echo "* Le développeur ptest2 a un nouveau de passe !<br>\n<br>\n";
+} else {
+  echo "* Erreur le développeur ptest2 a toujours son ancien mot de passe.<br>\n<br>\n";
+}
+
+// test supprDeveloppeur
+echo "<b>// test supprDeveloppeur</b><br>\n";
+//expect "Le compte du développeur ptest2 a été supprimé de la base !"
+if ($test->supprDeveloppeur($nbDevs)) {
+  echo "* Le compte du développeur ptest2 a été supprimé de la base !<br>\n<br>\n";
+} else {
+  echo "* Erreur le compte du développeur ptest2 existe toujours.<br>\n<br>\n";
+}
+
 // test testPseudoDeveloppeur
 echo "<b>// test testPseudoDeveloppeur</b><br>\n";
 $pseudo = "pstest";
@@ -278,11 +298,11 @@ if ($test->testIDProjet(1)) {
 echo "<br>\n";
 
 /******************************************************/
-/** Tests des fonctions concernant les User Strories **/
+/** Tests des fonctions concernant les User Stories **/
 /******************************************************/
 
 echo ("<b>/**********************************************/<br>
-/** Tests des fonctions concernant les User Strories **/<br>
+/** Tests des fonctions concernant les User Stories **/<br>
 /*********************************************/</b><br>\n");
 echo "<br>\n";
 
