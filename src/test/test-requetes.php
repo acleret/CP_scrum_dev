@@ -505,7 +505,7 @@ $row = $result->fetch_assoc();
 echo "avant modif : <br>";
 echo $row["SPR_id"]." | ".$row["SPR_numero"]." | ".$row["SPR_dateDebut"]." | ".$row["SPR_duree"]." | ".$row["PRO_id"]."<br>\n";
 echo "après modif : <br>";
-$test->modifSprint($id_spr, "22", "2222-22-22", 22);
+$test->modifSprint($id_spr, "22", "2222-12-22", 22);
 $result2 = $test->infosSprint($id_spr);
 $row2 = $result2->fetch_assoc();
 echo $row2["SPR_id"]." | ".$row2["SPR_numero"]." | ".$row2["SPR_dateDebut"]." | ".$row2["SPR_duree"]." | ".$row2["PRO_id"]."<br>\n";

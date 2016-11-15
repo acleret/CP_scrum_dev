@@ -85,7 +85,7 @@ while ($row = $result->fetch_assoc()) {
               </table>
               <div class="container">
                 <ul class="pagination">
-									<li><a href="javascript:pagePrecedente(<?php echo $page_actuelle; ?>);">&laquo;</a></li>
+                  <li><a href="javascript:pagePrecedente(<?php echo $page_actuelle; ?>);">&laquo;</a></li>
 <?php
 // affichage de la liste des pages
 if ($nombre_de_pages > 1) {
@@ -102,10 +102,9 @@ if ($nombre_de_pages > 1) {
     // echo ' <a href="listeProjets.php?page='.$i.'\">'.$i.'</a> ';
     }
   }
-  echo "\n";
 }
 ?>
-									<li><a href="javascript:pageSuivante(<?php echo $page_actuelle; ?>, <?php echo $nombre_de_pages; ?>);">&raquo;</a></li>
+                  <li><a href="javascript:pageSuivante(<?php echo $page_actuelle; ?>, <?php echo $nombre_de_pages; ?>);">&raquo;</a></li>
                 </ul>
               </div>
             </div>
@@ -115,13 +114,13 @@ if ($nombre_de_pages > 1) {
 if (isset($_SESSION["session"])) {
 ?>
             <div class="col-sm-2 sidenav">
-                <form style="display: inline;" action="formulaireProjet.php" method="post">
-                    <input type="hidden" name="action" value="ajouter"/>
-                    <input class="btn btn-primary" type="submit" value="Ajouter Projet"/>
-                </form>
+              <form style="display: inline;" action="formulaireProjet.php" method="post">
+                <input type="hidden" name="action" value="ajouter"/>
+                <input class="btn btn-primary" type="submit" value="Ajouter Projet"/>
+              </form>
             </div>
 <?php
 }
 ?>
           </aside>
-<?php $s->footer();?>
+<?php $s->footer(); ?>

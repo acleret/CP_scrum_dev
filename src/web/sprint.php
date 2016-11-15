@@ -9,22 +9,28 @@ if (isset($_POST["inser_us"])){
     $retirer_us_sprint = $db->affecterUserStorySprint($_POST["inser_us"], $_POST["id_sprint"]);
 }
 
-$id_pro = $_COOKIE["id_projet"];
-$infos = $db->infosProjet($id_pro);
-$row = $infos->fetch_assoc();
+if (isset($_COOKIE["id_projet"])) {
+  $id_pro = $_COOKIE["id_projet"];
+  $infos = $db->infosProjet($id_pro);
+  $row = $infos->fetch_assoc();
 
-$id_spr = $_POST["id_sprint"];
-$infos_spr = $db->infosSprint($id_spr);
-$nom_spr = $_POST["nom_sprint"];
+  if (!isset($_POST["id_sprint"]) || !isset($_POST["nom_sprint"])) {
+    header("Location: ../web/index.php");
+    exit();
+  }
 
-$s->head("Sprints");
-$s->header($db);
-$s->nav($db);
+  $id_spr = $_POST["id_sprint"];
+  $infos_spr = $db->infosSprint($id_spr);
+  $nom_spr = $_POST["nom_sprint"];
+
+  $s->head("Sprints");
+  $s->header($db);
+  $s->nav($db);
 ?>
           <article>
             <div class="col-sm-8 text-left">
               <h2><?php echo $row["PRO_nom"]." - ".$nom_spr;?></h2>
-              <hr>   
+              <hr>
               <div class="col-sm-8 text-left">
               <dl class="dl-horizontal">
 <?php
@@ -36,18 +42,18 @@ $row2 = $infos_spr->fetch_assoc();
                 <dd><?php echo $row2["SPR_duree"]." jours"; ?></dd>
               </dl></div>
               <div class="col-sm-4 text-right">
-			    <form style="display: inline;" action="../web/kanban.php" method="post">
-			      <input class="btn btn-primary" type="submit" value="Kanban"/>
-			    </form>
+                <form style="display: inline;" action="../web/kanban.php" method="post">
+                  <input class="btn btn-primary" type="submit" value="Kanban"/>
+                </form>
               </div>
             <table class="table table-bordered">
               <thead>
                 <tr>
-			      <th>User story</th>
-			      <th>Chiffrage abstrait</th>
-			      <th>Priorité</th>
+                  <th>User story</th>
+                  <th>Chiffrage abstrait</th>
+                  <th>Priorité</th>
 <?php if (isset($_SESSION["session"]) && $db->estMembreProjet($row["PRO_id"], $_SESSION["id_co"])) {?>
-			      <th>Actions</th>
+                  <th>Actions</th>
 <?php
     }
 ?>
@@ -71,13 +77,13 @@ if (isset($_SESSION["session"]) && $db->estMembreProjet($row["PRO_id"], $_SESSIO
                   <td>
                     <form style="display: inline;" action="" method="post">
                       <input type="hidden" name="ret_us" value="<?php echo $id_us; ?>"/>
-    			      <input type="hidden" name="id_sprint" value="<?php echo $id_spr;?>"/>
-    			      <input type="hidden" name="nom_sprint" value="<?php echo $_POST["nom_sprint"];?>"/>
+                      <input type="hidden" name="id_sprint" value="<?php echo $id_spr;?>"/>
+                      <input type="hidden" name="nom_sprint" value="<?php echo $_POST["nom_sprint"];?>"/>
                       <input class="btn btn-default" type="submit" value="Retirer"/>
                     </form>
                   </td>
 <?php } ?>
-                </tr>  
+                </tr>
 <?php } ?>
               </tbody>
             </table>
@@ -90,19 +96,19 @@ if (isset($_SESSION["session"]) && $db->estMembreProjet($row["PRO_id"], $_SESSIO
             <table class="table table-bordered">
               <thead>
                 <tr>
-			      <th>User story</th>
-			      <th>Chiffrage abstrait</th>
-			      <th>Priorité</th>
-			      <th>Actions</th>
+                  <th>User story</th>
+                  <th>Chiffrage abstrait</th>
+                  <th>Priorité</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
 <?php
 $listeUS2 = $db->listeUserStoryOutOfSprint($id_spr, $id_pro);
-while ($row4 = $listeUS2->fetch_assoc()){
-    $id_us = $row4["US_id"];
-    $infos_us = $db->infosUserStory($id_us);
-    $row4 = $infos_us->fetch_assoc();
+    while ($row4 = $listeUS2->fetch_assoc()) {
+      $id_us = $row4["US_id"];
+      $infos_us = $db->infosUserStory($id_us);
+      $row4 = $infos_us->fetch_assoc();
 ?>
                 <tr>
                   <td><?php echo $row4["US_nom"]; ?></td>
@@ -118,23 +124,29 @@ while ($row4 = $listeUS2->fetch_assoc()){
                   </td>
                 </tr>
 <?php
-}
+    }
 ?>
               </tbody>
             </table>
           </div>
-		  <aside>
-		    <div class="col-sm-2 sidenav">
-			  <form  action="../web/modificationSprint.php" method="post">
-				<input class="btn btn-primary" type="submit" value="Modifier"/>
-			  </form>
+          <aside>
+            <div class="col-sm-2 sidenav">
+              <form  action="../web/modificationSprint.php" method="post">
+                <input class="btn btn-primary" type="submit" value="Modifier"/>
+              </form>
               <br>
-			  <form  action="../web/kanban.php" method="post">
-			    <input class="btn btn-danger" type="submit" value="Supprimer"/>
-			  </form>
-			</div>
-		  </aside>
+              <form  action="../web/kanban.php" method="post">
+                <input class="btn btn-danger" type="submit" value="Supprimer"/>
+              </form>
+            </div>
+          </aside>
 <?php
+  }
+?>
+<?php
+  $s->footer();
+} else {
+  header("Location: ../web/index.php");
+  exit();
 }
 ?>
-<?php $s->footer();?>
