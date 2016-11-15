@@ -4,7 +4,7 @@ require_once("../web/config.php");
 if (!isset($_SESSION["session"])) {
   $s->suppressionCookies();
   $s->head("Inscription");
-  $s->header();
+  $s->header($db);
   $s->nav($db);
 
   $erreurDev = false;

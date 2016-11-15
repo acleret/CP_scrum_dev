@@ -13,7 +13,7 @@ if (isset($_COOKIE["id_projet"])) {
 		$infos = $db->infosProjet($id_pro);
 		$row = $infos->fetch_assoc();
 		$s->head("Page projet");
-		$s->header();
+		$s->header($db);
 		$s->nav($db);
 ?>
 		<article>

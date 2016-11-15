@@ -17,7 +17,7 @@ class Structure {
 <?php
   }
 
-  public function header() {
+  public function header($db) {
 ?>
   <body>
     <header>
@@ -39,7 +39,37 @@ class Structure {
 ?>
               <li><a href="../web/projet.php">Projet</a></li>
               <li><a href="../web/backlog.php">Backlog</a></li>
-              <li><a href="../web/listeSprints.php">Sprints</a></li>
+              <li class="dropdown">
+                <a class="dropdown-toggle" href="../web/listeSprints.php">Sprints
+                <span class="caret"></span></a>
+<?php
+$liste_sprints = $db->listeSprints($_COOKIE["id_projet"]);
+if ($liste_sprints->num_rows > 0) {
+?>
+                <ul class="dropdown-menu">
+<?php
+    while ($row_sprints = $liste_sprints->fetch_assoc()) {
+        $id_spr = $row_sprints["SPR_id"];
+        $infos_spr = $db->infosSprint($id_spr);
+        $row_sprints = $infos_spr->fetch_assoc();
+        $nom_spr = "Sprint#".$row_sprints["SPR_numero"];
+?>
+                  <li>
+                      <form id=<?php echo "form_spr".$id_spr;?> style="display: inline;" action="../web/sprint.php" method="post">
+                      <input type="hidden" name="id_sprint" value="<?php echo $id_spr; ?>"/>
+                      <input type="hidden" name="nom_sprint" value="<?php echo $nom_spr; ?>"/>
+                    </form>
+                    <a action="../web/sprint.php" onclick=<?php echo 'document.getElementById("form_spr'.$id_spr.'").submit()' ;?>><?php echo $nom_spr; ?></a>
+                  </li>
+
+<?php
+    }
+?>
+                </ul>
+<?php
+    }
+?>
+              </li>
               <li><a href="../web/tracabilite.php">Traçabilité</a></li>
 <?php
     }

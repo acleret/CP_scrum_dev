@@ -27,7 +27,7 @@ if (isset($_GET["profil"])) { // un visiteur peut voir n'importe quel profil
 
 	$s->head("Mon profil");
 }
-$s->header();
+$s->header($db);
 $s->nav($db);
 ?>
 

@@ -4,12 +4,12 @@ require_once("config.php");
 $id_pro = $_COOKIE["id_projet"];
 
 $s->head("Ajouter un Sprint");
-$s->header($db);
+$s->header("Ajouter un Sprint");
 $s->nav($db);
 ?>
           <article>
             <div class="col-sm-8 text-left">
-              <h2>Ajouter un Sprint</h2>
+              <h2>Modification de Sprint</h2>
               <hr>
               <form class="form-horizontal" action="../web/listeSprints.php" method="post">
                 <div class="form-group">

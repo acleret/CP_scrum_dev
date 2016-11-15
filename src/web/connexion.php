@@ -5,7 +5,7 @@ if (!isset($_SESSION["session"])) {
   $_SESSION["expire"] = time() + (30 * 60); // 30 mn plus tard
   $s->suppressionCookies();
   $s->head("Connexion");
-  $s->header();
+  $s->header($db);
   $s->nav($db);
 ?>
           <article>

@@ -13,7 +13,7 @@ if (isset($_SESSION["session"])) {
 			$s->head("Page projet - Édition");
 		}
 	
-		$s->header();
+		$s->header($db);
 		$s->nav($db);
 
 		$nom = "";

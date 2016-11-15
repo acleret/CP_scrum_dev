@@ -18,7 +18,7 @@ if (isset($_POST["suppression"])){
 
 
 $s->head($row['PRO_nom']);
-$s->header();
+$s->header($db);
 $s->nav($db);
 ?>
           <article>
@@ -70,10 +70,16 @@ while ($row_sprints = $liste_sprints->fetch_assoc()) {
 if (isset($_SESSION["session"]) && $db->estMembreProjet($row["PRO_id"], $_SESSION["id_co"])) {
 ?>
 		        <td>
+		          <form style="display: inline;" action="modificationSprint.php" method="post">
+		            <input class="btn btn-default" type="submit" value="Modifier"/>
+ 		          </form>
 		          <form style="display: inline;" action="" method="post">
     				<input type="hidden" name="suppression" value="<?php echo $id_spr;?>"/>
-		            <input class="btn btn-default" type="submit" value="Supprimer"/>
-		          </form>
+		            <input class="btn btn-danger" type="submit" value="Supprimer"/>
+ 		          </form>
+                   <form style="display: inline;" action="kanban.php" method="post">
+                    <input class="btn btn-primary" type="submit" value="Kanban"/>
+                  </form>
 		        </td>
 <?php
 }

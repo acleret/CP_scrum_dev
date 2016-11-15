@@ -3,7 +3,7 @@ require_once("../web/config.php");
 
 $s->suppressionCookies();
 $s->head("Liste des Projets");
-$s->header();
+$s->header($db);
 $s->nav($db);
 ?>
           <article>

@@ -4,7 +4,7 @@ require_once("config.php");
 if (isset($_SESSION["session"])) {
   $s->suppressionCookies();
   $s->head("Mon profil - Édition");
-  $s->header();
+  $s->header($db);
   $s->nav($db);
 
   $erreurDev = false;
