@@ -9,14 +9,10 @@ if (isset($_POST["suppr_projet"])) {
 }
 
 if (isset($_COOKIE["id_projet"])) {
-	$id_pro = $_COOKIE["id_projet"];
-	if (!$db->testIDProjet($id_pro)) {
-		header("Location: index.php");
-		exit();
-	} else {
+		$id_pro = $_COOKIE["id_projet"];
 		$infos = $db->infosProjet($id_pro);
 		$row = $infos->fetch_assoc();
-		$s->head("Liste des Projets");
+		$s->head("Page projet");
 		$s->header();
 		$s->nav($db);
 ?>
@@ -30,10 +26,10 @@ if (isset($_COOKIE["id_projet"])) {
 					<dd><?php echo $row["PRO_client"];?></dd>
 					<dt>Product owner</dt>
 					<dd><?php
-									$id_PO = $row["DEV_idProductOwner"];
-									$infos_PO = $db->infosDeveloppeur($id_PO);
-									$row_PO = $infos_PO->fetch_assoc();
-									echo "<a href=\"profil.php?profil=".$row_PO["DEV_pseudo"]."\">".$row_PO["DEV_pseudo"]."</a>";
+						$id_PO = $row["DEV_idProductOwner"];
+						$infos_PO = $db->infosDeveloppeur($id_PO);
+						$row_PO = $infos_PO->fetch_assoc();
+						echo "<a href=\"profil.php?profil=".$row_PO["DEV_pseudo"]."\">".$row_PO["DEV_pseudo"]."</a>";
 						?></dd>
 					<dt>Scrum master</dt>		
 					<dd><?php
@@ -86,7 +82,7 @@ if (isset($_COOKIE["id_projet"])) {
 			}
 		}
 		$s->footer();
-	}
+	//}
 }	else {
 	$url = $_SERVER["REQUEST_URI"];
 	header("Location: ../web/index.php?url=".$url);

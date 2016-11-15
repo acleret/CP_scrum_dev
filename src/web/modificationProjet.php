@@ -15,8 +15,7 @@ if (isset($_SESSION["session"])) {
 	
 	if (isset($_GET["action"]) && $_GET['action']=="ajouter") {
 		$nbProjetsBDD = $db->nombreProjets();
-		//ATTENTION DESCRIPTION ! apostrophe
-		
+		//TODO ATTENTION  aux apostrophe dans DESCRIPTION
 		
 		if ($db->ajoutNouveauProjet($nom, $client, $description, $_SESSION['id_co'], $_SESSION['id_co'] /*$idPO, $idSM*/)) {
 			$expire = time() + 60 * 60 * 24; // 24 heures

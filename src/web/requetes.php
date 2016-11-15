@@ -375,7 +375,7 @@ class Requetes {
         return $result;
     }
 
-    // si l'id du projet $id_pro existe déjà retourne vrai
+    // retourne vrai si l'id du projet $id_pro existe déjà
     public function testIDProjet($id_pro) {
         $sql = "SELECT * FROM projet WHERE PRO_id = ".$id_pro.";";
         if (!$result = $this->conn->query($sql)) {

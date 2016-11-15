@@ -2,11 +2,11 @@
 require_once("config.php");
 
 if (isset($_SESSION["session"])) {
-  $s->suppressionCookies();
 
 	if (isset($_POST["action"])){
-
+	
 		if ($_POST["action"] == "ajouter"){
+			$s->suppressionCookies();
 		  $s->head("Page projet - Création");
 		}
 		else if ($_POST["action"] == "éditer"){
@@ -36,17 +36,20 @@ if (isset($_SESSION["session"])) {
 		</script>
 		<article>
 			<div class="col-sm-8 text-left">
-				<?php if ($_POST["action"] == "ajouter") { ?>
-					<h2>Nouveau projet</h2>
-				<?php } else { ?>
-					<h2>Édition du projet '<?php echo $nom; ?>'</h2>
-				<?php } ?>
+				<h2>
+<?php 	if ($_POST["action"] == "ajouter") { ?>
+					Nouveau projet
+<?php 	} else { ?>
+					Édition du projet '<?php echo $nom; ?>'
+<?php 	} ?>
+				</h2>
 				<hr>
-				<?php if ($_POST["action"] == "ajouter") { ?>
+				
+<?php 	if ($_POST["action"] == "ajouter") { ?>
 				<form class="form-horizontal" action="modificationProjet.php?action=ajouter" method="post">
-				<?php } else { ?>
+<?php   } else { ?>
 				<form class="form-horizontal" action="modificationProjet.php?action=éditer" method="post">
-				<?php } ?>
+<?php 	} ?>
 				<!--onsubmit="VerifFormulaireProjet()"-->
 					<div class="form-group">
 						<div class="col-md-offset-0 col-md-8">
