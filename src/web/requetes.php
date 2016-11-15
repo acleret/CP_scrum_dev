@@ -561,7 +561,7 @@ class Requetes {
     public function listeSprints($id_pro) {
         $sql = "SELECT * FROM sprint
                 WHERE PRO_id = ".$id_pro."
-                ORDER BY SPR_dateDebut ASC;";
+                ORDER BY SPR_numero ASC;";
         if (!$result = $this->conn->query($sql)) {
             printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
             return NULL;
@@ -584,15 +584,42 @@ class Requetes {
     }
 
    // retourne vrai après avoir ajouté un sprint, sinon faux
-    public function ajoutSprint($nom, $dateDebut, $duree, $id_pro) {
-        $sql = "INSERT INTO sprint (SPR_nom, SPR_dateDebut, SPR_duree, PRO_id)
-                VALUES ('".$nom."', '".$dateDebut."', '".$duree."', '".$id_pro."', Now());";
+    public function ajoutSprint($numero, $dateDebut, $duree, $id_pro) {
+        $sql = "INSERT INTO sprint (SPR_numero, SPR_dateDebut, SPR_duree, PRO_id)
+                VALUES ('".$numero."', '".$dateDebut."', '".$duree."', '".$id_pro."');";
         if (!$result = $this->conn->query($sql)) {
             printf("Message d'erreur: %s<br>", $this->conn->error);
+            return false;
         }
         return true;
     }
 
+   // retourne vrai après avoir retiré un sprint, sinon faux
+    public function supprimerSprint($id_spr) {
+        $sql_ret_us = "UPDATE us SET SPR_id = NULL WHERE SPR_id = ".$id_spr.";";
+        $sql_ret_spr = "DELETE FROM sprint WHERE SPR_id = ".$id_spr.";";
+        if (!$result = $this->conn->query($sql_ret_us)) {
+            printf("Message d'erreur: %s<br>", $this->conn->error);
+            return false;
+        } else if (!$result = $this->conn->query($sql_ret_spr)) {
+            printf("Message d'erreur: %s<br>", $this->conn->error);
+            return false;
+        }
+        return true;
+    }
+    
+    // modifie les données du projet et retourne vrai quand c'est fait
+    public function modifSprint($id_spr, $num, $date, $duree){
+        $sql = "UPDATE sprint
+                SET SPR_numero='".$num."', SPR_dateDebut='".$date."', SPR_duree='".$duree."'
+                WHERE SPR_id=".$id_spr.";";
+        if (!$result = $this->conn->query($sql)) {
+            printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
+            return false;
+       }
+        return true;
+    }
+    
     // ordonne une date : 2000-10-01 -> 01/10/00
     public function ordonnerDate($date) {
         return $date[8].$date[9]."/".$date[5].$date[6]."/".$date[2].$date[3] ;

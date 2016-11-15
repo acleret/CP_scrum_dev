@@ -8,6 +8,15 @@ $row = $infos->fetch_assoc();
 $liste_sprints = $db->listeSprints($id_pro);
 $row_sprints = $liste_sprints->fetch_assoc();
 
+if (isset($_POST["numero"])) { 
+    $db->ajoutSprint($_POST["numero"], $_POST["dateDebut"], $_POST["duree"], $id_pro);
+}
+
+if (isset($_POST["suppression"])){
+    $db->supprimerSprint($_POST["suppression"]);
+}
+
+
 $s->head($row['PRO_nom']);
 $s->header();
 $s->nav($db);
@@ -61,7 +70,8 @@ while ($row_sprints = $liste_sprints->fetch_assoc()) {
 if (isset($_SESSION["session"]) && $db->estMembreProjet($row["PRO_id"], $_SESSION["id_co"])) {
 ?>
 		        <td>
-		          <form style="display: inline;" action="../web/suppressionSprint.php" method="post">
+		          <form style="display: inline;" action="" method="post">
+    				<input type="hidden" name="suppression" value="<?php echo $id_spr;?>"/>
 		            <input class="btn btn-default" type="submit" value="Supprimer"/>
 		          </form>
 		        </td>
@@ -81,12 +91,10 @@ if (isset($_SESSION["session"]) && $db->estMembreProjet($row["PRO_id"], $_SESSIO
 if (isset($_SESSION["session"]) && $db->estMembreProjet($row["PRO_id"], $_SESSION["id_co"])) {
 ?>
         <div class="col-sm-2 sidenav">
-          <div class="well">
-            <form style="display: inline;" action="formulaireSprint.php" method="post">
-              <input type="hidden" name="action_page" value="ajouter"/>
-              <input class="btn btn-primary" type="submit" value="Ajouter Sprint"/>
-            </form>
-          </div>
+          <form style="display: inline;" action="formulaireSprint.php" method="post">
+            <input type="hidden" name="action_page" value="ajouter"/>
+            <input class="btn btn-primary" type="submit" value="Ajouter Sprint"/>
+          </form>
         </div>
 <?php
 }

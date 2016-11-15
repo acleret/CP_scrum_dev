@@ -451,7 +451,7 @@ echo "<br>\n";
 
 // test listeSprints
 echo "<b>// test listeSprints</b><br>\n";
-$id_pro = 4;
+$id_pro = 1;
 $result = $test->listeSprints($id_pro);
 while ($row = $result->fetch_assoc()) {
   echo $row["SPR_id"]." | ".$row["SPR_numero"]." | ".$row["SPR_dateDebut"]." | ".$row["SPR_duree"]." | ".$row["PRO_id"]."<br>\n";
@@ -475,5 +475,40 @@ $date = $row["SPR_dateDebut"];
 echo $date." -> ";
 echo $test->ordonnerDate($date);
 echo "<br>\n<br>\n";
+
+// test ajoutSprint
+echo "<b>// test ajoutSprint</b><br>";
+// expect "sprint ajouté"
+if ($test->ajoutSprint("11", "2011-11-11", 11, 1)) {
+  echo "* Sprint ajouté<br>\n";
+} else {
+  echo "* Erreur dans la création d'une US<br>\n";
+}
+echo "<br>\n";
+
+// test supprimerSprint
+echo "<b>// test supprimerSprint</b><br>";
+// expect "sprint supprimé"
+$id_spr = 11;
+if ($test->supprimerSprint($id_spr)) {
+  echo "* Sprint supprimé<br>\n";
+} else {
+  echo "* Erreur dans la création d'une US<br>\n";
+}
+echo "<br>\n";
+
+// test ModifSprint
+echo "<b>// test modifSprint</b><br>\n";
+$id_spr = 4;
+$result = $test->infosSprint($id_spr);
+$row = $result->fetch_assoc();
+echo "avant modif : <br>";
+echo $row["SPR_id"]." | ".$row["SPR_numero"]." | ".$row["SPR_dateDebut"]." | ".$row["SPR_duree"]." | ".$row["PRO_id"]."<br>\n";
+echo "après modif : <br>";
+$test->modifSprint($id_spr, "22", "2222-22-22", 22);
+$result2 = $test->infosSprint($id_spr);
+$row2 = $result2->fetch_assoc();
+echo $row2["SPR_id"]." | ".$row2["SPR_numero"]." | ".$row2["SPR_dateDebut"]." | ".$row2["SPR_duree"]." | ".$row2["PRO_id"]."<br>\n";
+echo "<br>\n";
 
 ?>

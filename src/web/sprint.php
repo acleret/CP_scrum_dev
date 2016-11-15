@@ -72,11 +72,11 @@ if (isset($_SESSION["session"]) && $db->estMembreProjet($row["PRO_id"], $_SESSIO
                         <input class="btn btn-default" type="submit" value="Retirer"/>
                       </form>
                     </td>
+                  </tr>
 <?php
 }
 }
 ?>
-                  </tr>
                 </tbody>
               </table>
 <?php
@@ -123,6 +123,13 @@ while ($row4 = $listeUS2->fetch_assoc()){
                 </tbody>
               </table>
             </div>
+		    <aside>
+			  <div class="col-sm-2 sidenav">
+				<form style="display: inline;" action="../web/kanban.php" method="post">
+				  <input class="btn btn-primary" type="submit" value="Kanban"/>
+				</form>
+							</div>
+		</aside>
 <?php
 }
 ?>
