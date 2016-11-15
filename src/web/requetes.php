@@ -289,7 +289,7 @@ class Requetes {
     }
 
     // retourne la liste de tous les projets enregistrés sur le site web
-	// les paramètres sont optionnels car mis en place pour la pagination
+		// les paramètres sont optionnels car mis en place pour la pagination
     public function listeProjets($id_premiere_ligne = 0, $nb_projets_par_pages = 200000) {
         $sql = "SELECT * FROM projet
                 ORDER BY PRO_date_creation ASC
@@ -320,7 +320,7 @@ class Requetes {
             printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
             return NULL;
         }
-        return true;
+        return  $this->conn->insert_id;
     }
 
 		// modifie les données du projet et retourne vrai quand c'est fait
