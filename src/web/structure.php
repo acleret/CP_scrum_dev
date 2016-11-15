@@ -45,11 +45,13 @@ class Structure {
     }
 ?>
             </ul>
-            <!--
-            <ul class="nav navbar-nav navbar-right">
-              <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-            </ul>
-            -->
+						<form class="navbar-form navbar-right inline-form">
+							<div class="form-group">
+								<input type="search" class="input-sm form-control" placeholder="Recherche">
+								<button type="submit" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-eye-open"></span> Chercher</button>
+								</div>
+							</form>
+
           </div>
         </div>
       </nav>
@@ -120,10 +122,23 @@ class Structure {
 ?>
         </div>
       </div>
-    </section>
-    <footer class="container-fluid text-center">
-      <p>Footer Text</p>
+    </section>		
+		<footer class="container-fluid text-center">
+      <p>Copyright 2016 - Conduite de projet facile - Tous droits réservés</p>
     </footer>
+		
+		<script>
+			function pagePrecedente(page_actuelle){
+				var nouvelle_page = page_actuelle - 1;
+				if(nouvelle_page > 0)
+					document.location.href="listeProjets.php?page="+nouvelle_page;
+			}
+			function pageSuivante(page_actuelle, nombre_de_pages){
+				var nouvelle_page = page_actuelle + 1;
+				if(nouvelle_page < nombre_de_pages+1)
+					document.location.href="listeProjets.php?page="+nouvelle_page;
+			}
+			</script>
   </body>
 </html>
 <?php

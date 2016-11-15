@@ -1,11 +1,6 @@
 <?php
 require_once("config.php");
-/*
-if (isset($_POST["action"]) && $_POST["action"] == "ajouter")
-echo "ajouter !<br>";
-else
-echo "éditer !<br>";
-*/
+
 if (isset($_SESSION["session"])) {
   $s->suppressionCookies();
 
@@ -43,13 +38,13 @@ if (isset($_SESSION["session"])) {
 			<div class="col-sm-8 text-left">
 				<?php if ($_POST["action"] == "ajouter") { ?>
 					<h2>Nouveau projet</h2>
-				<?php } else {?>
+				<?php } else { ?>
 					<h2>Édition du projet '<?php echo $nom; ?>'</h2>
 				<?php } ?>
 				<hr>
 				<?php if ($_POST["action"] == "ajouter") { ?>
 				<form class="form-horizontal" action="modificationProjet.php?action=ajouter" method="post">
-				<?php } else {?>
+				<?php } else { ?>
 				<form class="form-horizontal" action="modificationProjet.php?action=éditer" method="post">
 				<?php } ?>
 				<!--onsubmit="VerifFormulaireProjet()"-->
@@ -65,7 +60,8 @@ if (isset($_SESSION["session"])) {
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-0 col-md-8">
-							<input class="form-control" type="text" name="descr" placeholder="Description du projet" value="<?php echo $description; ?>" required />
+							<label for="comment">Description:</label>
+							<textarea class="form-control" rows="5" id="comment" name="descr" placeholder="Description du projet" ><?php echo $description; ?></textarea>
 						</div>
 					</div>
 					<div class="form-group">

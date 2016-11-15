@@ -37,7 +37,19 @@ class Requetes {
         return $result;
     }
 
-    // retourne la liste des développeurs du site web
+    // retourne l'id du développeur dont le pseudo est $pseudo_dev
+		// car comme les id, les pseudo sont uniques
+    public function idDeveloppeur($pseudo_dev) {
+        $sql = "SELECT DEV_id FROM developpeur 
+								WHERE DEV_pseudo = ".$pseudo_dev.";";
+        if (!$result = $this->conn->query($sql)) {
+            printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
+            return NULL;
+        }
+				return $result;
+    }
+		
+		// retourne la liste des développeurs du site web
     public function listeDeveloppeurs() {
         $sql = "SELECT D.* FROM developpeur as D
                 ORDER BY D.DEV_pseudo ASC;";
@@ -117,13 +129,13 @@ class Requetes {
 		}
 	
 		// retourne vrai si le compte du développeur connecté,
-		// à l'identifiant $id_dev, est bien supprimé de la BDD
+		// à l'identifiant $id_dev, est supprimé de la BDD
 		public function supprDeveloppeur($id_dev) {
-				$sql1="DELETE FROM developpeur 
+				$sql3="DELETE FROM developpeur 
 							WHERE DEV_id='$id_dev'";
 				$sql2="DELETE FROM inter_dev_projet 
 							WHERE DEV_id='$id_dev'";
-				$sql3="DELETE FROM projet 
+				$sql1="DELETE FROM projet 
 							WHERE DEV_idProductOwner='$id_dev'";
 				/* TODO : Que faire quand il est le ScrumMaster */
 				/* TODO : Que faire quand il est le responsable d'une tâche */

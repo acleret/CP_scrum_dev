@@ -52,3 +52,8 @@ footer {
   text-decoration: underline;
   color: #333;
 }
+
+.inline-form input {
+  display: inline-block;
+  width: 100px;
+}
