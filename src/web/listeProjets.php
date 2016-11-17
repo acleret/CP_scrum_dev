@@ -14,6 +14,7 @@ $s->nav($db);
                 <thead>
                   <tr>
                     <th>Titre</th>
+                    <th>Date de création</th>
 <?php
 if (isset($_SESSION["session"])) {
 ?>
@@ -54,6 +55,7 @@ while ($row = $result->fetch_assoc()) {
                         <input class="url2" type="submit" value="<?php echo $row["PRO_nom"]; ?>"/>
                       </form>
                     </td>
+                    <td><?php echo $row["PRO_dateCreation"]; ?></td>
 <?php
   if (isset($_SESSION["session"])) {
 ?>

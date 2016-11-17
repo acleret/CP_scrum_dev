@@ -3,7 +3,7 @@ require_once("config.php");
 
 $s->suppressionCookies();
 
-if (isset($_POST["suppr_profil"])) { 
+if (isset($_POST["suppr_profil"])) {
 	$res = $db->supprDeveloppeur($_POST["suppr_profil"]);
 	if($res) header("Location: deconnexion.php");
 	exit();
@@ -11,15 +11,15 @@ if (isset($_POST["suppr_profil"])) {
 
 if (isset($_GET["profil"])) { // un visiteur peut voir n'importe quel profil
 	$pseudo_demande = $_GET["profil"];
-	
+
 	$id = $db->idDeveloppeur("\"".$pseudo_demande."\""); // grâce aux pseudo uniques
 	$row_id = $id->fetch_assoc();
 	$id_dev = $row_id["DEV_id"];
-	
-	$infos = $db->infosDeveloppeur($id_dev); 
+
+	$infos = $db->infosDeveloppeur($id_dev);
 	$row = $infos->fetch_assoc();
 
-	$s->head("Profil - ".$pseudo_demande);	
+	$s->head("Profil - ".$pseudo_demande);
 } else if (isset($_SESSION["session"])) { // le dev connecté peut agir sur son profil
 	$id_dev = $_SESSION["id_co"];
 	$infos = $db->infosDeveloppeur($id_dev);
@@ -34,7 +34,7 @@ $s->nav($db);
 	<article>
 		<div class="col-sm-8 text-left">
 			<h2>
-<?php if (isset($_GET["profil"]) && isset($_SESSION["session"]) 
+<?php if (isset($_GET["profil"]) && isset($_SESSION["session"])
 					&& $_GET["profil"]==$_SESSION["pseudo_co"]) {	?>
 			Mon profil '<?php echo $row["DEV_pseudo"];?>'
 <?php } else if (isset($_GET["profil"])) {	?>
@@ -44,7 +44,7 @@ $s->nav($db);
 <?php } ?>
 			</h2>
 			<hr>
-			
+
 <?php
 			if (isset($_GET["url"])) {
 				if (!strcmp($_GET["url"], "OK")) {
@@ -78,9 +78,9 @@ $s->nav($db);
 						</dl>
 						<br>
 						<br>
-<?php					
+<?php
 		if ((isset($_SESSION["session"]) && empty($_GET["profil"])) ||
-				((isset($_GET["profil"]) && isset($_SESSION["session"]) 
+				((isset($_GET["profil"]) && isset($_SESSION["session"])
 					&& $_GET["profil"]==$_SESSION["pseudo_co"]))) {
 ?>
 							<form style="display: inline; margin-left:25%;" action="modificationMotDePasse.php" method="post">
@@ -90,9 +90,9 @@ $s->nav($db);
 						</div>
 					</div>
 				</div>
-				
+
 				<hr>
-				
+
 				<div class="col-sm-4 text-left">
 					<h3>Projets :</h3>
 					<h4>(en tant que Product Owner)</h4>
@@ -106,7 +106,7 @@ $s->nav($db);
 								<input type="hidden" name="id_projet" value="<?php echo $projet["PRO_id"]; ?>"/>
 								<input class="url2" type="submit" value="<?php echo $projet["PRO_nom"]; ?>"/>
 							</form><br>
-							Créé le <?php echo $projet["PRO_date_creation"]; ?> pour <?php echo $projet["PRO_client"]; ?>
+							Créé le <?php echo $projet["PRO_dateCreation"]; ?> pour <?php echo $projet["PRO_client"]; ?>
 						</li>
 <?php
 					}
@@ -127,7 +127,7 @@ $s->nav($db);
 								<input type="hidden" name="id_projet" value="<?php echo $projet["PRO_id"]; ?>"/>
 								<input class="url2" type="submit" value="<?php echo $projet["PRO_nom"]; ?>"/>
 							</form><br>
-							Créé le <?php echo $projet["PRO_date_creation"]; ?> pour <?php echo $projet["PRO_client"]; ?>
+							Créé le <?php echo $projet["PRO_dateCreation"]; ?> pour <?php echo $projet["PRO_client"]; ?>
 						</li>
 <?php
 						}
@@ -148,7 +148,7 @@ $s->nav($db);
 								<input type="hidden" name="id_projet" value="<?php echo $projet["PRO_id"]; ?>"/>
 								<input class="url2" type="submit" value="<?php echo $projet["PRO_nom"]; ?>"/>
 							</form><br>
-							Créé le <?php echo $projet["PRO_date_creation"]; ?> pour <?php echo $projet["PRO_client"]; ?><br>
+							Créé le <?php echo $projet["PRO_dateCreation"]; ?> pour <?php echo $projet["PRO_client"]; ?><br>
 						</li>
 <?php
 					}
@@ -157,9 +157,9 @@ $s->nav($db);
 				</div>
 			</div>
 		</article>
-<?php					
+<?php
 		if ((isset($_SESSION["session"]) && empty($_GET["profil"])) ||
-				((isset($_GET["profil"]) && isset($_SESSION["session"]) 
+				((isset($_GET["profil"]) && isset($_SESSION["session"])
 					&& $_GET["profil"]==$_SESSION["pseudo_co"]))) {
 ?>
 		<aside>
@@ -177,7 +177,7 @@ $s->nav($db);
 <?php
 		}
 ?>
-		
+
 <?php
 	$s->footer();
   exit();

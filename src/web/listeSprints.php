@@ -17,7 +17,7 @@ if (isset($_COOKIE["id_projet"])) {
     $db->supprimerSprint($_POST["suppression"]);
   }
 
-  $s->head($row['PRO_nom']);
+  $s->head("Sprints");
   $s->header($db);
   $s->nav($db);
 ?>

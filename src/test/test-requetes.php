@@ -18,7 +18,7 @@ $id_dev = 1;
 if ($test->testIDDeveloppeur($id_dev)) {
   $result = $test->infosDeveloppeur($id_dev);
   $row = $result->fetch_assoc();
-  echo $row["DEV_id"]." | ".$row["DEV_prenom"]." | ".$row["DEV_nom"]." | ".$row["DEV_pseudo"]." | ".$row["DEV_mdp"]." | ".$row["DEV_mail"]." | ".$row["DEV_urlAvatar"]." | ".$row["DEV_date_creation"]."<br>\n<br>\n\n\n";
+  echo $row["DEV_id"]." | ".$row["DEV_prenom"]." | ".$row["DEV_nom"]." | ".$row["DEV_pseudo"]." | ".$row["DEV_mdp"]." | ".$row["DEV_mail"]." | ".$row["DEV_urlAvatar"]." | ".$row["DEV_dateCreation"]."<br>\n<br>\n\n\n";
 } else {
   echo "* Erreur le dév ".$id_dev." est inconnu<br>\n<br>\n";
 }
@@ -27,7 +27,7 @@ if ($test->testIDDeveloppeur($id_dev)) {
 echo "<b>// test listeDeveloppeurs</b><br>\n";
 $result = $test->listeDeveloppeurs();
 while ($row = $result->fetch_assoc()) {
-  echo $row["DEV_id"]." | ".$row["DEV_prenom"]." | ".$row["DEV_nom"]." | ".$row["DEV_pseudo"]." | ".$row["DEV_mdp"]." | ".$row["DEV_mail"]." | ".$row["DEV_urlAvatar"]." | ".$row["DEV_date_creation"]."<br>\n";
+  echo $row["DEV_id"]." | ".$row["DEV_prenom"]." | ".$row["DEV_nom"]." | ".$row["DEV_pseudo"]." | ".$row["DEV_mdp"]." | ".$row["DEV_mail"]." | ".$row["DEV_urlAvatar"]." | ".$row["DEV_dateCreation"]."<br>\n";
 }
 echo "<br>\n";
 
@@ -183,7 +183,7 @@ echo "<b>// test listeProjetsDeveloppeurProductOwner</b><br>\n";
 $id_dev = 1; // le dev 1 est lié au projet 1, 2 et 4
 $result = $test->listeProjetsDeveloppeurProductOwner($id_dev);
 while ($row = $result->fetch_assoc()) {
-  echo $row["PRO_id"]." | ".$row["PRO_nom"]." | ".$row["PRO_client"]." | ".$row["PRO_description"]." | ".$row["PRO_date_creation"]." | ".$row["DEV_idProductOwner"]." | ".$row["DEV_idScrumMaster"]."<br>\n";
+  echo $row["PRO_id"]." | ".$row["PRO_nom"]." | ".$row["PRO_client"]." | ".$row["PRO_description"]." | ".$row["PRO_dateCreation"]." | ".$row["DEV_idProductOwner"]." | ".$row["DEV_idScrumMaster"]."<br>\n";
 }
 echo "<br>\n";
 
@@ -192,7 +192,7 @@ echo "<b>// test listeProjetsDeveloppeur</b><br>\n";
 $id_dev = 1; // le dev 1 est lié au projet 1, 2 et 4
 $result = $test->listeProjetsDeveloppeur($id_dev);
 while ($row = $result->fetch_assoc()) {
-  echo $row["PRO_id"]." | ".$row["PRO_nom"]." | ".$row["PRO_client"]." | ".$row["PRO_description"]." | ".$row["PRO_date_creation"]." | ".$row["DEV_idProductOwner"]." | ".$row["DEV_idScrumMaster"]."<br>\n";
+  echo $row["PRO_id"]." | ".$row["PRO_nom"]." | ".$row["PRO_client"]." | ".$row["PRO_description"]." | ".$row["PRO_dateCreation"]." | ".$row["DEV_idProductOwner"]." | ".$row["DEV_idScrumMaster"]."<br>\n";
 }
 echo "<br>\n";
 
@@ -208,7 +208,7 @@ $mdp = "mdptest";
 $result = $test->testDeveloppeurConnexion($pseudo, $mdp);
 $row = $result->fetch_assoc();
 if ($result->num_rows == 1) {
-  echo $row["DEV_id"]." | ".$row["DEV_prenom"]." | ".$row["DEV_nom"]." | ".$row["DEV_pseudo"]." | ".$row["DEV_mdp"]." | ".$row["DEV_mail"]." | ".$row["DEV_urlAvatar"]." | ".$row["DEV_date_creation"]."<br>\n<br>\n";
+  echo $row["DEV_id"]." | ".$row["DEV_prenom"]." | ".$row["DEV_nom"]." | ".$row["DEV_pseudo"]." | ".$row["DEV_mdp"]." | ".$row["DEV_mail"]." | ".$row["DEV_urlAvatar"]." | ".$row["DEV_dateCreation"]."<br>\n<br>\n";
 } else {
   echo "* Mauvaise combinaison pseudo et mot de passe<br>\n<br>\n";
 }
@@ -228,7 +228,7 @@ $id_pro = 1;
 if ($test->testIDProjet($id_pro)) {
   $result = $test->infosProjet($id_pro);
   $row = $result->fetch_assoc();
-  echo $row["PRO_id"]." | ".$row["PRO_nom"]." | ".$row["PRO_client"]." | ".$row["PRO_description"]." | ".$row["PRO_date_creation"]." | ".$row["DEV_idProductOwner"]." | ".$row["DEV_idScrumMaster"]."<br>\n";
+  echo $row["PRO_id"]." | ".$row["PRO_nom"]." | ".$row["PRO_client"]." | ".$row["PRO_description"]." | ".$row["PRO_dateCreation"]." | ".$row["DEV_idProductOwner"]." | ".$row["DEV_idScrumMaster"]."<br>\n";
 } else {
   echo "* Erreur le projet ".$id_pro." est inconnu<br>\n";
 }
@@ -238,7 +238,7 @@ echo "<br>\n";
 echo "<b>// test listeProjets</b><br>\n";
 $result = $test->listeProjets();
 while ($row = $result->fetch_assoc()) {
-  echo $row["PRO_id"]." | ".$row["PRO_nom"]." | ".$row["PRO_client"]." | ".$row["PRO_description"]." | ".$row["PRO_date_creation"]." | ".$row["DEV_idProductOwner"]." | ".$row["DEV_idScrumMaster"]."<br>\n";
+  echo $row["PRO_id"]." | ".$row["PRO_nom"]." | ".$row["PRO_client"]." | ".$row["PRO_description"]." | ".$row["PRO_dateCreation"]." | ".$row["DEV_idProductOwner"]." | ".$row["DEV_idScrumMaster"]."<br>\n";
 }
 echo "<br>\n";
 
@@ -283,7 +283,7 @@ echo "<b>// test listeDeveloppeursProjet</b><br>\n";
 $id_pro = 1; // le projet contient plusieurs développeurs
 $result = $test->listeDeveloppeursProjet($id_pro);
 while ($row = $result->fetch_assoc()) {
-  echo $row["DEV_id"]." | ".$row["DEV_prenom"]." | ".$row["DEV_nom"]." | ".$row["DEV_pseudo"]." | ".$row["DEV_mdp"]." | ".$row["DEV_mail"]." | ".$row["DEV_urlAvatar"]." | ".$row["DEV_date_creation"]."<br>\n";
+  echo $row["DEV_id"]." | ".$row["DEV_prenom"]." | ".$row["DEV_nom"]." | ".$row["DEV_pseudo"]." | ".$row["DEV_mdp"]." | ".$row["DEV_mail"]." | ".$row["DEV_urlAvatar"]." | ".$row["DEV_dateCreation"]."<br>\n";
 }
 echo "<br>\n";
 
@@ -312,7 +312,7 @@ $id_us = 1;
 if ($test->testIDUserStory($id_us)) {
   $result = $test->infosUserStory($id_us);
   $row = $result->fetch_assoc();
-  echo $row["US_id"]." | ".$row["US_nom"]." | ".$row["US_chiffrageAbstrait"]." | ".$row["US_priorite"]." | ".$row["US_dateDernierCommit"]." | ".$row["US_idDernierCommit"]." | ".$row["US_auteurDernierCommit"]." |
+  echo $row["US_id"]." | ".$row["US_nom"]." | ".$row["US_chiffrageAbstrait"]." | ".$row["US_priorite"]." | ".$row["US_dateCreation"]." | ".$row["US_dateDernierCommit"]." | ".$row["US_idDernierCommit"]." | ".$row["US_auteurDernierCommit"]." |
   ".$row["PRO_id"]." |
   ".$row["SPR_id"]."<br>\n";
 } else {
@@ -325,7 +325,7 @@ echo "<b>// test listeUserStories</b><br>\n";
 $id_pro = 4;
 $result = $test->listeUserStories($id_pro);
 while ($row = $result->fetch_assoc()) {
-  echo $row["US_id"]." | ".$row["US_nom"]." | ".$row["US_chiffrageAbstrait"]." | ".$row["US_priorite"]." | ".$row["US_dateDernierCommit"]." | ".$row["US_idDernierCommit"]." | ".$row["US_auteurDernierCommit"]." |
+  echo $row["US_id"]." | ".$row["US_nom"]." | ".$row["US_chiffrageAbstrait"]." | ".$row["US_priorite"]." | ".$row["US_dateCreation"]." | ".$row["US_dateDernierCommit"]." | ".$row["US_idDernierCommit"]." | ".$row["US_auteurDernierCommit"]." |
   ".$row["PRO_id"]." |
   ".$row["SPR_id"]."<br>\n";
 }
@@ -337,7 +337,7 @@ $id_spr = 1;
 $result = $test->listeUserStorySprint($id_spr);
 echo "US dans le sprint#".$id_spr."<br>";
 while ($row = $result->fetch_assoc()) {
-  echo $row["US_id"]." | ".$row["US_nom"]." | ".$row["US_chiffrageAbstrait"]." | ".$row["US_priorite"]." | ".$row["US_dateDernierCommit"]." | ".$row["US_idDernierCommit"]." | ".$row["US_auteurDernierCommit"]." |
+  echo $row["US_id"]." | ".$row["US_nom"]." | ".$row["US_chiffrageAbstrait"]." | ".$row["US_priorite"]." | ".$row["US_dateCreation"]." | ".$row["US_dateDernierCommit"]." | ".$row["US_idDernierCommit"]." | ".$row["US_auteurDernierCommit"]." |
   ".$row["PRO_id"]." |
   ".$row["SPR_id"]."<br>\n";
 }
@@ -350,7 +350,7 @@ $id_pro = 1;
 $result = $test->listeUserStoryOutOfSprint($id_spr, $id_pro);
 echo "US dans du projet ".$id_pro." or du sprint#".$id_spr."<br>";
 while ($row = $result->fetch_assoc()) {
-  echo $row["US_id"]." | ".$row["US_nom"]." | ".$row["US_chiffrageAbstrait"]." | ".$row["US_priorite"]." | ".$row["US_dateDernierCommit"]." | ".$row["US_idDernierCommit"]." | ".$row["US_auteurDernierCommit"]." |
+  echo $row["US_id"]." | ".$row["US_nom"]." | ".$row["US_chiffrageAbstrait"]." | ".$row["US_priorite"]." | ".$row["US_dateCreation"]." | ".$row["US_dateDernierCommit"]." | ".$row["US_idDernierCommit"]." | ".$row["US_auteurDernierCommit"]." |
   ".$row["PRO_id"]." |
   ".$row["SPR_id"]."<br>\n";
 }

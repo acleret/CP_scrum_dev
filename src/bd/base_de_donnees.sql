@@ -30,7 +30,7 @@ CREATE TABLE `developpeur` (
   `DEV_mdp` varchar(255) NOT NULL,
   `DEV_mail` varchar(255) NOT NULL,
   `DEV_urlAvatar` text,
-  `DEV_date_creation` date DEFAULT NULL
+  `DEV_dateCreation` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -55,7 +55,7 @@ CREATE TABLE `projet` (
   `PRO_nom` varchar(255) NOT NULL,
   `PRO_client` varchar(255) NOT NULL,
   `PRO_description` text NOT NULL,
-  `PRO_date_creation` date NOT NULL,
+  `PRO_dateCreation` datetime NOT NULL,
   `DEV_idProductOwner` int(11) NOT NULL,
   `DEV_idScrumMaster` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -103,6 +103,7 @@ CREATE TABLE `us` (
   `US_nom` varchar(255) NOT NULL,
   `US_chiffrageAbstrait` int(11) NOT NULL,
   `US_priorite` int(11) DEFAULT NULL,
+  `US_dateCreation` datetime NOT NULL,
   `US_dateDernierCommit` date DEFAULT NULL,
   `US_idDernierCommit` varchar(255) DEFAULT NULL,
   `US_auteurDernierCommit` varchar(255) DEFAULT NULL,
