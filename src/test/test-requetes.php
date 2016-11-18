@@ -242,6 +242,25 @@ while ($row = $result->fetch_assoc()) {
 }
 echo "<br>\n";
 
+
+// test supprimerProjetBDD
+echo "<b>// test supprimerProjetBDD</b><br>\n";
+if ($test->supprimerProjetBDD(1)) {
+  echo "* Projet 1 supprimé<br>\n<br>\n";
+} else {
+  echo "* Erreur lors de la suppression d'un projet<br>\n<br>\n";
+}
+
+// test listeProjets
+echo "<b>// test listeProjets</b><br>\n";
+$result = $test->listeProjets();
+while ($row = $result->fetch_assoc()) {
+  echo $row["PRO_id"]." | ".$row["PRO_nom"]." | ".$row["PRO_client"]." | ".$row["PRO_description"]." | ".$row["PRO_dateCreation"]." | ".$row["DEV_idProductOwner"]." | ".$row["DEV_idScrumMaster"]."<br>\n";
+}
+echo "<br>\n";
+
+
+
 // test nombreProjets
 echo "<b>// test nombreProjets</b><br>\n";
 $nb_projets = $test->nombreProjets();
@@ -253,6 +272,17 @@ echo "<br>\n";
 echo "<b>// test ajoutNouveauProjet</b><br>\n";
 // expect "Projet créé"
 if ($test->ajoutNouveauProjet("MonNouveauProjet", "Anonymous", "Projet test dans la BD", 1, 1)) {
+  echo "* Projet créé<br>\n<br>\n";
+} else {
+  echo "* Erreur dans la création du projet<br>\n<br>\n";
+}
+
+// test ajouterProjetBDD
+echo "<b>// test ajouterProjetBDD</b><br>\n";
+// expect "Projet créé"
+$idProjetMaxEnVisu = $test->maxIDProjet()+1;
+$idProjet = $test->ajouterProjetBDD("MonNouveauProjet", "Anonymous", "Projet test dans la BD", 1, 1, 2, 1);
+if ($idProjetMaxEnVisu == $idProjet) {
   echo "* Projet créé<br>\n<br>\n";
 } else {
   echo "* Erreur dans la création du projet<br>\n<br>\n";
@@ -273,7 +303,7 @@ echo "<b>// test suppressionProjet</b><br>\n";
 // expect "Projet supprimé"
 $idprojet = $test->maxIDProjet();
 if ($test->suppressionProjet($test->maxIDProjet())) {
-  echo "* Projet ".$idprojet." supprimé<br>\n<br>\n";
+  echo "* Projet ".$idprojet." non supprimé car il reste des dépendances dans la BDD<br>\n<br>\n";
 } else {
   echo "* Erreur lors de la suppression d'un projet<br>\n<br>\n";
 }
@@ -370,18 +400,7 @@ echo "<br>\n";
 echo "<b>// test modifUserStory</b><br>\n";
 // expect "US modifié"
 $id_us = $test->maxIDUserStory();
-if ($test->modifUserStory($id_us, "US1Modifié", 8, "NULL")) {
-  echo "* US ".$id_us." modifié<br>\n";
-} else {
-  echo "* Erreur dans la modification des données d'une US ".$id_us."<br>\n";
-}
-echo "<br>\n";
-
-// test modifUserStoryProductOwner
-echo "<b>// test modifUserStoryProductOwner</b><br>\n";
-// expect "US modifié"
-$id_us = $test->maxIDUserStory();
-if ($test->modifUserStoryProductOwner($id_us, "US1Modifié", 8, 4, "NULL")) {
+if ($test->modifUserStory($id_us, "US1Modifié", 8, "NULL", "NULL")) {
   echo "* US ".$id_us." modifié<br>\n";
 } else {
   echo "* Erreur dans la modification des données d'une US ".$id_us."<br>\n";

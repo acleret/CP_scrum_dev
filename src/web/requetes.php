@@ -311,16 +311,42 @@ class Requetes {
         return $result->num_rows;
     }
 
-    // ajoute un projet dans la BD et retourne vrai si il est ajouté
+		// démarche pour ajouter un projet dans la base de données 'cp_scrum'
+		// retourne vrai ssi : 
+		//  - le projet est rajouté
+		//  - le lien entre les développeurs et le projet sont créés
+		public function ajouterProjetBDD(){
+				$numargs = func_num_args();
+				if ($numargs >= 5) {
+				  $arg_list = func_get_args();					
+					$idProjet = $this->ajoutNouveauProjet($arg_list[0], $arg_list[1], $arg_list[2], $arg_list[3], $arg_list[4]);
+					
+					if ($idProjet==0)
+							return false;
+
+					for ($i = 5; $i < $numargs; $i++) {
+							$sql = "INSERT INTO inter_dev_projet (DEV_id, PRO_id)
+											VALUES ('".$arg_list[$i]."', '".$idProjet."');";
+							if (!$result = $this->conn->query($sql)) {
+									printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
+									return NULL;
+							}
+					}
+					return $idProjet;
+				}
+				return false;
+		}
+		
+    // ajoute un objet de type projet et retourne vrai si il est ajouté
     // sa date de création est celle du jour où il est enregistré
     public function ajoutNouveauProjet($nom, $client, $description, $idPO, $idSM){
-        $sql = "INSERT INTO projet (PRO_nom, PRO_client, PRO_description, PRO_dateCreation, DEV_idProductOwner, DEV_idScrumMaster)
+        $sql = "INSERT INTO projet (PRO_nom, PRO_client, PRO_description, 		PRO_dateCreation, DEV_idProductOwner, DEV_idScrumMaster)
                 VALUES ('".$nom."', '".$client."', '".$description."', Now(), '".$idPO."', '".$idSM."');";
         if (!$result = $this->conn->query($sql)) {
             printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
             return NULL;
         }
-        return  $this->conn->insert_id;
+        return $this->conn->insert_id;
     }
 
     // modifie les données du projet et retourne vrai quand c'est fait
@@ -335,31 +361,72 @@ class Requetes {
         return true;
     }
 
-    // retire de la BD tous les liens avec le projet en paramètre puis lui-même
-    // retourne vrai une fois exécuté
-    public function suppressionProjet($id_pro){
-        $sql_InterDevProjet = "DELETE FROM inter_dev_projet
-                              WHERE PRO_id=".$id_pro.";";
-        $sql_Sprint = "DELETE FROM sprint
-                      WHERE PRO_id=".$id_pro.";";
-        $sql_Projet = "DELETE FROM projet
-                      WHERE PRO_id=".$id_pro.";";
-        if (!$result = $this->conn->query($sql_InterDevProjet)) {
+    // démarche pour supprimer un projet de la base de données 'cp_scrum'
+		// retourne vrai ssi : 
+		//  - les liens entre le projet, les sprints, les us et les tâches sont supprimées
+		//  - les liens entre le projet et les développeurs sont supprimés
+		//  - le projet est supprimé
+		public function supprimerProjetBDD($idPro){
+				$liste_idSprints = $this->listeSprints($idPro); 
+				while ($row_sprint = $liste_idSprints->fetch_assoc()) {
+					
+					$liste_idUS = $this->listeUserStorySprint($row_sprint["SPR_id"]);
+					while ($row_us = $liste_idUS->fetch_assoc()) {
+						$liste_idTaches = $this->listeTachesUS($row_us["US_id"]);
+						while ($row_tache = $liste_idTaches->fetch_assoc()) {
+							if(!$this->suppressionTache($row_tache["Tache_id"]))
+								return false;
+						}
+						if(!$this->suppressionUserStory($row_us["US_id"]))
+								return false;
+					}
+					
+					$liste_idUS_out = $this->listeUserStoryOutOfSprint($row_sprint["SPR_id"], $idPro);
+					while ($row_us_out = $liste_idUS_out->fetch_assoc()) {
+						$liste_idTaches_out = $this->listeTachesUS($row_us_out["US_id"]);
+						while ($row_tache_out = $liste_idTaches_out->fetch_assoc()) {
+							if(!$this->suppressionTache($row_tache_out["TAC_id"]))
+								return false;
+						}
+						if(!$this->suppressionUserStory($row_us_out["US_id"]))
+								return false;
+					}
+
+					if(!$this->supprimerSprint($row_sprint["SPR_id"]))
+						return false;
+				}
+				
+				$liste_idDevs = $this->listeDeveloppeursProjet($idPro); 
+				while ($row_dev = $liste_idDevs->fetch_assoc()) {
+					if (!$this->suppressionDeveloppeurProjet($row_dev["DEV_id"], $idPro))
+						return false;
+				}
+				
+				if (!$this->suppressionProjet($idPro))
+					return false;
+		
+        return true;
+		}
+		
+		public function suppressionDeveloppeurProjet($id_dev, $id_pro){
+				$sql = "DELETE FROM inter_dev_projet
+								WHERE DEV_id=".$id_dev." AND PRO_id=".$id_pro.";";
+        if (!$result = $this->conn->query($sql)) {
           printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
           return NULL;
-        } else {
-          if (!$result = $this->conn->query($sql_Sprint)) {
-          printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
-          return NULL;
-          } else {
-            if (!$result = $this->conn->query($sql_Projet)) {
-              printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
-              return NULL;
-            } else {
-              return true;
-            }
-          }
         }
+				return true;
+		}
+
+    // retourne vrai après avoir retiré un projet, sinon faux
+    public function suppressionProjet($id_pro){
+        $sql = "DELETE FROM projet
+                WHERE PRO_id=".$id_pro.";";
+				if (!$result = $this->conn->query($sql)) {
+					printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
+					return NULL;
+				}
+				return true;
     }
 
     // retourne la liste des développeurs du projet $id_pro
@@ -400,11 +467,12 @@ class Requetes {
         return $row["MAX(PRO_id)"];
     }
 
-    /**********************************************/
+
+	/**********************************************/
   /** Fonctions pour la gestion des User Story **/
   /**********************************************/
 
-    //retourne les données du sprint $id_spr
+    //retourne les données de l'us $id_us
     public function infosUserStory($id_us) {
         $sql = "SELECT * FROM us WHERE US_id = ".$id_us.";";
         if (!$res = $this->conn->query($sql)) {
@@ -414,7 +482,7 @@ class Requetes {
         return $res;
     }
 
-    // retourne la liste des sprints du projet $id_pro
+    // retourne la liste des us du projet $id_pro
     public function listeUserStories($id_pro, $id_premiere_ligne = 0, $nb_projets_par_pages = 200000) {
         $sql = "SELECT * FROM us
                 WHERE PRO_id = ".$id_pro."
@@ -457,19 +525,7 @@ class Requetes {
     }
 
     // modif US
-    public function modifUserStory($id_us, $nom_us, $chiffrage, $id_spr) {
-        $sql = "UPDATE us
-                SET US_nom = '".$nom_us."', US_chiffrageAbstrait = ".$chiffrage.", SPR_id = ".$id_spr."
-                WHERE US_id = ".$id_us.";";
-        if (!$result = $this->conn->query($sql)) {
-            printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
-            return NULL;
-        }
-        return true;
-    }
-
-    // modif US en tant que ProductOwner
-    public function modifUserStoryProductOwner($id_us, $nom_us, $chiffrage, $priorite, $id_spr) {
+    public function modifUserStory($id_us, $nom_us, $chiffrage, $priorite, $id_spr) {
         $sql = "UPDATE us
                 SET US_nom = '".$nom_us."', US_chiffrageAbstrait = ".$chiffrage.", US_priorite = ".$priorite.", SPR_id = ".$id_spr."
                 WHERE US_id = ".$id_us.";";
@@ -521,10 +577,10 @@ class Requetes {
         $sql_tache = "DELETE FROM tache WHERE US_id = ".$id_us.";";
         if (!$result = $this->conn->query($sql_tache)) {
             printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
-      return NULL;
+						return NULL;
         } else if (!$result = $this->conn->query($sql_us)) {
             printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
-      return NULL;
+						return NULL;
         }
         return true;
     }
@@ -555,7 +611,19 @@ class Requetes {
         return $row["MAX(US_id)"];
     }
 
-  /*******************************************/
+    // retourne les tâches par US
+    public function listeTachesUS($id_us) {
+        $sql = "SELECT * FROM tache WHERE US_id = ".$id_us." 
+								ORDER BY TAC_dateDepart;";
+         if (!$result = $this->conn->query($sql)) {
+            printf("Message d'erreur: %s<br>", $this->conn->error);
+						return NULL;
+        }
+        return $result;
+    }
+
+		
+	/*******************************************/
   /** Fonctions pour la gestion des sprints **/
   /*******************************************/
 
@@ -636,5 +704,21 @@ class Requetes {
     public function ordonnerDate($date) {
         return $date[8].$date[9]."/".$date[5].$date[6]."/".$date[2].$date[3] ;
     }
+
+		
+  /******************************************/
+  /** Fonctions pour la gestion des tâches **/
+  /******************************************/
+	   
+		// retourne vrai après avoir retiré une tâche, sinon faux
+		public function suppressionTache($id_tache) {
+			$sql = "DELETE FROM tache WHERE TAC_id = ".$id_tache.";";
+			if (!$result = $this->conn->query($sql)) {
+					printf("Message d'erreur: %s<br>", $this->conn->error);
+					return NULL;
+			}
+			return true;
+		}
+		
 }
 ?>
