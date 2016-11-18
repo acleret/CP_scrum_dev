@@ -524,8 +524,21 @@ class Requetes {
         return true;
     }
 
+    
     // modif US
-    public function modifUserStory($id_us, $nom_us, $chiffrage, $priorite, $id_spr) {
+    public function modifUserStory($id_us, $nom_us, $chiffrage, $id_spr) {
+        $sql = "UPDATE us
+                SET US_nom = '".$nom_us."', US_chiffrageAbstrait = ".$chiffrage.", SPR_id = ".$id_spr."
+                WHERE US_id = ".$id_us.";";
+        if (!$result = $this->conn->query($sql)) {
+            printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
+            return NULL;
+        }
+        return true;
+    }
+
+    // modif US en tant que ProductOwner
+    public function modifUserStoryProductOwner($id_us, $nom_us, $chiffrage, $priorite, $id_spr) {
         $sql = "UPDATE us
                 SET US_nom = '".$nom_us."', US_chiffrageAbstrait = ".$chiffrage.", US_priorite = ".$priorite.", SPR_id = ".$id_spr."
                 WHERE US_id = ".$id_us.";";

@@ -245,7 +245,7 @@ echo "<br>\n";
 
 // test supprimerProjetBDD
 echo "<b>// test supprimerProjetBDD</b><br>\n";
-if ($test->supprimerProjetBDD(1)) {
+if ($test->supprimerProjetBDD(5)) {
   echo "* Projet 1 supprimé<br>\n<br>\n";
 } else {
   echo "* Erreur lors de la suppression d'un projet<br>\n<br>\n";
