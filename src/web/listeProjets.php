@@ -8,7 +8,7 @@ $s->nav($db);
 ?>
           <article>
             <div class="col-sm-8 text-left">
-              <h2>Projets</h2>
+              <h2>Projets recensés sur le site</h2>
               <hr>
               <table class="table table-bordered">
                 <thead>
@@ -64,13 +64,18 @@ while ($row = $result->fetch_assoc()) {
     if ($db->estMembreProjet($row["PRO_id"], $_SESSION["id_co"])) {
 ?>
                       <form style="display: inline;" action="../web/formulaireProjet.php" method="post">
-                        <input type="hidden" name="id_atelier" value="<?php echo $row["PRO_id"]; ?>"/>
+												<input type="hidden" name="action" value="éditer"/>
+												<input type="hidden" name="idProjet" value="<?php echo $row["PRO_id"];?>"/>
+												<input type="hidden" name="nom" value="<?php echo $row["PRO_nom"];?>"/>
+												<input type="hidden" name="client" value="<?php echo $row["PRO_client"];?>"/>
+												<input type="hidden" name="descr" value="<?php echo $row["PRO_description"];?>"/>
+                        <input type="hidden" name="pageActuelle" value="<?php echo $page_actuelle; ?>"/>
                         <input class="btn btn-default" type="submit" value="Modifier"/>
                       </form>
-                      <form style="display: inline;" action="../web/suppressionProjet.php" method="post">
-                        <input type="hidden" name="id_atelier" value="<?php echo $row["PRO_id"]; ?>"/>
-                        <input type="hidden" name="page_actuelle" value="<?php echo $page_actuelle; ?>"/>
-                        <input class="btn btn-default" type="submit" value="Supprimer"/>
+                      <form style="display: inline;" action="projet.php" method="post">
+												<input type="hidden" name="suppr_projet" value="<?php echo $row["PRO_id"]; ?>"/>
+                        <input type="hidden" name="pageActuelle" value="<?php echo $page_actuelle; ?>"/>
+                        <input class="btn btn-danger" type="submit" value="Supprimer"/>
                       </form>
 <?php
     }

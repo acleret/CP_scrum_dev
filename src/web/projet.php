@@ -2,9 +2,10 @@
 require_once("config.php");
 
 if (isset($_POST["suppr_projet"])) { 
-	$res = $db->suppressionProjet($_POST["suppr_projet"]);
+	$res = $db->supprimerProjetBDD($_POST["suppr_projet"]);
 	$s->suppressionCookies();
-	if($res) header("Location: index.php");
+	if (isset($_POST["pageActuelle"]))
+	if ($res) header("Location: listeProjets.php?page=".$_POST["pageActuelle"]);
 	exit();
 }
 
@@ -18,7 +19,7 @@ if (isset($_COOKIE["id_projet"])) {
 ?>
 		<article>
 			<div class="col-sm-8 text-left">
-				<h2><?php echo $row["PRO_nom"];?></h2>
+				<h2>Projet '<?php echo $row["PRO_nom"];?>'</h2>
 				<hr>
 
 				<dl class="dl-horizontal">
@@ -68,6 +69,10 @@ if (isset($_COOKIE["id_projet"])) {
 		<aside>
 			<div class="col-sm-2 sidenav">
 				<form style="display: inline;" action="../web/formulaireProjet.php" method="post">
+          <input type="hidden" name="action" value="éditer"/>
+          <input type="hidden" name="nom" value="<?php echo $row["PRO_nom"];?>"/>
+          <input type="hidden" name="client" value="<?php echo $row["PRO_client"];?>"/>
+          <input type="hidden" name="descr" value="<?php echo $row["PRO_description"];?>"/>
 					<input class="btn btn-primary" type="submit" value="Éditer le projet"/>
 				</form>
 				<br>

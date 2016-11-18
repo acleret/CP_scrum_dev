@@ -17,16 +17,16 @@ if (isset($_SESSION["session"])) {
 		$s->nav($db);
 
 		$nom = "";
-		if (isset($_GET["nom"])) {
-			$nom = $_GET["nom"];
+		if (isset($_POST["nom"])) {
+			$nom = $_POST["nom"];
 		}
 		$client = "";
-		if (isset($_GET["client"])) {
-			$client = $_GET["client"];
+		if (isset($_POST["client"])) {
+			$client = $_POST["client"];
 		}
 		$description = "";
-		if (isset($_GET["descr"])) {
-			$description = $_GET["descr"];
+		if (isset($_POST["descr"])) {
+			$description = $_POST["descr"];
 		}
 ?>
 		<script>
@@ -69,6 +69,12 @@ if (isset($_SESSION["session"])) {
 					</div>
 					<div class="form-group">
 						<div class="col-md-offset-0 col-md-8">
+<?php 			// depuis le bouton "Modifier" de listeProjets.php
+						if (isset($_POST["idProjet"]) && isset($_POST["pageActuelle"])) { 
+?>												
+							<input type="hidden" name="idProjet" value="<?php echo $_POST["idProjet"]; ?>"/>
+							<input type="hidden" name="pageActuelle" value="<?php echo $_POST["pageActuelle"]; ?>"/>
+<?php 			} ?>
 							<input class="btn btn-primary" type="submit" value="Valider">
 						</div>
 					</div>
