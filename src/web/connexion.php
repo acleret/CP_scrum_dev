@@ -27,7 +27,7 @@ if (!isset($_SESSION["session"])) {
 ?>
               <form action="../web/verificationConnexion.php" class="form-horizontal" method="post" accept-charset="utf-8">
                 <div <?php if($erreurKO) echo 'class="form-group has-error"'; else echo 'class="form-group"'; ?>>
-                  <div class="col-md-8"><input name="identifiant" placeholder="Idenfiant" class="form-control" type="text" id="DevPseudo" required /></div>
+                  <div class="col-md-8"><input name="identifiant" placeholder="Identifiant" class="form-control" type="text" id="DevPseudo" required /></div>
                 </div>
                 <div <?php if($erreurKO) echo 'class="form-group has-error"'; else echo 'class="form-group"'; ?>>
                   <div class="col-md-8"><input name="motDePasse" placeholder="Mot de passe" class="form-control" type="password" id="DevMDP" required /></div>
