@@ -32,7 +32,7 @@ class Structure {
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.php">CdP</a>
+            <a class="navbar-brand" href="cdp.php">CdP</a>
           </div>
           <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
