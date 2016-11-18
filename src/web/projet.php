@@ -23,6 +23,9 @@ if (isset($_COOKIE["id_projet"])) {
 				<hr>
 
 				<dl class="dl-horizontal">
+    				<dt>Date de création</dt>
+					<dd><?php echo $row["PRO_dateCreation"];?></dd>
+					<br>
 					<dt>Client</dt>
 					<dd><?php echo $row["PRO_client"];?></dd>
 					<dt>Product owner</dt>
