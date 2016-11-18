@@ -87,7 +87,7 @@ CREATE TABLE `tache` (
   `TAC_nbJours` int(11) NOT NULL,
   `TAC_dateDepart` date NOT NULL,
   `TAC_dateFin` date NOT NULL,
-  `set` enum('TO DO','ON GOING','TO TEST','DONE') DEFAULT NULL,
+  `TAC_etat` enum('TO DO','ON GOING','TO TEST','DONE') DEFAULT NULL,
   `DEV_id` int(11) NOT NULL,
   `US_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
