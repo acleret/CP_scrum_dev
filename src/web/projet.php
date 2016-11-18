@@ -76,13 +76,13 @@ if (isset($_COOKIE["id_projet"])) {
           <input type="hidden" name="nom" value="<?php echo $row["PRO_nom"];?>"/>
           <input type="hidden" name="client" value="<?php echo $row["PRO_client"];?>"/>
           <input type="hidden" name="descr" value="<?php echo $row["PRO_description"];?>"/>
-					<input class="btn btn-primary" type="submit" value="Éditer le projet"/>
+					<input class="btn btn-default" type="submit" value="Modifier"/>
 				</form>
 				<br>
 				<br>
 				<form style="display: inline;" action="" method="post">
 					<input type="hidden" name="suppr_projet" value="<?php echo $_COOKIE["id_projet"]; ?>"/>
-					<input class="btn btn-primary" type="submit" value="Supprimer le projet"/>
+					<input class="btn btn-danger" type="submit" value="Supprimer"/>
 				</form>
 			</div>
 		</aside>

@@ -153,7 +153,7 @@ if (isset($_COOKIE["id_projet"])) {
     if (isset($_SESSION["session"])) {
       if ($db->estMembreProjet($id_pro, $_SESSION["id_co"])) {
 ?>
-                    <td style="text-align: right">
+                    <td>
                       <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modificationModal<?php echo $row["US_id"]; ?>">Modifier</button>
                       <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#supprimerModal<?php echo $row["US_id"]; ?>">Supprimer</button>
                     </td>

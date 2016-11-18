@@ -50,7 +50,8 @@ if (isset($_COOKIE["id_projet"])) {
                 <thead>
                   <tr>
                     <th>Numéro</th>
-<th>Début</th>
+                    <th>Début</th>
+                    <th>Kanban</th>
 <?php
   if (isset($_SESSION["session"]) && $db->estMembreProjet($row["PRO_id"], $_SESSION["id_co"]))
       echo "              <th>Actions</th>\n" ;
@@ -76,6 +77,12 @@ $liste_sprints = $db->listeSprints($id_pro);  // on réinitialiste liste_sprints
                       </form>
                     </td>
                     <td><?php echo $db->ordonnerDate($row_sprints["SPR_dateDebut"]); ?></td>
+                    <td>
+                      <form style="display: inline;" action="kanban.php" method="post">
+                        <input type="hidden" name="id_sprint" value="<?php echo $id_spr; ?>"/>
+                        <input class="btn btn-link" type="submit" value="Kanban"/>
+                      </form>
+                    </td>
 <?php
     if (isset($_SESSION["session"]) && $db->estMembreProjet($row["PRO_id"], $_SESSION["id_co"])) {
 ?>
@@ -90,9 +97,6 @@ $liste_sprints = $db->listeSprints($id_pro);  // on réinitialiste liste_sprints
                       <form style="display: inline;" action="" method="post">
                         <input type="hidden" name="suppr_sprint" value="<?php echo $id_spr;?>"/>
                         <input class="btn btn-danger" type="submit" value="Supprimer"/>
-                      </form>
-                      <form style="display: inline;" action="kanban.php" method="post">
-                        <input class="btn btn-primary" type="submit" value="Kanban"/>
                       </form>
                     </td>
 <?php
