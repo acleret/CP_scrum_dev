@@ -370,7 +370,18 @@ echo "<br>\n";
 echo "<b>// test modifUserStory</b><br>\n";
 // expect "US modifié"
 $id_us = $test->maxIDUserStory();
-if ($test->modifUserStory($id_us, "US1Modifié", 8, "NULL", "NULL")) {
+if ($test->modifUserStory($id_us, "US1Modifié", 8, "NULL")) {
+  echo "* US ".$id_us." modifié<br>\n";
+} else {
+  echo "* Erreur dans la modification des données d'une US ".$id_us."<br>\n";
+}
+echo "<br>\n";
+
+// test modifUserStoryProductOwner
+echo "<b>// test modifUserStoryProductOwner</b><br>\n";
+// expect "US modifié"
+$id_us = $test->maxIDUserStory();
+if ($test->modifUserStoryProductOwner($id_us, "US1Modifié", 8, 4, "NULL")) {
   echo "* US ".$id_us." modifié<br>\n";
 } else {
   echo "* Erreur dans la modification des données d'une US ".$id_us."<br>\n";
