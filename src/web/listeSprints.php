@@ -9,15 +9,25 @@ if (isset($_COOKIE["id_projet"])) {
   $liste_sprints = $db->listeSprints($id_pro);
   $row_sprints = $liste_sprints->fetch_assoc();
 
-  if (isset($_POST["numero"])) {
+  if (isset($_POST["ajout_sprint"])) {
     $db->ajoutSprint($_POST["numero"], $_POST["dateDebut"], $_POST["duree"], $id_pro);
   }
 
-  if (isset($_POST["suppression"])) {
-    $db->supprimerSprint($_POST["suppression"]);
+  if (isset($_POST["suppr_sprint"])) {
+    $db->supprimerSprint($_POST["suppr_sprint"]);
   }
 
-  $s->head("Sprints");
+  if (isset($_POST["modif_sprint"])) {
+    $id_sprint_modif = $_POST["modif_sprint"];
+    $infos_sprint_modif = $db->infosSprint($id_sprint_modif);
+    $row_sprint_modif = $infos_sprint_modif->fetch_assoc();
+    if($_POST["num_sprint"] == NULL) $modif_num = $row_sprint_modif["SPR_numero"]; else $modif_num = $_POST["num_sprint"];
+    if($_POST["date_sprint"] == NULL) $modif_date = $row_sprint_modif["SPR_dateDebut"]; else $modif_date = $_POST["date_sprint"];
+    if($_POST["duree_sprint"] == NULL) $modif_duree = $row_sprint_modif["SPR_duree"]; else $modif_duree = $_POST["duree_sprint"];
+    $db->modifSprint($id_sprint_modif, $modif_num, $modif_date, $modif_duree);
+  }
+
+  $s->head($row['PRO_nom']);
   $s->header($db);
   $s->nav($db);
 ?>
@@ -71,10 +81,14 @@ $liste_sprints = $db->listeSprints($id_pro);  // on réinitialiste liste_sprints
 ?>
                     <td>
                       <form style="display: inline;" action="modificationSprint.php" method="post">
+                        <input type="hidden" name="id_sprint" value="<?php echo $id_spr; ?>"/>
+                        <input type="hidden" name="nom_sprint" value="<?php echo $nom_spr; ?>"/>
+                        <input type="hidden" name="num_sprint" value="<?php echo $row_sprints["SPR_numero"]; ?>"/>
+                        <input type="hidden" name="duree_sprint" value="<?php echo $row_sprints["SPR_duree"]; ?>"/>
                         <input class="btn btn-default" type="submit" value="Modifier"/>
                       </form>
                       <form style="display: inline;" action="" method="post">
-                        <input type="hidden" name="suppression" value="<?php echo $id_spr;?>"/>
+                        <input type="hidden" name="suppr_sprint" value="<?php echo $id_spr;?>"/>
                         <input class="btn btn-danger" type="submit" value="Supprimer"/>
                       </form>
                       <form style="display: inline;" action="kanban.php" method="post">

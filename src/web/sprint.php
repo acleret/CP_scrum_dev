@@ -132,10 +132,15 @@ $listeUS2 = $db->listeUserStoryOutOfSprint($id_spr, $id_pro);
           <aside>
             <div class="col-sm-2 sidenav">
               <form  action="../web/modificationSprint.php" method="post">
-                <input class="btn btn-primary" type="submit" value="Modifier"/>
+                <input type="hidden" name="id_sprint" value="<?php echo $id_spr; ?>"/>
+                <input type="hidden" name="nom_sprint" value="<?php echo $nom_spr; ?>"/>
+                <input type="hidden" name="num_sprint" value="<?php echo $row2["SPR_numero"]; ?>"/>
+                <input type="hidden" name="duree_sprint" value="<?php echo $row2["SPR_duree"]; ?>"/>
+                <input class="btn btn-default" type="submit" value="Modifier"/>
               </form>
               <br>
-              <form  action="../web/kanban.php" method="post">
+              <form  action="../web/listeSprints.php" method="post">
+                <input type="hidden" name="suppression" value="<?php echo $id_spr; ?>"/>
                 <input class="btn btn-danger" type="submit" value="Supprimer"/>
               </form>
             </div>

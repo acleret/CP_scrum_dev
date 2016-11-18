@@ -16,7 +16,7 @@ if (isset($_COOKIE["id_projet"])) {
               header("Location: ../web/backlog.php?modif=OK");
               exit();
             } else {
-              header("Location: ../web/backlog.php?modif=erreur");
+                header("Location: ../web/backlog.php?modif=erreur");
               exit();
             }
           } else {

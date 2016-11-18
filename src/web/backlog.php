@@ -23,7 +23,7 @@ if (isset($_COOKIE["id_projet"])) {
           <script>
             $(document).ready(function() {
               $('#tableUS').DataTable( {
-                "order": [[ 3, "asc" ]],
+                "order": [[ 4, "asc" ]],
                 "oLanguage": {
                   "sLengthMenu": "Afficher _MENU_ entrées",
                   "sSearch": "<span class=\"glyphicon glyphicon-search\"></span> Recherche:",
@@ -124,6 +124,7 @@ if (isset($_COOKIE["id_projet"])) {
                     <th>Nom</th>
                     <th>Chiffrage</th>
                     <th>Priorité</th>
+		    <th>Sprint</th>
                     <th>Date de création</th>
 <?php
   if (isset($_SESSION["session"])) {
@@ -146,6 +147,7 @@ if (isset($_COOKIE["id_projet"])) {
                     <td><?php echo $row["US_nom"]; ?></td>
                     <td><?php echo $row["US_chiffrageAbstrait"]; ?></td>
                     <td><?php echo $row["US_priorite"]; ?></td>
+                    <td><?php echo $db->numeroSprint($row["SPR_id"]); ?></td>
                     <td><?php echo $row["US_dateCreation"]; ?></td>
 <?php
     if (isset($_SESSION["session"])) {

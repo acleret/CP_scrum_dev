@@ -526,9 +526,9 @@ class Requetes {
 
     
     // modif US
-    public function modifUserStory($id_us, $nom_us, $chiffrage, $id_spr) {
+    public function modifUserStory($id_us, $nom_us, $chiffrage, $id_pro) {
         $sql = "UPDATE us
-                SET US_nom = '".$nom_us."', US_chiffrageAbstrait = ".$chiffrage.", SPR_id = ".$id_spr."
+                SET US_nom = '".$nom_us."', US_chiffrageAbstrait = ".$chiffrage.", PRO_id = ".$id_pro."
                 WHERE US_id = ".$id_us.";";
         if (!$result = $this->conn->query($sql)) {
             printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
@@ -538,9 +538,9 @@ class Requetes {
     }
 
     // modif US en tant que ProductOwner
-    public function modifUserStoryProductOwner($id_us, $nom_us, $chiffrage, $priorite, $id_spr) {
+    public function modifUserStoryProductOwner($id_us, $nom_us, $chiffrage, $priorite, $id_pro) {
         $sql = "UPDATE us
-                SET US_nom = '".$nom_us."', US_chiffrageAbstrait = ".$chiffrage.", US_priorite = ".$priorite.", SPR_id = ".$id_spr."
+                SET US_nom = '".$nom_us."', US_chiffrageAbstrait = ".$chiffrage.", US_priorite = ".$priorite.", PRO_id = ".$id_pro."
                 WHERE US_id = ".$id_us.";";
         if (!$result = $this->conn->query($sql)) {
             printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
@@ -682,7 +682,7 @@ class Requetes {
                 VALUES ('".$numero."', '".$dateDebut."', '".$duree."', '".$id_pro."');";
         if (!$result = $this->conn->query($sql)) {
             printf("Message d'erreur: %s<br>", $this->conn->error);
-            return false;
+            return NULL;
         }
         return true;
     }
@@ -693,10 +693,10 @@ class Requetes {
         $sql_ret_spr = "DELETE FROM sprint WHERE SPR_id = ".$id_spr.";";
         if (!$result = $this->conn->query($sql_ret_us)) {
             printf("Message d'erreur: %s<br>", $this->conn->error);
-            return false;
+            return NULL;
         } else if (!$result = $this->conn->query($sql_ret_spr)) {
             printf("Message d'erreur: %s<br>", $this->conn->error);
-            return false;
+            return NULL;
         }
         return true;
     }
@@ -708,7 +708,7 @@ class Requetes {
                 WHERE SPR_id=".$id_spr.";";
         if (!$result = $this->conn->query($sql)) {
             printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
-            return false;
+            return NULL;
        }
         return true;
     }
@@ -716,6 +716,21 @@ class Requetes {
     // ordonne une date : 2000-10-01 -> 01/10/00
     public function ordonnerDate($date) {
         return $date[8].$date[9]."/".$date[5].$date[6]."/".$date[2].$date[3] ;
+    }
+
+    // retourne le numéro du sprint à partir de son id
+    public function numeroSprint($id_spr) {
+        if (!empty($id_spr)) {
+            $sql = "SELECT SPR_numero FROM sprint WHERE SPR_id = ".$id_spr.";";
+            if (!$result = $this->conn->query($sql)) {
+                printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
+                return NULL;
+            }
+            $row = $result->fetch_assoc();
+            return $row["SPR_numero"];
+        } else {
+            return "";
+        }
     }
 
 		
