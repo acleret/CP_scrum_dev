@@ -37,7 +37,7 @@ if (isset($_COOKIE["id_projet"])) {
 $row2 = $infos_spr->fetch_assoc();
 ?>
                 <dt>Début</dt>
-                <dd><?php echo $row2["SPR_dateDebut"]; ?></dd>
+                  <dd><?php echo $db->ordonnerDate($row2["SPR_dateDebut"]); ?></dd>
                 <dt>Durée</dt>
                 <dd><?php echo $row2["SPR_duree"]." jours"; ?></dd>
               </dl></div>
@@ -46,7 +46,7 @@ $row2 = $infos_spr->fetch_assoc();
                   <input class="btn btn-primary" type="submit" value="Kanban"/>
                 </form>
               </div>
-            <table class="table table-bordered">
+            <table class="table table-striped table-hover">
               <thead>
                 <tr>
                   <th>User story</th>
@@ -93,7 +93,7 @@ if (isset($_SESSION["session"]) && $db->estMembreProjet($row["PRO_id"], $_SESSIO
             <hr>
             <h3>Ajouter user stories</h3>
             <br>
-            <table class="table table-bordered">
+            <table class="table table-striped table-hover">
               <thead>
                 <tr>
                   <th>User story</th>

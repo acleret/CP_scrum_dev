@@ -715,6 +715,8 @@ class Requetes {
 
     // ordonne une date : 2000-10-01 -> 01/10/00
     public function ordonnerDate($date) {
+        if (empty($date))
+            return NULL;
         return $date[8].$date[9]."/".$date[5].$date[6]."/".$date[2].$date[3] ;
     }
 

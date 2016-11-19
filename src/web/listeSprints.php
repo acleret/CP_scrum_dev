@@ -46,7 +46,7 @@ if (isset($_COOKIE["id_projet"])) {
 ?>
                 </dd>
               </dl>
-              <table class="table table-bordered">
+              <table class="table table-striped table-hover">
                 <thead>
                   <tr>
                     <th>Numéro</th>
@@ -73,7 +73,8 @@ $liste_sprints = $db->listeSprints($id_pro);  // on réinitialiste liste_sprints
     $nom_spr = "Sprint#".$row_sprints["SPR_numero"];
 ?>
                         <input type="hidden" name="id_sprint" value="<?php echo $id_spr;?>"/>
-                        <input class="url2" name="nom_sprint" type="submit" value="<?php echo $nom_spr;?>"/>
+                        <input type="hidden" name="nom_sprint" value="<?php echo $nom_spr;?>"/>
+                        <input class="btn btn-link"  type="submit" value="<?php echo $nom_spr;?>"/>
                       </form>
                     </td>
                     <td><?php echo $db->ordonnerDate($row_sprints["SPR_dateDebut"]); ?></td>
