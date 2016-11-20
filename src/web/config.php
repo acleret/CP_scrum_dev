@@ -14,7 +14,7 @@ require_once("../web/structure.php");
 $DBhost  = "localhost";  // serveur de la bdd
 $DBowner = "root";  // login SQL
 $DBpwd   = "";  // password SQL
-$DBname  = "CP_scrum"; // nom de la bdd
+$DBname  = "cp_scrum"; // nom de la bdd
 
 /******* Configuration BD au Cremi // à choisir si connexion au Cremi *******/
 /*
@@ -34,7 +34,7 @@ $DBname  = "acleret"; // nom de la bdd
 $db = new Requetes($DBhost, $DBowner, $DBpwd, $DBname);
 
 if ($db->verifConnexion()) {
-  die ("Connection failed: ".$test->verifConnexion());
+  die ("Connection failed: ".$db->verifConnexion());
 }
 
 /******* Creation structure d'une page *******/
