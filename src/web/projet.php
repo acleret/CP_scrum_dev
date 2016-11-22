@@ -35,7 +35,7 @@ if (isset($_COOKIE["id_projet"])) {
 						$row_PO = $infos_PO->fetch_assoc();
 						echo "<a href=\"profil.php?profil=".$row_PO["DEV_pseudo"]."\">".$row_PO["DEV_pseudo"]."</a>";
 						?></dd>
-					<dt>Scrum master</dt>		
+					<dt>Scrum master</dt>
 					<dd><?php
 								$id_SM = $row["DEV_idScrumMaster"];
 								$infos_SM = $db->infosDeveloppeur($id_SM);
@@ -73,9 +73,12 @@ if (isset($_COOKIE["id_projet"])) {
 			<div class="col-sm-2 sidenav">
 				<form style="display: inline;" action="../web/formulaireProjet.php" method="post">
           <input type="hidden" name="action" value="éditer"/>
+					<input type="hidden" name="idProjet" value="<?php echo $row["PRO_id"];?>"/>
           <input type="hidden" name="nom" value="<?php echo $row["PRO_nom"];?>"/>
           <input type="hidden" name="client" value="<?php echo $row["PRO_client"];?>"/>
           <input type="hidden" name="descr" value="<?php echo $row["PRO_description"];?>"/>
+          <input type="hidden" name="id_po" value="<?php echo $row["DEV_idProductOwner"];?>"/>
+          <input type="hidden" name="id_sm" value="<?php echo $row["DEV_idScrumMaster"];?>"/>
 					<input class="btn btn-default" type="submit" value="Modifier"/>
 				</form>
 				<br>

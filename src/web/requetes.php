@@ -156,8 +156,16 @@ class Requetes {
         }
     }
 
-    // retourne vrai si le développeur est membre du projet
+    // retourne vrai dès que la personne $id_dev est, au choix :
+		//	po, sm, développeur du projet $id_projet
     public function estMembreProjet($id_projet, $id_dev) {
+				return $this->estDeveloppeurProjet($id_projet, $id_dev) ||
+							$this->estScrumMaster($id_dev, $id_projet) ||
+							$this->estProductOwner($id_dev, $id_projet);
+    }
+		
+		// retourne vrai si le membre $id_dev est développeur du projet $id_projet
+    public function estDeveloppeurProjet($id_projet, $id_dev) {
         $sql = "SELECT * FROM inter_dev_projet
                 WHERE PRO_id = ".$id_projet." AND DEV_id = ".$id_dev.";";
         if (!$result = $this->conn->query($sql)) {
@@ -251,7 +259,7 @@ class Requetes {
         return $result->num_rows;
     }
 
-    // retourne les infos d'un développeur si les pseudo et mot de passe sont exacts
+    // retourne les infos d'un développeur ssi les pseudo et mot de passe correspondent
     public function testDeveloppeurConnexion($pseudo, $mdp) {
         $sql = "SELECT * FROM developpeur
                 WHERE DEV_pseudo='".$pseudo."' AND DEV_mdp='".$mdp."';";
@@ -262,7 +270,7 @@ class Requetes {
         return $result;
     }
 
-    // retourne le plus grand des id de developpeur
+    // retourne le plus grand des id de développeur
     public function maxIDDeveloppeur() {
         $sql = "SELECT MAX(DEV_id) FROM developpeur;";
         if (!$res = $this->conn->query($sql)) {
@@ -271,6 +279,17 @@ class Requetes {
         }
         $row = $res->fetch_assoc();
         return $row["MAX(DEV_id)"];
+    }
+		
+    // retourne le pseudo du développeur
+    public function pseudoDeveloppeur($id_dev) {
+        $sql = "SELECT DEV_pseudo FROM developpeur
+								WHERE DEV_id ='".$id_dev."';";
+        if (!$result = $this->conn->query($sql)) {
+            printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
+            return NULL;
+        }
+        return $result;
     }
 
 
@@ -311,26 +330,29 @@ class Requetes {
         return $result->num_rows;
     }
 
-		// démarche pour ajouter un projet dans la base de données 'cp_scrum'
+		// démarche pour ajouter un projet dans la base de données
 		// retourne vrai ssi : 
 		//  - le projet est rajouté
-		//  - le lien entre les développeurs et le projet sont créés
-		public function ajouterProjetBDD(){
+		//  - le lien entre membres et projet sont créés
+		public function ajouterProjetBDD(){ // Les arguments ne sont pas définis car la piste d'un po ou d'un sm null est envisageable : $nom, $client, $description, $idPO, $idSM, $idDevs
 				$numargs = func_num_args();
-				if ($numargs >= 5) {
-				  $arg_list = func_get_args();					
+				$arg_list = func_get_args();			
+
+				if ($numargs == 6) {
 					$idProjet = $this->ajoutNouveauProjet($arg_list[0], $arg_list[1], $arg_list[2], $arg_list[3], $arg_list[4]);
 					
 					if ($idProjet==0)
-							return false;
+						return false;
 
-					for ($i = 5; $i < $numargs; $i++) {
+					foreach($arg_list[5] as $valeur_idDev) {
+						if (!$this->estDeveloppeurProjet($idProjet, $valeur_idDev)) {
 							$sql = "INSERT INTO inter_dev_projet (DEV_id, PRO_id)
-											VALUES ('".$arg_list[$i]."', '".$idProjet."');";
+											VALUES ('".$valeur_idDev."', '".$idProjet."');";
 							if (!$result = $this->conn->query($sql)) {
-									printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
-									return NULL;
+								printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
+								return NULL;
 							}
+						}
 					}
 					return $idProjet;
 				}
@@ -349,7 +371,42 @@ class Requetes {
         return $this->conn->insert_id;
     }
 
-    // modifie les données du projet et retourne vrai quand c'est fait
+    // démarche pour modifier les informations concernant un projet dans la base de données
+		// retourne vrai ssi :
+		// 	- les infos sont toutes mises à jour
+		//  - les mises à jour des membres sont effectuées
+    public function modifierProjetBDD(){ // Les arguments ne sont pas définis car la piste d'un po ou d'un sm null est envisageable : $id_pro, $nom, $client, $description, $idPO, $idSM, $idDevs
+				$numargs = func_num_args();
+				$arg_list = func_get_args();			
+				
+				if ($numargs == 7) {
+					$idProjet = $this->modifProjet($arg_list[0], $arg_list[1], $arg_list[2], $arg_list[3], $arg_list[4], $arg_list[5]);
+					
+					if (!$idProjet)
+						return false;
+					
+					// retrait des liens développeur-projet
+					$actuelsdevsProjet = $this->listeDeveloppeursProjet($arg_list[0]);
+					while ($row_dev = $actuelsdevsProjet->fetch_assoc()) {
+						$this->suppressionDeveloppeurProjet($row_dev['DEV_id'], $arg_list[0]);
+					}
+					
+					// rajout des liens développeur-projet dans la table 'inter_dev_projet'
+					foreach($arg_list[6] as $valeur_idDev) {
+							$sql = "INSERT INTO inter_dev_projet (DEV_id, PRO_id)
+											VALUES ('".$valeur_idDev."', '".$arg_list[0]."');";
+							if (!$result = $this->conn->query($sql)) {
+								printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
+								return NULL;
+							}
+					}
+					return true;
+				}
+				return false;
+    }
+		
+    // modifie les données du projet $id_pro dans la table 'projet' 
+		// retourne vrai quand c'est fait
     public function modifProjet($id_pro, $nom, $client, $description, $idPO, $idSM){
         $sql = "UPDATE projet
                 SET PRO_nom='".$nom."', PRO_client='".$client."', PRO_description='".$description."', DEV_idProductOwner='".$idPO."', DEV_idScrumMaster='".$idSM."'
@@ -408,6 +465,8 @@ class Requetes {
         return true;
 		}
 		
+		// retourne vrai après suppression du lien développeur-projet dans la 
+		// table 'inter_dev_projet'
 		public function suppressionDeveloppeurProjet($id_dev, $id_pro){
 				$sql = "DELETE FROM inter_dev_projet
 								WHERE DEV_id=".$id_dev." AND PRO_id=".$id_pro.";";

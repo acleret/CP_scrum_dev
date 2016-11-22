@@ -22,6 +22,16 @@ if ($test->testIDDeveloppeur($id_dev)) {
 }
 echo "</ul><br>\n";
 
+// test pseudoDeveloppeur
+echo "<b>// test pseudoDeveloppeur</b><br>\n<ul>";
+$pseudo_dev1 = $test->pseudoDeveloppeur($id_dev)->fetch_assoc();
+if (($res = $pseudo_dev1["DEV_pseudo"]) == "devpseudo01") {
+  echo "<li class=\"correct\">Pseudo correct</li>\n";
+} else {
+  echo "<li class=\"erreur\">Erreur : le pseudo ne correpond pas</li>\n";
+}
+echo "</ul><br>\n";
+
 // test listeDeveloppeurs
 echo "<b>// test listeDeveloppeurs</b><br>\n<ul>";
 $result = $test->listeDeveloppeurs();
@@ -119,14 +129,14 @@ if (!$test->testPseudoDeveloppeur($newpseudo)) {
 }
 echo "</ul><br>\n";
 
-// test estMembreProjet
-echo "<b>// test estMembreProjet</b><br>\n<ul>";
-if ($test->estMembreProjet(1, 1)) {
-  echo "<li class=\"correct\">Le développeur 1 est membre du projet 1</li>\n";
+// test estDeveloppeurProjet
+echo "<b>// test estDeveloppeurProjet</b><br>\n<ul>";
+if ($test->estDeveloppeurProjet(1, 1)) {
+  echo "<li class=\"correct\">Le développeur 1 est développeur du projet 1</li>\n";
 } else {
     echo "<li class=\"erreur\">Le développeur 1 n'est pas membre du projet 1</li>\n";
 }
-if ($test->estMembreProjet(3, 1)) {
+if ($test->estDeveloppeurProjet(3, 1)) {
   echo "<li class=\"correct\">Le développeur 1 est membre du projet 3</li>\n";
 } else {
     echo "<li class=\"erreur\">Le développeur 1 n'est pas membre du projet 3</li>\n";
@@ -152,6 +162,17 @@ if ($test->estProductOwner($id_dev, $id_pro)) {
   echo "<li class=\"correct\">Le développeur ".$id_dev." est ProductOwner sur le projet ".$id_pro."</li>\n";
 } else {
   echo "<li class=\"erreur\">Le développeur ".$id_dev." n'est pas ProductOwner sur le projet ".$id_pro."</li>\n";
+}
+echo "</ul><br>\n";
+
+// test estMembreProjet
+echo "<b>// test estMembreProjet</b><br>\n<ul>";
+$id_dev = 1;
+$id_pro = 1;
+if ($test->estMembreProjet($id_dev, $id_pro)) {
+  echo "<li class=\"correct\">La personne n°".$id_dev." est bien membre du projet ".$id_pro."</li>\n";
+} else {
+  echo "<li class=\"erreur\">La personne n°".$id_dev." n'est pas membre du projet ".$id_pro."</li>\n";
 }
 echo "</ul><br>\n";
 
@@ -236,10 +257,17 @@ echo "</ul><br>\n";
 // test supprimerProjetBDD
 echo "<b>// test supprimerProjetBDD</b><br>\n<ul>";
 if ($test->supprimerProjetBDD(5)) {
-	echo "<li class=\"correct\">Projet 5 supprimé</li>\n";
+	echo "<li class=\"correct\">Projet 5 bien supprimé</li>\n";
 } else {
   echo "<li class=\"erreur\">Erreur lors de la suppression d'un projet</li>\n";
 }
+echo "</ul><br>\n";
+
+// test nombreProjets
+echo "<b>// test nombreProjets</b><br>\n<ul>";
+$nb_projets = $test->nombreProjets();
+echo ($nb_projets == $test->listeProjets()->num_rows)? "<li class=\"correct\">Bon calcul : "
+.$nb_projets." projets</li>\n" : "<li class=\"erreur\">Mauvais calcul</li>\n";
 echo "</ul><br>\n";
 
 // test listeProjets
@@ -250,40 +278,34 @@ while ($row = $result->fetch_assoc()) {
 }
 echo "</ul><br>\n";
 
-// test nombreProjets
-echo "<b>// test nombreProjets</b><br>\n<ul>";
-$nb_projets = $test->nombreProjets();
-echo ($nb_projets == $test->listeProjets()->num_rows)? "<li class=\"correct\">bon calcul : "
-.$nb_projets." projets</li>\n" : "<li class=\"erreur\">mauvais calcul</li>\n";
-echo "</ul><br>\n";
-
-// test ajoutNouveauProjet
-echo "<b>// test ajoutNouveauProjet</b><br>\n<ul>";
-if ($test->ajoutNouveauProjet("MonNouveauProjet", "Anonymous", "Projet test dans la BD", 1, 1)) {
-  echo "<li class=\"correct\">Projet créé</li>\n";
-} else {
-  echo "<li class=\"erreur\">Erreur dans la création du projet</li>\n";
-}
-echo "</ul><br>\n";
-
 // test ajouterProjetBDD
 echo "<b>// test ajouterProjetBDD</b><br>\n<ul>";
 $idProjetMaxEnVisu = $test->maxIDProjet()+1;
-$idProjet = $test->ajouterProjetBDD("MonNouveauProjet", "Anonymous", "Projet test dans la BD", 1, 1, 2, 1);
+$devs = array(0 => 1, 1 => 2, 2 => 3);
+$idProjet = $test->ajouterProjetBDD("NouveauProjet", "Anonymous", "Projet test dans la BD", 1, 1, $devs);
 if ($idProjetMaxEnVisu == $idProjet) {
+echo $idProjet;
   echo "<li class=\"correct\">Projet créé</li>\n";
 } else {
   echo "<li class=\"erreur\">Erreur dans la création du projet</li>\n";
 }
 echo "</ul><br>\n";
 
-// test modifProjet
-echo "<b>// test modifProjet</b><br>\n<ul>";
-$idprojet = $test->maxIDProjet();
-if ($test->modifProjet($idprojet, "MonSupeeerProjet", "Anonymous", "Projet test dans la BD", 1, 1)) {
-  echo "<li class=\"correct\">Projet ".$idprojet." modifié</li>\n";
+// test modifierProjetBDD
+echo "<b>// test modifierProjetBDD</b><br>\n<ul>";
+$result = $test->infosProjet($idProjet);
+$row = $result->fetch_assoc();
+echo "<li>Projet ".$idProjet." avant modif : <br>";
+echo $row["PRO_id"]." | ".$row["PRO_nom"]." | ".$row["PRO_client"]." | ".$row["PRO_description"]." | ".$row["DEV_idProductOwner"]." | ".$row["DEV_idScrumMaster"]."<br></li><br>\n\n";
+$devs[] = 10; // on rajoute le dév 10
+unset($devs[2]); // on retire le dév 03
+if ($test->modifierProjetBDD($idProjet, "MonDernierProjet", "Anonymous", "Projet test dans la BD", 1, 2, $devs)) {
+  echo "<li class=\"correct\">Projet ".$idProjet." bien modifié : <br>";
+	$result2 = $test->infosProjet($idProjet);
+	$row2 = $result2->fetch_assoc();
+	echo $row2["PRO_id"]." | ".$row2["PRO_nom"]." | ".$row2["PRO_client"]." | ".$row2["PRO_description"]." | ".$row2["DEV_idProductOwner"]." | ".$row2["DEV_idScrumMaster"]."</li>\n";
 } else {
-  echo "<li class=\"erreur\">Erreur dans la modification des données du projet  ".$idprojet."</li>\n";
+  echo "<li class=\"erreur\">Erreur dans la modification des données du projet ".$idprojet."</li>\n";
 }
 echo "</ul><br>\n";
 
@@ -304,7 +326,6 @@ if ($test->testIDProjet(1)) {
   echo "<li class=\"erreur\">Le projet 1 n'existe pas</li>\n";
 }
 echo "</ul><br>\n";
-
 
 
 /************************************************************************/
