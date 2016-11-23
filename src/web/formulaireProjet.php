@@ -119,7 +119,7 @@ if (isset($_SESSION["session"])) {
 <?php 				if ($_POST["action"] == "ajouter") {  
 								echo "Ajouter un scrum master</label>";
 							} else if ($_POST["action"] == "éditer") {  
-								echo "Changer de product owner</label><br>\n
+								echo "Changer de scrum master</label><br>\n
 								(Actuellement, c'est : ".$nomSM.")";
 							}
 ?>
@@ -198,9 +198,11 @@ if (isset($_SESSION["session"])) {
 						</div>
 					</div>
 					<br><br>
-					<p class="information" style="font-style: italic;"><span style="text-decoration: underline">NB :</span> Surtout pas d'inquiétudes si vous ne savez pas encore à qui affecter ces 3 différents rôles. <br>
-					&emsp;&emsp;&nbsp;Si pour l'un, vous ne sélectionnez aucune option, nous vous attribuons par défaut le poste. <br>
-					&emsp;&emsp;&nbsp;Évidemment vous pourrez modifier ces informations plus tard dans la page d'édition de ce nouveau projet.</p>
+					<p class="information" style="font-style: italic;">
+                                <span style="text-decoration: underline">NB :</span>
+                                Surtout, pas d'inquiétudes ! Si vous ne savez pas encore qui affecter à un (ou aux 3) poste(s), ne sélectionnez personne. <br> 
+                                &emsp;&emsp;&nbsp;Par défaut, nous vous attribuons ce(s) poste(s). <br>
+                                &emsp;&emsp;&nbsp;Évidemment, vous pourrez modifier ces informations dans la page d'édition de ce nouveau projet.</p>
 					<br>
 					<div class="form-group">
 						<div class="col-md-offset-0 col-md-8">
