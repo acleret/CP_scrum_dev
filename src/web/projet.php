@@ -4,8 +4,12 @@ require_once("config.php");
 if (isset($_POST["suppr_projet"])) { 
 	$res = $db->supprimerProjetBDD($_POST["suppr_projet"]);
 	$s->suppressionCookies();
-	if (isset($_POST["pageActuelle"]))
-	if ($res) header("Location: listeProjets.php?page=".$_POST["pageActuelle"]);
+	if (isset($_POST["pageActuelle"])) {
+        if ($res)
+            header("Location: listeProjets.php?page=".$_POST["pageActuelle"]);
+    }
+    else
+        header("Location: index.php");
 	exit();
 }
 
@@ -93,7 +97,6 @@ if (isset($_COOKIE["id_projet"])) {
 			}
 		}
 		$s->footer();
-	//}
 }	else {
 	$url = $_SERVER["REQUEST_URI"];
 	header("Location: ../web/index.php?url=".$url);
