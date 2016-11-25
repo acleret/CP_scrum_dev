@@ -104,7 +104,7 @@ $s->nav($db);
 						<li>
 							<form style="display: inline;" action="setProjet.php" method="post">
 								<input type="hidden" name="id_projet" value="<?php echo $projet["PRO_id"]; ?>"/>
-								<input class="url2" type="submit" value="<?php echo $projet["PRO_nom"]; ?>"/>
+								<input class="btn btn-link" type="submit" value="<?php echo $projet["PRO_nom"]; ?>"/>
 							</form><br>
 							Créé le <?php echo $projet["PRO_dateCreation"]; ?> pour <?php echo $projet["PRO_client"]; ?>
 						</li>
@@ -125,7 +125,7 @@ $s->nav($db);
 						<li>
 							<form style="display: inline;" action="setProjet.php" method="post">
 								<input type="hidden" name="id_projet" value="<?php echo $projet["PRO_id"]; ?>"/>
-								<input class="url2" type="submit" value="<?php echo $projet["PRO_nom"]; ?>"/>
+								<input class="btn btn-link" type="submit" value="<?php echo $projet["PRO_nom"]; ?>"/>
 							</form><br>
 							Créé le <?php echo $projet["PRO_dateCreation"]; ?> pour <?php echo $projet["PRO_client"]; ?>
 						</li>
@@ -146,7 +146,7 @@ $s->nav($db);
 						<li>
 							<form style="display: inline;" action="setProjet.php" method="post">
 								<input type="hidden" name="id_projet" value="<?php echo $projet["PRO_id"]; ?>"/>
-								<input class="url2" type="submit" value="<?php echo $projet["PRO_nom"]; ?>"/>
+								<input class="btn btn-link" type="submit" value="<?php echo $projet["PRO_nom"]; ?>"/>
 							</form><br>
 							Créé le <?php echo $projet["PRO_dateCreation"]; ?> pour <?php echo $projet["PRO_client"]; ?><br>
 						</li>
