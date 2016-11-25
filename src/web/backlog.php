@@ -27,7 +27,9 @@ if (isset($_COOKIE["id_projet"])) {
                 "oLanguage": {
                   "sLengthMenu": "Afficher _MENU_ entrées",
                   "sSearch": "<span class=\"glyphicon glyphicon-search\"></span> Recherche:",
+                  "sEmptyTable": "Aucunes données",
                   "sInfo": "Affichage de _START_ à _END_ sur _TOTAL_ entrées",
+                  "sInfoEmpty": "",
                   "oPaginate": {
                     "sPrevious": "Précédent",
                     "sNext": "Suivant"

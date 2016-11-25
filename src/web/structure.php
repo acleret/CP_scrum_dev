@@ -126,15 +126,20 @@ if ($liste_sprints->num_rows > 0) {
 <?php
       $id_dev = $_SESSION["id_co"];
       $result = $db->listeProjetsDeveloppeur($id_dev);
+?>
+              <div class="scroll">
+<?php
       while ($row = $result->fetch_assoc()) {
 ?>
-              <form style="display: inline;" action="../web/setProjet.php" method="post">
-                <input type="hidden" name="id_projet" value="<?php echo $row["PRO_id"]; ?>"/>
-                <input class="url" type="submit" value="<?php echo substr($row["PRO_nom"], 0, 19); ?>"/>
-              </form>
-              <br>
+                <form action="../web/setProjet.php" method="post">
+                  <input type="hidden" name="id_projet" value="<?php echo $row["PRO_id"]; ?>"/>
+                  <input class="btn-xs btn-link" type="submit" value="<?php echo substr($row["PRO_nom"], 0, 19); ?>"/>
+                </form>
 <?php
       }
+?>
+              </div>
+<?php
    } else {
 ?>
               <p>

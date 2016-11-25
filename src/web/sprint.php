@@ -34,7 +34,9 @@ if (isset($_COOKIE["id_projet"])) {
                 "oLanguage": {
                   "sLengthMenu": "Afficher _MENU_ entrées",
                   "sSearch": "<span class=\"glyphicon glyphicon-search\"></span> Recherche:",
+                  "sEmptyTable": "Aucunes données",
                   "sInfo": "Affichage de _START_ à _END_ sur _TOTAL_ entrées",
+                  "sInfoEmpty": "",
                   "oPaginate": {
                     "sPrevious": "Précédent",
                     "sNext": "Suivant"
@@ -66,7 +68,7 @@ $row2 = $infos_spr->fetch_assoc();
 	      <br>
 	      <br>
 	      <hr>
-	      <table id="tableUS" class="table table-striped table-hover" cellspacing="0" width="100%">
+	      <table id="tableUS" class="table table-striped table-hover">
                 <thead>
                   <tr>
                     <th>User story</th>

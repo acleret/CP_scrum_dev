@@ -2,7 +2,7 @@
 require_once("../web/config.php");
 
 $s->head("test bootstrap structure example");
-$s->header();
+$s->header($db);
 $s->nav($db);
 ?>
           <article>

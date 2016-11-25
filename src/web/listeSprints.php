@@ -34,11 +34,13 @@ if (isset($_COOKIE["id_projet"])) {
           <script>
             $(document).ready(function() {
               $('#tableSprint').DataTable( {
-                "order": [[ 2, "asc" ]],
+                "order": [[ 0, "asc" ]],
                 "oLanguage": {
                   "sLengthMenu": "Afficher _MENU_ entrées",
                   "sSearch": "<span class=\"glyphicon glyphicon-search\"></span> Recherche:",
+                  "sEmptyTable": "Aucunes données",
                   "sInfo": "Affichage de _START_ à _END_ sur _TOTAL_ entrées",
+                  "sInfoEmpty": "",
                   "oPaginate": {
                     "sPrevious": "Précédent",
                     "sNext": "Suivant"
@@ -63,7 +65,7 @@ if (isset($_COOKIE["id_projet"])) {
                 </dd>
               </dl>
               <hr>
-              <table id="tableSprint" class="table table-striped table-hover" cellspacing="0" width="100%">
+              <table id="tableSprint" class="table table-striped table-hover">
                 <thead>
                   <tr>
                     <th>Numéro</th>
@@ -144,7 +146,7 @@ $liste_sprints = $db->listeSprints($id_pro);  // on réinitialiste liste_sprints
           </aside>
 <?php
   $s->footer();
-}  else {
+} else {
   header("Location: ../web/index.php");
   exit();
 }

@@ -16,11 +16,12 @@ $s->nav($db);
           <script>
             $(document).ready(function() {
               $('#tableUS').DataTable( {
-                "order": [[ 4, "asc" ]],
                 "oLanguage": {
                   "sLengthMenu": "Afficher _MENU_ entrées",
                   "sSearch": "<span class=\"glyphicon glyphicon-search\"></span> Recherche:",
+                  "sEmptyTable": "Aucunes données",
                   "sInfo": "Affichage de _START_ à _END_ sur _TOTAL_ entrées",
+                  "sInfoEmpty": "",
                   "oPaginate": {
                     "sPrevious": "Précédent",
                     "sNext": "Suivant"
@@ -42,11 +43,11 @@ $s->nav($db);
                     <th>Auteur</th>
 <?php
 if (isset($_SESSION["session"]) && $db->estMembreProjet($row_pro["PRO_id"], $_SESSION["id_co"])) {
-?> 
+?>
                     <th>Actions</th>
 <?php
 }
-?>    
+?>
                   </tr>
                 </thead>
                 <tbody>
@@ -99,7 +100,7 @@ while ($row = $result->fetch_assoc()) {
                     </div>
 <?php
     }
-?>    
+?>
                   </tr>
 <?php
 }
