@@ -163,7 +163,7 @@ class Requetes {
 							$this->estScrumMaster($id_dev, $id_projet) ||
 							$this->estProductOwner($id_dev, $id_projet);
     }
-		
+
 		// retourne vrai si le membre $id_dev est développeur du projet $id_projet
     public function estDeveloppeurProjet($id_projet, $id_dev) {
         $sql = "SELECT * FROM inter_dev_projet
@@ -280,7 +280,7 @@ class Requetes {
         $row = $res->fetch_assoc();
         return $row["MAX(DEV_id)"];
     }
-		
+
     // retourne le pseudo du développeur
     public function pseudoDeveloppeur($id_dev) {
         $sql = "SELECT DEV_pseudo FROM developpeur
@@ -331,16 +331,16 @@ class Requetes {
     }
 
 		// démarche pour ajouter un projet dans la base de données
-		// retourne vrai ssi : 
+		// retourne vrai ssi :
 		//  - le projet est rajouté
 		//  - le lien entre membres et projet sont créés
 		public function ajouterProjetBDD(){ // Les arguments ne sont pas définis car la piste d'un po ou d'un sm null est envisageable : $nom, $client, $description, $idPO, $idSM, $idDevs
 				$numargs = func_num_args();
-				$arg_list = func_get_args();			
+				$arg_list = func_get_args();
 
 				if ($numargs == 6) {
 					$idProjet = $this->ajoutNouveauProjet($arg_list[0], $arg_list[1], $arg_list[2], $arg_list[3], $arg_list[4]);
-					
+
 					if ($idProjet==0)
 						return false;
 
@@ -358,7 +358,7 @@ class Requetes {
 				}
 				return false;
 		}
-		
+
     // ajoute un objet de type projet et retourne vrai si il est ajouté
     // sa date de création est celle du jour où il est enregistré
     public function ajoutNouveauProjet($nom, $client, $description, $idPO, $idSM){
@@ -377,20 +377,20 @@ class Requetes {
 		//  - les mises à jour des membres sont effectuées
     public function modifierProjetBDD(){ // Les arguments ne sont pas définis car la piste d'un po ou d'un sm null est envisageable : $id_pro, $nom, $client, $description, $idPO, $idSM, $idDevs
 				$numargs = func_num_args();
-				$arg_list = func_get_args();			
-				
+				$arg_list = func_get_args();
+
 				if ($numargs == 7) {
 					$idProjet = $this->modifProjet($arg_list[0], $arg_list[1], $arg_list[2], $arg_list[3], $arg_list[4], $arg_list[5]);
-					
+
 					if (!$idProjet)
 						return false;
-					
+
 					// retrait des liens développeur-projet
 					$actuelsdevsProjet = $this->listeDeveloppeursProjet($arg_list[0]);
 					while ($row_dev = $actuelsdevsProjet->fetch_assoc()) {
 						$this->suppressionDeveloppeurProjet($row_dev['DEV_id'], $arg_list[0]);
 					}
-					
+
 					// rajout des liens développeur-projet dans la table 'inter_dev_projet'
 					foreach($arg_list[6] as $valeur_idDev) {
 							$sql = "INSERT INTO inter_dev_projet (DEV_id, PRO_id)
@@ -404,8 +404,8 @@ class Requetes {
 				}
 				return false;
     }
-		
-    // modifie les données du projet $id_pro dans la table 'projet' 
+
+    // modifie les données du projet $id_pro dans la table 'projet'
 		// retourne vrai quand c'est fait
     public function modifProjet($id_pro, $nom, $client, $description, $idPO, $idSM){
         $sql = "UPDATE projet
@@ -419,14 +419,14 @@ class Requetes {
     }
 
     // démarche pour supprimer un projet de la base de données 'cp_scrum'
-		// retourne vrai ssi : 
+		// retourne vrai ssi :
 		//  - les liens entre le projet, les sprints, les us et les tâches sont supprimées
 		//  - les liens entre le projet et les développeurs sont supprimés
 		//  - le projet est supprimé
 		public function supprimerProjetBDD($idPro){
-				$liste_idSprints = $this->listeSprints($idPro); 
+				$liste_idSprints = $this->listeSprints($idPro);
 				while ($row_sprint = $liste_idSprints->fetch_assoc()) {
-					
+
 					$liste_idUS = $this->listeUserStorySprint($row_sprint["SPR_id"]);
 					while ($row_us = $liste_idUS->fetch_assoc()) {
 						$liste_idTaches = $this->listeTachesUS($row_us["US_id"]);
@@ -437,7 +437,7 @@ class Requetes {
 						if(!$this->suppressionUserStory($row_us["US_id"]))
 								return false;
 					}
-					
+
 					$liste_idUS_out = $this->listeUserStoryOutOfSprint($row_sprint["SPR_id"], $idPro);
 					while ($row_us_out = $liste_idUS_out->fetch_assoc()) {
 						$liste_idTaches_out = $this->listeTachesUS($row_us_out["US_id"]);
@@ -452,20 +452,20 @@ class Requetes {
 					if(!$this->supprimerSprint($row_sprint["SPR_id"]))
 						return false;
 				}
-				
-				$liste_idDevs = $this->listeDeveloppeursProjet($idPro); 
+
+				$liste_idDevs = $this->listeDeveloppeursProjet($idPro);
 				while ($row_dev = $liste_idDevs->fetch_assoc()) {
 					if (!$this->suppressionDeveloppeurProjet($row_dev["DEV_id"], $idPro))
 						return false;
 				}
-				
+
 				if (!$this->suppressionProjet($idPro))
 					return false;
-		
+
         return true;
 		}
-		
-		// retourne vrai après suppression du lien développeur-projet dans la 
+
+		// retourne vrai après suppression du lien développeur-projet dans la
 		// table 'inter_dev_projet'
 		public function suppressionDeveloppeurProjet($id_dev, $id_pro){
 				$sql = "DELETE FROM inter_dev_projet
@@ -583,7 +583,7 @@ class Requetes {
         return true;
     }
 
-    
+
     // modif US
     public function modifUserStory($id_us, $nom_us, $chiffrage, $id_pro) {
         $sql = "UPDATE us
@@ -685,7 +685,7 @@ class Requetes {
 
     // retourne les tâches par US
     public function listeTachesUS($id_us) {
-        $sql = "SELECT * FROM tache WHERE US_id = ".$id_us." 
+        $sql = "SELECT * FROM tache WHERE US_id = ".$id_us."
 								ORDER BY TAC_dateDepart;";
          if (!$result = $this->conn->query($sql)) {
             printf("Message d'erreur: %s<br>", $this->conn->error);
@@ -694,7 +694,7 @@ class Requetes {
         return $result;
     }
 
-		
+
 	/*******************************************/
   /** Fonctions pour la gestion des sprints **/
   /*******************************************/
@@ -740,7 +740,7 @@ class Requetes {
         $sql = "INSERT INTO sprint (SPR_numero, SPR_dateDebut, SPR_duree, PRO_id)
                 VALUES ('".$numero."', '".$dateDebut."', '".$duree."', '".$id_pro."');";
         if (!$result = $this->conn->query($sql)) {
-            printf("Message d'erreur: %s<br>", $this->conn->error);
+            printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>", $this->conn->error);
             return NULL;
         }
         return true;
@@ -751,10 +751,10 @@ class Requetes {
         $sql_ret_us = "UPDATE us SET SPR_id = NULL WHERE SPR_id = ".$id_spr.";";
         $sql_ret_spr = "DELETE FROM sprint WHERE SPR_id = ".$id_spr.";";
         if (!$result = $this->conn->query($sql_ret_us)) {
-            printf("Message d'erreur: %s<br>", $this->conn->error);
+            printf("<b style=\"color:red;\"><b style=\"color:red;\">Message d'erreur: %s</b><br>", $this->conn->error);
             return NULL;
         } else if (!$result = $this->conn->query($sql_ret_spr)) {
-            printf("Message d'erreur: %s<br>", $this->conn->error);
+            printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>", $this->conn->error);
             return NULL;
         }
         return true;
@@ -794,20 +794,20 @@ class Requetes {
         }
     }
 
-		
+
   /******************************************/
   /** Fonctions pour la gestion des tâches **/
   /******************************************/
-	   
+
 		// retourne vrai après avoir retiré une tâche, sinon faux
 		public function suppressionTache($id_tache) {
 			$sql = "DELETE FROM tache WHERE TAC_id = ".$id_tache.";";
 			if (!$result = $this->conn->query($sql)) {
-					printf("Message d'erreur: %s<br>", $this->conn->error);
+					printf("<b style=\"color:red;\">Message d'erreur: %s<br></b>", $this->conn->error);
 					return NULL;
 			}
 			return true;
 		}
-		
+
 }
 ?>
