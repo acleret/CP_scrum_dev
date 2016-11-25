@@ -610,7 +610,7 @@ class Requetes {
 
     public function modifUserStoryTracabilite($id_us, $date_commit, $id_commit, $auteur_commit) {
         $sql = "UPDATE us
-        SET US_dateDernierCommit = ".$date_commit.", US_idDernierCommit = '".$id_commit."', US_auteurDernierCommit = '".$auteur_commit."'
+        SET US_dateDernierCommit = '".$date_commit."', US_idDernierCommit = '".$id_commit."', US_auteurDernierCommit = '".$auteur_commit."'
         WHERE US_id=".$id_us.";";
         if (!$result = $this->conn->query($sql)) {
             printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);

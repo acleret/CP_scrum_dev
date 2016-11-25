@@ -6,18 +6,34 @@ $infos_pro = $db->infosProjet($id_pro);
 $row_pro = $infos_pro->fetch_assoc();
 
 if (isset($_POST["modif_commit_us"])) {
-    $db->modifUserStoryTracabilite($_POST["id_us"], "Now()", $_POST["num_commit"], $_POST["auteur_commit"]);
+    $db->modifUserStoryTracabilite($_POST["id_us"], $_POST["date_commit"], $_POST["num_commit"], $_POST["auteur_commit"]);
 }
 
 $s->head("Traçabilité");
 $s->header($db);
 $s->nav($db);
 ?>
+          <script>
+            $(document).ready(function() {
+              $('#tableUS').DataTable( {
+                "order": [[ 4, "asc" ]],
+                "oLanguage": {
+                  "sLengthMenu": "Afficher _MENU_ entrées",
+                  "sSearch": "<span class=\"glyphicon glyphicon-search\"></span> Recherche:",
+                  "sInfo": "Affichage de _START_ à _END_ sur _TOTAL_ entrées",
+                  "oPaginate": {
+                    "sPrevious": "Précédent",
+                    "sNext": "Suivant"
+                  }
+                }
+              } );
+            } );
+          </script>
           <article>
             <div class="col-sm-8 text-left">
     		  <h2><?php echo $row_pro["PRO_nom"]; ?> - Traçabilité</h2>
               <hr>
-              <table class="table table-striped table-hover">
+              <table id="tableUS" class="table table-striped table-hover">
                 <thead>
                   <tr>
                     <th>US</th>
@@ -41,7 +57,7 @@ while ($row = $result->fetch_assoc()) {
                   <tr>
                     <td><?php echo $row["US_nom"]; ?></td>
                     <td><?php echo $row["US_idDernierCommit"]; ?></td>
-                    <td><?php echo $db->ordonnerDate($row["US_dateDernierCommit"]); ?></td>
+				    <td><?php echo $db->ordonnerDate($row["US_dateDernierCommit"]); ?></td>
                     <td><?php echo $row["US_auteurDernierCommit"]; ?></td>
 <?php
     if (isset($_SESSION["session"]) && $db->estMembreProjet($row_pro["PRO_id"], $_SESSION["id_co"])) {
@@ -64,6 +80,9 @@ while ($row = $result->fetch_assoc()) {
                                 <label>Numéro du commit</label>
                                 <input class="form-control" type="text" name="num_commit" placeholder="d08d49ff98re5d21f3e066ef515430b0c641b308" value="<?php echo $row["US_idDernierCommit"]; ?>" required/>
                               </div>
+                              <div class="form-group">
+                                <label>Date du commit</label>
+                				<input class="form-control" type="date" name="date_commit" placeholder="pseudo" value="<?php echo $row["US_dateDernierCommit"]; ?>" required/>
                               <div class="form-group">
                                 <label>Auteur du commit</label>
                 				<input class="form-control" type="text" name="auteur_commit" placeholder="pseudo" value="<?php echo $row["US_auteurDernierCommit"]; ?>" required/>

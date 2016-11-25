@@ -31,6 +31,22 @@ if (isset($_COOKIE["id_projet"])) {
   $s->header($db);
   $s->nav($db);
 ?>
+          <script>
+            $(document).ready(function() {
+              $('#tableSprint').DataTable( {
+                "order": [[ 2, "asc" ]],
+                "oLanguage": {
+                  "sLengthMenu": "Afficher _MENU_ entrées",
+                  "sSearch": "<span class=\"glyphicon glyphicon-search\"></span> Recherche:",
+                  "sInfo": "Affichage de _START_ à _END_ sur _TOTAL_ entrées",
+                  "oPaginate": {
+                    "sPrevious": "Précédent",
+                    "sNext": "Suivant"
+                  }
+                }
+              } );
+            } );
+          </script>
           <article>
             <div class="col-sm-8 text-left">
               <h2><?php echo $row["PRO_nom"];?> - Sprints</h2>
@@ -46,7 +62,8 @@ if (isset($_COOKIE["id_projet"])) {
 ?>
                 </dd>
               </dl>
-              <table class="table table-striped table-hover">
+              <hr>
+              <table id="tableSprint" class="table table-striped table-hover" cellspacing="0" width="100%">
                 <thead>
                   <tr>
                     <th>Numéro</th>

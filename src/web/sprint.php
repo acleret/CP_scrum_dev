@@ -27,39 +27,59 @@ if (isset($_COOKIE["id_projet"])) {
   $s->header($db);
   $s->nav($db);
 ?>
+          <script>
+            $(document).ready(function() {
+              $('#tableUS').DataTable( {
+                "order": [[ 2, "asc" ]],
+                "oLanguage": {
+                  "sLengthMenu": "Afficher _MENU_ entrées",
+                  "sSearch": "<span class=\"glyphicon glyphicon-search\"></span> Recherche:",
+                  "sInfo": "Affichage de _START_ à _END_ sur _TOTAL_ entrées",
+                  "oPaginate": {
+                    "sPrevious": "Précédent",
+                    "sNext": "Suivant"
+                  }
+                }
+              } );
+            } );
+          </script>
           <article>
             <div class="col-sm-8 text-left">
               <h2><?php echo $row["PRO_nom"]." - ".$nom_spr;?></h2>
               <hr>
               <div class="col-sm-8 text-left">
-              <dl class="dl-horizontal">
+                <dl class="dl-horizontal">
 <?php
 $row2 = $infos_spr->fetch_assoc();
 ?>
-                <dt>Début</dt>
+                  <dt>Début</dt>
                   <dd><?php echo $db->ordonnerDate($row2["SPR_dateDebut"]); ?></dd>
-                <dt>Durée</dt>
-                <dd><?php echo $row2["SPR_duree"]." jours"; ?></dd>
-              </dl></div>
+                  <dt>Durée</dt>
+                  <dd><?php echo $row2["SPR_duree"]." jours"; ?></dd>
+                </dl>
+              </div>
               <div class="col-sm-4 text-right">
                 <form style="display: inline;" action="../web/kanban.php" method="post">
                   <input class="btn btn-primary" type="submit" value="Kanban"/>
                 </form>
               </div>
-            <table class="table table-striped table-hover">
-              <thead>
-                <tr>
-                  <th>User story</th>
-                  <th>Chiffrage abstrait</th>
-                  <th>Priorité</th>
+	      <br>
+	      <br>
+	      <hr>
+	      <table id="tableUS" class="table table-striped table-hover" cellspacing="0" width="100%">
+                <thead>
+                  <tr>
+                    <th>User story</th>
+                    <th>Chiffrage abstrait</th>
+                    <th>Priorité</th>
 <?php if (isset($_SESSION["session"]) && $db->estMembreProjet($row["PRO_id"], $_SESSION["id_co"])) {?>
-                  <th>Actions</th>
+                    <th>Actions</th>
 <?php
     }
 ?>
-                </tr>
-              </thead>
-              <tbody>
+                  </tr>
+                </thead>
+                <tbody>
 <?php
 $listeUS = $db->listeUserStorySprint($id_spr);
 while ($row3 = $listeUS->fetch_assoc()){
