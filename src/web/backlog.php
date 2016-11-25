@@ -120,7 +120,7 @@ if (isset($_COOKIE["id_projet"])) {
     }
   }
 ?>
-              <table id="tableUS" class="table table-striped table-hover" cellspacing="0" width="100%">
+              <table id="tableUS" class="table table-striped table-hover">
                 <thead>
                   <tr>
                     <th>Nom</th>
