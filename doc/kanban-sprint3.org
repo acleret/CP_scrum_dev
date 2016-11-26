@@ -48,7 +48,7 @@
 + T23 : Empêcher le html/php/css dans les champs textes
 + T24 : Lexique (infobulle, page php)
 + T25 : verifier que les sprints d’un projet aient la meme durée
-+ T26 : couleurs des boutons uniformes (supprimer en rouge, modifier/annuler en blanc, ajouter/valider en bleu)
++ T26 : couleurs des boutons uniformes (supprimer en rouge, modifier/annuler en blanc, ajouter/valider en bleu) + tous les boutons en haut à droite ont la classe btn-lg
 + T27 : liste déroulante dans la barre de navigation 
 + T28 : mettre tous les formulaires ajout/modification dans un fenêtre modale
 + T29 : Message d’information après n’importe quelle action (rouge et vert)
