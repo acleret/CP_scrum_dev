@@ -266,7 +266,7 @@ if (isset($_COOKIE["id_projet"])) {
     if ($db->estMembreProjet($id_pro, $_SESSION["id_co"])) {
 ?>
             <div class="col-sm-2 sidenav">
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ajoutModal">Ajouter</button>
+              <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#ajoutModal">Ajouter une US</button>
             </div>
             <!-- Modal Ajout -->
             <div id="ajoutModal" class="modal fade" role="dialog" style="text-align: left">

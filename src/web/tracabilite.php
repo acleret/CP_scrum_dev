@@ -74,7 +74,7 @@ while ($row = $result->fetch_assoc()) {
                           <form style="display: inline;" action="" method="post">
                             <div class="modal-header">
                               <button type="button" class="close" data-dismiss="modal">&times;</button>
-                              <h4 class="modal-title">Modification du commit</h4>
+                              <h4 class="modal-title">Modifier un commit</h4>
                             </div>
                             <div class="modal-body">
                               <div class="form-group">
@@ -83,7 +83,8 @@ while ($row = $result->fetch_assoc()) {
                               </div>
                               <div class="form-group">
                                 <label>Date du commit</label>
-                				<input class="form-control" type="date" name="date_commit" placeholder="pseudo" value="<?php echo $row["US_dateDernierCommit"]; ?>" required/>
+                				<input class="form-control" type="date" name="date_commit" value="<?php echo $row["US_dateDernierCommit"]; ?>" required/>
+                              </div>
                               <div class="form-group">
                                 <label>Auteur du commit</label>
                 				<input class="form-control" type="text" name="auteur_commit" placeholder="pseudo" value="<?php echo $row["US_auteurDernierCommit"]; ?>" required/>
@@ -93,8 +94,8 @@ while ($row = $result->fetch_assoc()) {
                               <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
                               <input type="hidden" name="id_us" value="<?php echo $row["US_id"]; ?>"/>
                               <input class="btn btn-primary" name="modif_commit_us" type="submit" value="Valider"/>
-                            </form>
-                          </div>
+                            </div>
+                          </form>
                         </div>
                       </div>
                     </div>

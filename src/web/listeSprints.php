@@ -55,14 +55,12 @@ if (isset($_COOKIE["id_projet"])) {
               <hr>
               <dl class="dl-horizontal">
                 <dt>Durée des sprints</dt>
-                <dd>
-<?php
+                <dd><?php
   if ($row_sprints["SPR_duree"] == NULL)
     echo "-";
   else
-    echo $row_sprints["SPR_duree"]." jours\n";
-?>
-                </dd>
+    echo $row_sprints["SPR_duree"]." jours";
+?></dd>
               </dl>
               <hr>
               <table id="tableSprint" class="table table-striped table-hover">
@@ -107,19 +105,46 @@ $liste_sprints = $db->listeSprints($id_pro);  // on réinitialiste liste_sprints
     if (isset($_SESSION["session"]) && $db->estMembreProjet($row["PRO_id"], $_SESSION["id_co"])) {
 ?>
                     <td>
-                      <form style="display: inline;" action="modificationSprint.php" method="post">
-                        <input type="hidden" name="id_sprint" value="<?php echo $id_spr; ?>"/>
-                        <input type="hidden" name="nom_sprint" value="<?php echo $nom_spr; ?>"/>
-                        <input type="hidden" name="num_sprint" value="<?php echo $row_sprints["SPR_numero"]; ?>"/>
-                        <input type="hidden" name="duree_sprint" value="<?php echo $row_sprints["SPR_duree"]; ?>"/>
-                        <input class="btn btn-default" type="submit" value="Modifier"/>
-                      </form>
+		      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalModif<?php echo $row_sprints["SPR_id"];?>">Modifier</button>
                       <form style="display: inline;" action="" method="post">
-                        <input type="hidden" name="suppr_sprint" value="<?php echo $id_spr;?>"/>
-                        <input class="btn btn-danger" type="submit" value="Supprimer"/>
+			<input type="hidden" name="suppr_sprint" value="<?php echo $id_spr;?>"/>
+			<input class="btn btn-danger" type="submit" value="Supprimer"/>
                       </form>
-                    </td>
-<?php
+                    </td>		    
+		    <!-- Modal Modification -->
+		    <div id="modalModif<?php echo $row_sprints["SPR_id"];?>" class="modal fade" role="dialog">
+		      <div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+                          <form style="display: inline;" action="" method="post">
+			    <div class="modal-header">
+			      <button type="button" class="close" data-dismiss="modal">&times;</button>
+			      <h4 class="modal-title">Modifier un sprint</h4>
+			    </div>
+			    <div class="modal-body">
+			      <div class="form-group">
+                                <label>Numéro</label>
+				<input class="form-control" type="number" name="num_sprint" placeholder="Numéro" value="<?php echo $row_sprints["SPR_numero"];?>"/>
+			      </div>
+			      <div class="form-group">
+                                <label>Date de début</label>
+				<input class="form-control" type="date" name="date_sprint" value="<?php echo $row_sprints["SPR_dateDebut"];?>"/>
+			      </div>
+			      <div class="form-group">
+                                <label>Durée</label>
+				<input class="form-control" type="number" name="duree_sprint" placeholder="Nombre de jours" value="<?php echo $row_sprints["SPR_duree"]; ?>"/>
+			      </div>
+			    </div>
+			    <div class="modal-footer">
+			      <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+			      <input type="hidden" name="modif_sprint" value="<?php echo $id_spr; ?>">
+			      <input class="btn btn-primary" type="submit" value="Modifier"/>
+			    </div>
+			  </form>
+			</div>
+		      </div>
+		    </div>		      
+		    <?php
     }
 ?>
                   </tr>
@@ -135,11 +160,41 @@ $liste_sprints = $db->listeSprints($id_pro);  // on réinitialiste liste_sprints
   if (isset($_SESSION["session"]) && $db->estMembreProjet($row["PRO_id"], $_SESSION["id_co"])) {
 ?>
             <div class="col-sm-2 sidenav">
-              <form style="display: inline;" action="formulaireSprint.php" method="post">
-                <input type="hidden" name="action_page" value="ajouter"/>
-                <input class="btn btn-primary" type="submit" value="Ajouter Sprint"/>
-              </form>
-            </div>
+	      <!-- Trigger the modal with a button -->
+	      <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#ajouterSprint">Ajouter un sprint</button>
+	      <!-- Modal Ajout-->
+	      <div id="ajouterSprint" class="modal fade text-left" role="dialog">
+		<div class="modal-dialog">
+		  <!-- Modal content-->
+		  <div class="modal-content">
+                    <form style="display: inline;" action="" method="post">
+		      <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			<h4 class="modal-title">Ajouter un sprint</h4>
+		      </div>
+		      <div class="modal-body">
+			<div class="form-group">
+                          <label>Numéro</label>
+			  <input class="form-control" type="number" name="numero" placeholder="Numéro" required autofocus/>
+			</div>
+			<div class="form-group">
+                          <label>Date de début</label>
+			  <input class="form-control" type="date" name="dateDebut" placeholder="Date de début" required/>
+			</div>
+			<div class="form-group">
+                          <label>Durée</label>
+			  <input class="form-control" type="number" name="duree" placeholder="Nombre de jours" required/>
+			</div>
+ 		      </div>
+		      <div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                        <input class="btn btn-primary" name="ajout_sprint" type="submit" value="Valider"/>
+		      </div>
+		    </form>
+		  </div>
+		</div>
+	      </div>
+	    </div>
 <?php
   }
 ?>

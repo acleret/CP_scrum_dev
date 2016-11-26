@@ -98,7 +98,7 @@ if (isset($_SESSION["session"])) {
             <div class="col-sm-2 sidenav">
               <form style="display: inline;" action="formulaireProjet.php" method="post">
                 <input type="hidden" name="action" value="ajouter"/>
-                <input class="btn btn-primary" type="submit" value="Ajouter Projet"/>
+                <input class="btn btn-primary btn-lg" type="submit" value="Ajouter un projet"/>
               </form>
             </div>
 <?php
