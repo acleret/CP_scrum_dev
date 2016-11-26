@@ -123,12 +123,10 @@ if ($liste_sprints->num_rows > 0) {
               </p>
               <p> - </p>
               <p>Mes collaborations:</p>
+              <div class="scroll">
 <?php
       $id_dev = $_SESSION["id_co"];
       $result = $db->listeProjetsDeveloppeur($id_dev);
-?>
-              <div class="scroll">
-<?php
       while ($row = $result->fetch_assoc()) {
 ?>
                 <form action="../web/setProjet.php" method="post">
