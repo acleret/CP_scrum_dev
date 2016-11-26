@@ -12,7 +12,7 @@ if (isset($_POST["suppr_profil"])) {
 if (isset($_GET["profil"])) { // un visiteur peut voir n'importe quel profil
 	$pseudo_demande = $_GET["profil"];
 
-	$id = $db->idDeveloppeur("\"".$pseudo_demande."\""); // grâce aux pseudo uniques
+	$id = $db->idDeveloppeur($pseudo_demande); // grâce aux pseudo uniques
 	$row_id = $id->fetch_assoc();
 	$id_dev = $row_id["DEV_id"];
 
@@ -26,7 +26,11 @@ if (isset($_GET["profil"])) { // un visiteur peut voir n'importe quel profil
 	$row = $infos->fetch_assoc();
 
 	$s->head("Mon profil");
+} else {
+	header("Location: index.php");
+	exit();
 }
+
 $s->header($db);
 $s->nav($db);
 ?>
@@ -96,64 +100,71 @@ $s->nav($db);
 				<div class="col-sm-4 text-left">
 					<h3>Projets :</h3>
 					<h4>(en tant que Product Owner)</h4>
-					<ul>
+					<div class="scrollProfil">
+						<ul>
 <?php
 					$projets = $db->listeProjetsDeveloppeurProductOwner($id_dev);
 					while ($projet = $projets->fetch_assoc()) {
 ?>
-						<li>
-							<form style="display: inline;" action="setProjet.php" method="post">
-								<input type="hidden" name="id_projet" value="<?php echo $projet["PRO_id"]; ?>"/>
-								<input class="btn btn-link" type="submit" value="<?php echo $projet["PRO_nom"]; ?>"/>
-							</form><br>
-							Créé le <?php echo $projet["PRO_dateCreation"]; ?> pour <?php echo $projet["PRO_client"]; ?>
-						</li>
+							<li>
+								<form style="display: inline;" action="setProjet.php" method="post">
+									<input type="hidden" name="id_projet" value="<?php echo $projet["PRO_id"]; ?>"/>
+									<input class="btn btn-link" type="submit" value="<?php echo $projet["PRO_nom"]; ?>"/>
+								</form><br>
+								Créé le <?php echo $projet["PRO_dateCreation"]; ?> pour <?php echo $projet["PRO_client"]; ?>
+							</li>
 <?php
 					}
 ?>
-					</ul>
+						</ul>
+					</div>
 				</div>
 				<div class="col-sm-4 text-left" style="border-right: 1px dashed #333; border-left: 1px dashed #333;">
 					<h3>Projets :</h3>
 					<h4>(en tant que Scrum Master)</h4>
-					<ul>
+					<div class="scrollProfil">
+						<ul>
 <?php
 					$projets = $db->listeProjetsDeveloppeur($id_dev);
 					while ($projet = $projets->fetch_assoc()) {
 						if ($db->estScrumMaster($id_dev, $projet["PRO_id"])) {
 ?>
-						<li>
-							<form style="display: inline;" action="setProjet.php" method="post">
-								<input type="hidden" name="id_projet" value="<?php echo $projet["PRO_id"]; ?>"/>
-								<input class="btn btn-link" type="submit" value="<?php echo $projet["PRO_nom"]; ?>"/>
-							</form><br>
-							Créé le <?php echo $projet["PRO_dateCreation"]; ?> pour <?php echo $projet["PRO_client"]; ?>
-						</li>
+							<li>
+								<form style="display: inline;" action="setProjet.php" method="post">
+									<input type="hidden" name="id_projet" value="<?php echo $projet["PRO_id"]; ?>"/>
+									<input class="btn btn-link" type="submit" value="<?php echo $projet["PRO_nom"]; ?>"/>
+								</form><br>
+								Créé le <?php echo $projet["PRO_dateCreation"]; ?> pour <?php echo $projet["PRO_client"]; ?>
+							</li>
 <?php
 						}
 					}
 ?>
-					</ul>
+						</ul>
+					</div>
 				</div>
 				<div class="col-sm-4">
 					<h3>Collaborations :</h3>
 					<h4>(en tant que développeur)</h4>
-					<ul>
+					<div class="scrollProfil">
+						<ul>
 <?php
 					$projets = $db->listeProjetsDeveloppeur($id_dev);
 					while ($projet = $projets->fetch_assoc()) {
 ?>
-						<li>
-							<form style="display: inline;" action="setProjet.php" method="post">
-								<input type="hidden" name="id_projet" value="<?php echo $projet["PRO_id"]; ?>"/>
-								<input class="btn btn-link" type="submit" value="<?php echo $projet["PRO_nom"]; ?>"/>
-							</form><br>
-							Créé le <?php echo $projet["PRO_dateCreation"]; ?> pour <?php echo $projet["PRO_client"]; ?><br>
-						</li>
+							<li>
+								<form style="display: inline;" action="setProjet.php" method="post">
+									<input type="hidden" name="id_projet" value="<?php echo $projet["PRO_id"]; ?>"/>
+									<input class="btn btn-link" type="submit" value="<?php echo $projet["PRO_nom"]; ?>"/>
+								</form><br>
+								Créé le <?php echo $projet["PRO_dateCreation"]; ?> pour <?php echo $projet["PRO_client"]; ?><br>
+							</li>
 <?php
 					}
 ?>
-					</ul><br>
+						</ul>
+					</div>
+					<br />
 				</div>
 			</div>
 		</article>

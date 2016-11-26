@@ -41,7 +41,7 @@ class Requetes {
     // car comme les id, les pseudo sont uniques
     public function idDeveloppeur($pseudo_dev) {
         $sql = "SELECT DEV_id FROM developpeur
-                WHERE DEV_pseudo = ".$pseudo_dev.";";
+                WHERE DEV_pseudo = '".$pseudo_dev."';";
         if (!$result = $this->conn->query($sql)) {
             printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
             return NULL;
