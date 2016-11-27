@@ -3,6 +3,7 @@ class Requetes {
 
   private $conn;
 
+
   /******************************************************/
   /** Fonctions pour la connexion à la Base de Données **/
   /******************************************************/
@@ -431,7 +432,7 @@ class Requetes {
 					while ($row_us = $liste_idUS->fetch_assoc()) {
 						$liste_idTaches = $this->listeTachesUS($row_us["US_id"]);
 						while ($row_tache = $liste_idTaches->fetch_assoc()) {
-							if(!$this->suppressionTache($row_tache["Tache_id"]))
+							if(!$this->suppressionTache($row_tache["TAC_id"]))
 								return false;
 						}
 						if(!$this->suppressionUserStory($row_us["US_id"]))
@@ -527,9 +528,9 @@ class Requetes {
     }
 
 
-	/**********************************************/
-  /** Fonctions pour la gestion des User Story **/
-  /**********************************************/
+	/************************************************/
+  /** Fonctions pour la gestion des User Stories **/
+  /************************************************/
 
     //retourne les données de l'us $id_us
     public function infosUserStory($id_us) {
@@ -550,15 +551,6 @@ class Requetes {
         if (!$result = $this->conn->query($sql)) {
             printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
             return NULL;
-        }
-        return $result;
-    }
-
-    // retourne les US d'un sprint
-    public function listeUserStorySprint($id_spr) {
-        $sql = "SELECT * FROM us WHERE SPR_id = ".$id_spr." ORDER BY US_priorite;";
-         if (!$result = $this->conn->query($sql)) {
-            printf("Message d'erreur: %s<br>", $this->conn->error);
         }
         return $result;
     }
@@ -760,7 +752,7 @@ class Requetes {
         return true;
     }
 
-    // modifie les données du projet et retourne vrai quand c'est fait
+    // modifie les données du sprint et retourne vrai quand c'est fait
     public function modifSprint($id_spr, $num, $date, $duree){
         $sql = "UPDATE sprint
                 SET SPR_numero='".$num."', SPR_dateDebut='".$date."', SPR_duree='".$duree."'
@@ -770,6 +762,15 @@ class Requetes {
             return NULL;
        }
         return true;
+    }
+
+    // retourne les US d'un sprint
+    public function listeUserStorySprint($id_spr) {
+        $sql = "SELECT * FROM us WHERE SPR_id = ".$id_spr." ORDER BY US_priorite;";
+         if (!$result = $this->conn->query($sql)) {
+            printf("Message d'erreur: %s<br>", $this->conn->error);
+        }
+        return $result;
     }
 
     // ordonne une date : 2000-10-01 -> 01/10/00
@@ -799,9 +800,45 @@ class Requetes {
   /** Fonctions pour la gestion des tâches **/
   /******************************************/
 
+    //retourne les données de la tâche $id_tac
+    public function infosTache($id_tac) {
+        $sql = "SELECT * FROM tache WHERE TAC_id = ".$id_tac.";";
+        if (!$res = $this->conn->query($sql)) {
+            printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
+            return NULL;
+        }
+        return $res;
+    }
+	
+		public function listeTachesEtatSprint($id_spr, $etat) {		
+				$sql = "SELECT *	FROM tache
+								WHERE US_id IN (
+									SELECT US_id FROM us
+									WHERE SPR_id = ".$id_spr."
+									ORDER BY `US_id` ASC
+								)	AND TAC_etat = \"".$etat."\"
+								ORDER BY US_id ASC;";
+        if (!$res = $this->conn->query($sql)) {
+            printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
+            return NULL;
+        }
+        return $res;		
+		}
+		
+		// retourne vrai après avoir ajouté une tâche, sinon faux
+    public function ajoutTache($nom, $description, $nbJours, $dateDepart, $dateFin, $etat, $id_dev, $id_us) {
+        $sql = "INSERT INTO tache (TAC_nom, TAC_description, TAC_nbJours, TAC_dateDepart, TAC_dateFin, TAC_etat, DEV_id, US_id)
+                VALUES ('".$nom."', '".$description."', '".$nbJours."', '".$dateDepart."', '".$dateFin."', '".$etat."', '".$id_dev."', '".$id_us."');";
+        if (!$result = $this->conn->query($sql)) {
+            printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>", $this->conn->error);
+            return NULL;
+        }
+        return true;
+    }
+		
 		// retourne vrai après avoir retiré une tâche, sinon faux
-		public function suppressionTache($id_tache) {
-			$sql = "DELETE FROM tache WHERE TAC_id = ".$id_tache.";";
+		public function suppressionTache($id_tac) {
+			$sql = "DELETE FROM tache WHERE TAC_id = ".$id_tac.";";
 			if (!$result = $this->conn->query($sql)) {
 					printf("<b style=\"color:red;\">Message d'erreur: %s<br></b>", $this->conn->error);
 					return NULL;
@@ -809,5 +846,66 @@ class Requetes {
 			return true;
 		}
 
+    // modifie les données de la tâche $id_tac et retourne vrai quand c'est fait
+    public function modifTache($id_tac, $nom, $description, $nbJours, $dateDepart, $dateFin, $etat, $id_dev, $id_us){
+        $sql = "UPDATE tache
+                SET TAC_nom='".$nom."', TAC_description='".$description."', TAC_nbJours='".$nbJours."',	TAC_dateDepart='".$dateDepart."', TAC_dateFin='".$dateFin."', TAC_etat='".$etat."', DEV_id='".$id_dev."', US_id='".$id_us."'
+                WHERE TAC_id=".$id_tac.";";
+				if (!$result = $this->conn->query($sql)) {
+            printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
+            return NULL;
+       }
+        return true;
+    }
+
+		// modifie l'état de la tâche $id_tac et retourne vrai quand c'est fait
+    public function modifEtatTache($id_tac, $etat){
+        $sql = "UPDATE tache
+                SET TAC_etat='".$etat."'
+                WHERE TAC_id=".$id_tac.";";
+				if (!$result = $this->conn->query($sql)) {
+            printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
+            return NULL;
+       }
+        return true;
+    }
+
+		// modifie l'id de l'us à laquelle appartient la tâche $id_tac et retourne vrai quand c'est fait
+    public function modifUSTache($id_tac, $id_us){
+        $sql = "UPDATE tache
+                SET US_id='".$id_us."'
+                WHERE TAC_id=".$id_tac.";";
+				if (!$result = $this->conn->query($sql)) {
+            printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
+            return NULL;
+       }
+        return true;
+    }
+		
+    // retourne le plus grand des id de la table tache
+    public function maxIDTache() {
+        $sql = "SELECT MAX(TAC_id) FROM tache;";
+        if (!$res = $this->conn->query($sql)) {
+            printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
+            return NULL;
+        }
+        $row = $res->fetch_assoc();
+        return $row["MAX(TAC_id)"];
+    }
+
+    // retourne vrai si l'id de la tâche existe déjà
+    public function testIDTache($id_tac) {
+        $sql = "SELECT * FROM tache WHERE TAC_id = ".$id_tac.";";
+        if (!$result = $this->conn->query($sql)) {
+            printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
+            return NULL;
+        }
+        $row = $result->fetch_assoc();
+        if ($row["TAC_id"] == $id_tac) {
+            return true;
+        }
+        return false;
+    }
+		
 }
 ?>
