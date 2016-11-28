@@ -1,17 +1,17 @@
 <?php
 require_once("../web/config.php");
 
-$id_pro = $_COOKIE["id_projet"];
-$infos_pro = $db->infosProjet($id_pro);
-$row_pro = $infos_pro->fetch_assoc();
-
 if (isset($_POST["modif_commit_us"])) {
     $db->modifUserStoryTracabilite($_POST["id_us"], $_POST["date_commit"], $_POST["num_commit"], $_POST["auteur_commit"]);
 }
 
-$s->head("Traçabilité");
-$s->header($db);
-$s->nav($db);
+if (isset($_COOKIE["id_projet"])) {
+  $id_pro = $_COOKIE["id_projet"];
+  $infos_pro = $db->infosProjet($id_pro);
+  $row_pro = $infos_pro->fetch_assoc();
+  $s->head("Traçabilité");
+  $s->header($db);
+  $s->nav($db);
 ?>
           <script>
             $(document).ready(function() {
@@ -42,18 +42,18 @@ $s->nav($db);
                     <th>Date</th>
                     <th>Auteur</th>
 <?php
-if (isset($_SESSION["session"]) && $db->estMembreProjet($row_pro["PRO_id"], $_SESSION["id_co"])) {
+  if (isset($_SESSION["session"]) && $db->estMembreProjet($row_pro["PRO_id"], $_SESSION["id_co"])) {
 ?>
                     <th>Actions</th>
 <?php
-}
+  }
 ?>
                   </tr>
                 </thead>
                 <tbody>
 <?php
-$result = $db->listeUserStories($id_pro);
-while ($row = $result->fetch_assoc()) {
+  $result = $db->listeUserStories($id_pro);
+  while ($row = $result->fetch_assoc()) {
 ?>
                   <tr>
                     <td><?php echo $row["US_nom"]; ?></td>
@@ -104,12 +104,16 @@ while ($row = $result->fetch_assoc()) {
 ?>
                   </tr>
 <?php
-}
+  }
 ?>
                 </tbody>
               </table>
             </div>
           </article>
 <?php
-$s->footer();
+  $s->footer();
+} else {
+  header("Location: ../web/index.php");
+  exit();
+}
 ?>
