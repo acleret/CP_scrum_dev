@@ -559,7 +559,7 @@ class Requetes {
     public function listeUserStoryOutOfSprint($id_spr, $id_pro) {
         $sql = "SELECT * FROM us WHERE (SPR_id IS NULL && PRO_id = ".$id_pro.") ORDER BY US_priorite;";
          if (!$result = $this->conn->query($sql)) {
-            printf("Message d'erreur: %s<br>", $this->conn->error);
+            printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
         }
         return $result;
     }
@@ -680,10 +680,33 @@ class Requetes {
         $sql = "SELECT * FROM tache WHERE US_id = ".$id_us."
 								ORDER BY TAC_dateDepart;";
          if (!$result = $this->conn->query($sql)) {
-            printf("Message d'erreur: %s<br>", $this->conn->error);
+            printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
 						return NULL;
         }
         return $result;
+    }
+
+    // retourne la somme du backlog d'un projet
+    public function sommeChiffrageBacklog($id_pro) {
+        $sql = "SELECT SUM(US_chiffrageAbstrait) FROM us
+                WHERE PRO_id = ".$id_pro.";";
+        if (!$res = $this->conn->query($sql)) {
+            printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
+            return NULL;
+        }
+        $row = $res->fetch_assoc();
+        return $row["SUM(US_chiffrageAbstrait)"];
+    }
+
+    public function sommeChiffrageSprint($id_sprint) {
+        $sql = "SELECT SUM(US_chiffrageAbstrait) FROM us
+                WHERE SPR_id = ".$id_sprint.";";
+        if (!$res = $this->conn->query($sql)) {
+            printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
+            return NULL;
+        }
+        $row = $res->fetch_assoc();
+        return $row["SUM(US_chiffrageAbstrait)"];
     }
 
 
@@ -768,7 +791,7 @@ class Requetes {
     public function listeUserStorySprint($id_spr) {
         $sql = "SELECT * FROM us WHERE SPR_id = ".$id_spr." ORDER BY US_priorite;";
          if (!$result = $this->conn->query($sql)) {
-            printf("Message d'erreur: %s<br>", $this->conn->error);
+            printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
         }
         return $result;
     }
@@ -809,8 +832,8 @@ class Requetes {
         }
         return $res;
     }
-	
-		public function listeTachesEtatSprint($id_spr, $etat) {		
+
+		public function listeTachesEtatSprint($id_spr, $etat) {
 				$sql = "SELECT *	FROM tache
 								WHERE US_id IN (
 									SELECT US_id FROM us
@@ -822,9 +845,9 @@ class Requetes {
             printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
             return NULL;
         }
-        return $res;		
+        return $res;
 		}
-		
+
 		// retourne vrai après avoir ajouté une tâche, sinon faux
     public function ajoutTache($nom, $description, $nbJours, $dateDepart, $dateFin, $etat, $id_dev, $id_us) {
         $sql = "INSERT INTO tache (TAC_nom, TAC_description, TAC_nbJours, TAC_dateDepart, TAC_dateFin, TAC_etat, DEV_id, US_id)
@@ -835,7 +858,7 @@ class Requetes {
         }
         return true;
     }
-		
+
 		// retourne vrai après avoir retiré une tâche, sinon faux
 		public function suppressionTache($id_tac) {
 			$sql = "DELETE FROM tache WHERE TAC_id = ".$id_tac.";";
@@ -881,7 +904,7 @@ class Requetes {
        }
         return true;
     }
-		
+
     // retourne le plus grand des id de la table tache
     public function maxIDTache() {
         $sql = "SELECT MAX(TAC_id) FROM tache;";
@@ -906,6 +929,6 @@ class Requetes {
         }
         return false;
     }
-		
+
 }
 ?>

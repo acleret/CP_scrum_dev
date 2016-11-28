@@ -55,18 +55,21 @@ if (isset($_COOKIE["id_projet"])) {
               <hr>
               <dl class="dl-horizontal">
                 <dt>Durée des sprints</dt>
-                <dd><?php
+                <dd>
+<?php
   if ($row_sprints["SPR_duree"] == NULL)
-    echo "-";
+    echo "-\n";
   else
-    echo $row_sprints["SPR_duree"]." jours";
-?></dd>
+    echo $row_sprints["SPR_duree"]." jours\n";
+?>
+                </dd>
               </dl>
               <hr>
               <table id="tableSprint" class="table table-striped table-hover">
                 <thead>
                   <tr>
                     <th>Numéro</th>
+                    <th>Chiffrage</th>
                     <th>Début</th>
                     <th>Kanban</th>
 <?php
@@ -94,6 +97,13 @@ $liste_sprints = $db->listeSprints($id_pro);  // on réinitialiste liste_sprints
                         <input class="btn btn-link"  type="submit" value="<?php echo $nom_spr;?>"/>
                       </form>
                     </td>
+                    <td>
+<?php
+    $cout_sprint = $db->sommeChiffrageSprint($id_spr);
+    if(!empty($cout_sprint))
+      echo $cout_sprint;
+?>
+                    </td>
                     <td><?php echo $db->ordonnerDate($row_sprints["SPR_dateDebut"]); ?></td>
                     <td>
                       <form style="display: inline;" action="kanban.php" method="post">
@@ -110,7 +120,7 @@ $liste_sprints = $db->listeSprints($id_pro);  // on réinitialiste liste_sprints
 			<input type="hidden" name="suppr_sprint" value="<?php echo $id_spr;?>"/>
 			<input class="btn btn-danger" type="submit" value="Supprimer"/>
                       </form>
-                    </td>		    
+                    </td>
 		    <!-- Modal Modification -->
 		    <div id="modalModif<?php echo $row_sprints["SPR_id"];?>" class="modal fade" role="dialog">
 		      <div class="modal-dialog">
@@ -143,7 +153,7 @@ $liste_sprints = $db->listeSprints($id_pro);  // on réinitialiste liste_sprints
 			  </form>
 			</div>
 		      </div>
-		    </div>		      
+		    </div>
 		    <?php
     }
 ?>

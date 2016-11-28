@@ -411,6 +411,22 @@ if ($test->testIDUserStory($id_us)) {
 }
 echo "</ul><br>\n";
 
+echo "<b>// test sommeChiffrageBacklog</b><br>\n<ul>";
+if (!empty($cout = $test->sommeChiffrageBacklog($id_pro))) {
+  echo "<li class=\"correct\">Chiffrage = $cout</li>\n";
+} else {
+  echo "<li class=\"erreur\">Chiffrage = 0</li>\n";
+}
+echo "</ul><br>\n";
+
+echo "<b>// test sommeChiffrageSprint</b><br>\n<ul>";
+if (!empty($cout = $test->sommeChiffrageSprint($id_spr))) {
+  echo "<li class=\"correct\">Chiffrage = $cout</li>\n";
+} else {
+  echo "<li class=\"erreur\">Chiffrage = 0</li>\n";
+}
+echo "</ul><br>\n";
+
 
 /************************************************************************/
 echo ("<h1>/* Tests des fonctions concernant les sprints */</h1><br>\n");

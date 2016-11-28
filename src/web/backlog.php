@@ -42,6 +42,19 @@ if (isset($_COOKIE["id_projet"])) {
             <div class="col-sm-8 text-left">
               <h2><?php echo $row_pro["PRO_nom"];?> - Backlog</h2>
               <hr>
+              <dl class="dl-horizontal">
+                <dt>Chiffrage total</dt>
+                <dd>
+<?php
+  $cout_backlog = $db->sommeChiffrageBacklog($id_pro);
+  if (empty($cout_backlog))
+    echo "-\n";
+  else
+    echo $cout_backlog."\n";
+?>
+                </dd>
+              </dl>
+              <hr>
 <?php
   if (isset($_GET["modif"])) {
     if (!strcmp($_GET["modif"], "erreurID")) {

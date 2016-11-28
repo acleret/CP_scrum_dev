@@ -73,6 +73,7 @@ if ($liste_sprints->num_rows > 0) {
 ?>
               </li>
               <li><a href="../web/tracabilite.php">Traçabilité</a></li>
+              <li><a href="../web/burndownchart.php">Burndown Chart</a></li>
 <?php
     }
 ?>
