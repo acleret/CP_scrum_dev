@@ -58,11 +58,13 @@ if ($liste_sprints->num_rows > 0) {
         $nom_spr = "Sprint#".$row_sprints["SPR_numero"];
 ?>
                   <li>
-                    <form id=<?php echo "form_spr".$id_spr;?> style="display: inline;" action="../web/sprint.php" method="post">
+                    <form id="<?php echo "form_spr".$id_spr;?>" style="display: inline;" action="../web/sprint.php" method="post">
                       <input type="hidden" name="id_sprint" value="<?php echo $id_spr; ?>"/>
                       <input type="hidden" name="nom_sprint" value="<?php echo $nom_spr; ?>"/>
                     </form>
-                    <a action="../web/sprint.php" onclick=<?php echo 'document.getElementById("form_spr'.$id_spr.'").submit()' ;?>><?php echo $nom_spr; ?></a>
+                    <a onclick=<?php echo 'document.getElementById("form_spr'.$id_spr.'").submit()' ;?>>
+                      <?php echo $nom_spr."\n"; ?>
+                    </a>
                   </li>
 <?php
     }
@@ -161,18 +163,6 @@ if ($liste_sprints->num_rows > 0) {
     <footer class="container-fluid text-center">
       <p>Copyright 2016 - Conduite de projet facile - Tous droits réservés</p>
     </footer>
-    <script>
-      function pagePrecedente(page_actuelle) {
-        var nouvelle_page = page_actuelle - 1;
-        if(nouvelle_page > 0)
-          document.location.href="listeProjets.php?page="+nouvelle_page;
-      }
-      function pageSuivante(page_actuelle, nombre_de_pages) {
-        var nouvelle_page = page_actuelle + 1;
-        if(nouvelle_page < nombre_de_pages + 1)
-          document.location.href="listeProjets.php?page="+nouvelle_page;
-      }
-    </script>
   </body>
 </html>
 <?php
