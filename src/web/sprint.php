@@ -14,18 +14,18 @@ if (isset($_COOKIE["id_projet"])) {
   $infos = $db->infosProjet($id_pro);
   $row = $infos->fetch_assoc();
 
-  if (!isset($_POST["id_sprint"]) || !isset($_POST["nom_sprint"])) {
+ if (!isset($_POST["id_sprint"]) || !isset($_POST["nom_sprint"])) {
     header("Location: ../web/index.php");
     exit();
   }
 
   $id_spr = $_POST["id_sprint"];
   $infos_spr = $db->infosSprint($id_spr);
-
-	$row2 = $infos_spr->fetch_assoc();
-	$expire = time() + 60 * 60 * 24; // 24 heures
-	setcookie("id_sprint", $row2["SPR_id"], $expire);
-
+  $row2 = $infos_spr->fetch_assoc();
+  
+  $expire = time() + 60 * 60 * 24; // 24 heures
+  setcookie("id_sprint", $row2["SPR_id"], $expire);
+  
   $nom_spr = $_POST["nom_sprint"];
 
   $s->head("Sprints");
@@ -70,9 +70,6 @@ if (isset($_COOKIE["id_projet"])) {
               <hr>
               <div class="col-sm-8 text-left">
                 <dl class="dl-horizontal">
-<?php
-  $row2 = $infos_spr->fetch_assoc();
-?>
                   <dt>Début</dt>
                   <dd><?php echo $db->ordonnerDate($row2["SPR_dateDebut"]); ?></dd>
                   <dt>Durée</dt>
@@ -94,6 +91,7 @@ if (isset($_COOKIE["id_projet"])) {
                   <input class="btn btn-primary" type="submit" value="Kanban"/>
                 </form>
               </div>
+	      <br>
 	      <br>
 	      <br>
 	      <hr>

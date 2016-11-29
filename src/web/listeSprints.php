@@ -11,6 +11,7 @@ if (isset($_COOKIE["id_projet"])) {
 
   if (isset($_POST["ajout_sprint"])) {
     $db->ajoutSprint($_POST["numero"], $_POST["dateDebut"], $_POST["duree"], $id_pro);
+    header('Location: ../web/listeSprints.php');
   }
 
   if (isset($_POST["suppr_sprint"])) {
@@ -85,7 +86,7 @@ $liste_sprints = $db->listeSprints($id_pro);  // on réinitialiste liste_sprints
 ?>
                   <tr>
                     <td>
-                      <form style="display: inline;" action="../web/sprint.php" method="post">
+                      <form id="lien_sprint" style="display: inline;" action="../web/sprint.php" method="post">
 <?php
     $id_spr = $row_sprints["SPR_id"];
     $infos_spr = $db->infosSprint($id_spr);
@@ -94,8 +95,8 @@ $liste_sprints = $db->listeSprints($id_pro);  // on réinitialiste liste_sprints
 ?>
                         <input type="hidden" name="id_sprint" value="<?php echo $id_spr;?>"/>
                         <input type="hidden" name="nom_sprint" value="<?php echo $nom_spr;?>"/>
-                        <input class="btn btn-link"  type="submit" value="<?php echo $nom_spr;?>"/>
                       </form>
+                      <a href="#" onmouseover="this.style.cursor='pointer'" onclick=<?php echo 'document.getElementById("lien_sprint").submit()' ;?>><?php echo $nom_spr;?></a>
                     </td>
                     <td>
 <?php

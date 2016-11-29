@@ -49,10 +49,10 @@ while ($row = $result->fetch_assoc()) {
 ?>
                 <tr>
                   <td>
-                    <form style="display: inline;" action="../web/setProjet.php" method="post">
+                    <form id="lien_projet" style="display: inline;" action="../web/setProjet.php" method="post">
                       <input type="hidden" name="id_projet" value="<?php echo $row["PRO_id"]; ?>"/>
-                      <input class="btn btn-link" type="submit" value="<?php echo $row["PRO_nom"]; ?>"/>
                     </form>
+                    <a href="#" onclick=<?php echo 'document.getElementById("lien_projet").submit()' ;?>><?php echo $row["PRO_nom"];;?></a>
                   </td>
                   <td><?php echo $row["PRO_dateCreation"]; ?></td>
 <?php

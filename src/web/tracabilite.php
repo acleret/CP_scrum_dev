@@ -79,7 +79,7 @@ if (isset($_COOKIE["id_projet"])) {
                             <div class="modal-body">
                               <div class="form-group">
                                 <label>Numéro du commit</label>
-                                <input class="form-control" type="text" name="num_commit" placeholder="d08d49ff98re5d21f3e066ef515430b0c641b308" value="<?php echo $row["US_idDernierCommit"]; ?>" required/>
+                                <input class="form-control" type="text" name="num_commit" placeholder="ex: d08d49ff98re5d21f3e066ef515430b0c641b308" value="<?php echo $row["US_idDernierCommit"]; ?>" required/>
                               </div>
                               <div class="form-group">
                                 <label>Date du commit</label>
