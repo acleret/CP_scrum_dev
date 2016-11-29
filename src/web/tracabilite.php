@@ -32,7 +32,7 @@ if (isset($_COOKIE["id_projet"])) {
           </script>
           <article>
             <div class="col-sm-8 text-left">
-    		  <h2><?php echo $row_pro["PRO_nom"]; ?> - Traçabilité</h2>
+        		  <h2><?php echo $row_pro["PRO_nom"]; ?> - Traçabilité</h2>
               <hr>
               <table id="tableUS" class="table table-striped table-hover">
                 <thead>
