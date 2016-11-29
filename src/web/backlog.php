@@ -79,7 +79,7 @@ if (isset($_COOKIE["id_projet"])) {
 ?>
               <div class="alert alert-success alert-dismissible">
                 <a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>OK!</strong> User story modifié.
+                <strong>OK!</strong> User story modifiée.
               </div>
 <?php
     }
