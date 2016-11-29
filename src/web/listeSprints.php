@@ -12,6 +12,7 @@ if (isset($_COOKIE["id_projet"])) {
   if (isset($_POST["ajout_sprint"])) {
     $db->ajoutSprint($_POST["numero"], $_POST["dateDebut"], $_POST["duree"], $id_pro);
     header('Location: ../web/listeSprints.php');
+
   }
 
   if (isset($_POST["suppr_sprint"])) {
@@ -82,21 +83,21 @@ if (isset($_COOKIE["id_projet"])) {
                 <tbody>
 <?php
 $liste_sprints = $db->listeSprints($id_pro);  // on réinitialiste liste_sprints
-  while ($row_sprints = $liste_sprints->fetch_assoc()) {
+  while ($row_sprints2 = $liste_sprints->fetch_assoc()) {
 ?>
                   <tr>
                     <td>
-                      <form id="lien_sprint" style="display: inline;" action="../web/sprint.php" method="post">
+                      <form style="display: inline;" action="../web/sprint.php" method="post">
 <?php
-    $id_spr = $row_sprints["SPR_id"];
+    $id_spr = $row_sprints2["SPR_id"];
     $infos_spr = $db->infosSprint($id_spr);
-    $row_sprints = $infos_spr->fetch_assoc();
-    $nom_spr = "Sprint#".$row_sprints["SPR_numero"];
+    $row_sprints2 = $infos_spr->fetch_assoc();
+    $nom_spr = "Sprint#".$row_sprints2["SPR_numero"];
 ?>
                         <input type="hidden" name="id_sprint" value="<?php echo $id_spr;?>"/>
                         <input type="hidden" name="nom_sprint" value="<?php echo $nom_spr;?>"/>
                       </form>
-                      <a href="#" onmouseover="this.style.cursor='pointer'" onclick=<?php echo 'document.getElementById("lien_sprint").submit()' ;?>><?php echo $nom_spr;?></a>
+                      <a href="#" onmouseover="this.style.cursor='pointer'" onclick=<?php echo 'document.getElementById("form_spr'.$id_spr.'").submit()' ;?>><?php echo $nom_spr;?></a>
                     </td>
                     <td>
 <?php
@@ -105,7 +106,7 @@ $liste_sprints = $db->listeSprints($id_pro);  // on réinitialiste liste_sprints
       echo $cout_sprint;
 ?>
                     </td>
-                    <td><?php echo $db->ordonnerDate($row_sprints["SPR_dateDebut"]); ?></td>
+                    <td><?php echo $db->ordonnerDate($row_sprints2["SPR_dateDebut"]); ?></td>
                     <td>
                       <form style="display: inline;" action="kanban.php" method="post">
                         <input type="hidden" name="id_sprint" value="<?php echo $id_spr; ?>"/>
@@ -116,14 +117,14 @@ $liste_sprints = $db->listeSprints($id_pro);  // on réinitialiste liste_sprints
     if (isset($_SESSION["session"]) && $db->estMembreProjet($row["PRO_id"], $_SESSION["id_co"])) {
 ?>
                     <td>
-		      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalModif<?php echo $row_sprints["SPR_id"];?>">Modifier</button>
+		      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalModif<?php echo $row_sprints2["SPR_id"];?>">Modifier</button>
                       <form style="display: inline;" action="" method="post">
 			<input type="hidden" name="suppr_sprint" value="<?php echo $id_spr;?>"/>
 			<input class="btn btn-danger" type="submit" value="Supprimer"/>
                       </form>
                     </td>
 		    <!-- Modal Modification -->
-		    <div id="modalModif<?php echo $row_sprints["SPR_id"];?>" class="modal fade" role="dialog">
+		    <div id="modalModif<?php echo $row_sprints2["SPR_id"];?>" class="modal fade" role="dialog">
 		      <div class="modal-dialog">
 			<!-- Modal content-->
 			<div class="modal-content">
@@ -135,15 +136,15 @@ $liste_sprints = $db->listeSprints($id_pro);  // on réinitialiste liste_sprints
 			    <div class="modal-body">
 			      <div class="form-group">
                                 <label>Numéro</label>
-				<input class="form-control" type="number" name="num_sprint" placeholder="Numéro" value="<?php echo $row_sprints["SPR_numero"];?>"/>
+				<input class="form-control" type="number" name="num_sprint" placeholder="Numéro" value="<?php echo $row_sprints2["SPR_numero"];?>"/>
 			      </div>
 			      <div class="form-group">
                                 <label>Date de début</label>
-				<input class="form-control" type="date" name="date_sprint" value="<?php echo $row_sprints["SPR_dateDebut"];?>"/>
+				<input class="form-control" type="date" name="date_sprint" value="<?php echo $row_sprints2["SPR_dateDebut"];?>"/>
 			      </div>
 			      <div class="form-group">
                                 <label>Durée</label>
-				<input class="form-control" type="number" name="duree_sprint" placeholder="Nombre de jours" value="<?php echo $row_sprints["SPR_duree"]; ?>"/>
+				<input class="form-control" type="number" name="duree_sprint" placeholder="Nombre de jours" value="<?php echo $row_sprints2["SPR_duree"]; ?>"/>
 			      </div>
 			    </div>
 			    <div class="modal-footer">

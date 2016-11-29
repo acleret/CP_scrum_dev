@@ -565,9 +565,9 @@ class Requetes {
     }
 
     // ajout US
-    public function ajoutUserStory($nom_us, $chiffrage, $priorite, $id_pro) {
-        $sql = "INSERT INTO us (US_nom, US_chiffrageAbstrait, US_priorite, US_dateCreation, PRO_id)
-                VALUES ('".$nom_us."', ".$chiffrage.", ".$priorite.", Now(), ".$id_pro.");";
+    public function ajoutUserStory($numero_us, $nom_us, $chiffrage, $priorite, $id_pro) {
+        $sql = "INSERT INTO us (US_numero, US_nom, US_chiffrageAbstrait, US_priorite, US_dateCreation, PRO_id)
+                VALUES (".$numero_us.", '".$nom_us."', ".$chiffrage.", ".$priorite.", Now(), ".$id_pro.");";
         if (!$result = $this->conn->query($sql)) {
             printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
             return NULL;

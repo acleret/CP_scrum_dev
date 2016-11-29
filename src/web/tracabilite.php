@@ -37,7 +37,8 @@ if (isset($_COOKIE["id_projet"])) {
               <table id="tableUS" class="table table-striped table-hover">
                 <thead>
                   <tr>
-                    <th>US</th>
+                    <th>Numéro US</th>
+                    <th>Nom US</th>
                     <th>Commit</th>
                     <th>Date</th>
                     <th>Auteur</th>
@@ -56,6 +57,7 @@ if (isset($_COOKIE["id_projet"])) {
   while ($row = $result->fetch_assoc()) {
 ?>
                   <tr>
+                    <td><?php echo 'US#'.$row["US_numero"]; ?></td>
                     <td><?php echo $row["US_nom"]; ?></td>
                     <td><?php echo $row["US_idDernierCommit"]; ?></td>
 				    <td><?php echo $db->ordonnerDate($row["US_dateDernierCommit"]); ?></td>

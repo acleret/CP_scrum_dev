@@ -357,7 +357,7 @@ while ($row = $result->fetch_assoc()) {
 echo "</ul><br>\n";
 
 echo "<b>// test ajoutUserStory</b><br>\n<ul>";
-if ($test->ajoutUserStory("us1", 5, "NULL", 1)) {
+if ($test->ajoutUserStory(1, "us1", 5, "NULL", 1)) {
 	$id_us = $test->maxIDUserStory();
   echo "<li class=\"correct\">US $id_us créée</li>\n";
 } else {

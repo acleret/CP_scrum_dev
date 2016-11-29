@@ -311,21 +311,308 @@ INSERT IGNORE INTO `inter_dev_projet` (`DEV_id`, `PRO_id`) VALUES
 (26, 24), (14, 19), (18, 79), (10, 38), (28, 96), (19, 39), (13, 88), (28, 44), (24, 104), (5, 34), 
 (4, 37), (20, 61), (29, 105), (13, 109), (4, 43), (9, 32), (9, 81), (6, 92), (27, 24), (17, 31);
 
-INSERT INTO `sprint` (`SPR_numero` , `SPR_dateDebut` , `SPR_duree` , `PRO_id`) VALUES
-('1',  '2016-11-09',  '7',  1), 
-('2',  '2016-11-16',  '7',  1), 
-('3',  '2016-11-23',  '7',  1), 
-('4',  '2016-11-30',  '7',  1), 
-('5',  '2016-12-07',  '7',  1), 
-('6',  '2016-12-14',  '7',  1), 
-('1',  '2016-11-09',  '7',  2), 
-('2',  '2016-11-16',  '7',  2), 
-('3',  '2016-11-23',  '7',  2), 
-('4',  '2016-11-30',  '7',  2), 
-('1',  '2016-11-09',  '7',  3), 
-('1',  '2016-11-09',  '7',  5), 
-('2',  '2016-11-16',  '7',  5), 
-('3',  '2016-11-23',  '7',  5);
+
+INSERT INTO `sprint` (`SPR_numero`,`SPR_duree`,`PRO_id`,`SPR_dateDebut`,`SPR_id`) VALUES
+(1,10,1,"2016-04-12",1),
+(2,19,1,"2017-10-22",2),
+(3,16,1,"2016-08-04",3),
+(4,12,1,"2017-02-01",4),
+(5,8,1,"2017-03-30",5),
+(6,12,1,"2016-11-14",6),
+(12,16,47,"2016-11-30",7),
+(15,8,94,"2017-10-04",8),
+(16,10,67,"2016-07-21",9),
+(7,9,58,"2017-08-01",10),
+(4,8,53,"2017-03-24",11),
+(5,20,95,"2016-08-13",12),
+(19,17,43,"2016-01-07",13),
+(6,14,57,"2017-03-26",14),
+(19,19,2,"2016-12-31",15),
+(14,7,52,"2017-10-16",16),
+(1,8,8,"2016-11-16",17),
+(5,19,83,"2016-11-03",18),
+(14,9,9,"2016-10-02",19),
+(19,10,15,"2016-05-23",20),
+(12,10,2,"2017-09-24",21),
+(12,19,103,"2016-03-31",22),
+(2,14,12,"2016-05-06",23),
+(7,15,91,"2016-01-23",24),
+(8,16,78,"2016-09-25",25),
+(4,21,63,"2016-12-10",26),
+(15,7,117,"2015-12-23",27),
+(16,13,118,"2016-01-22",28),
+(1,11,39,"2015-12-14",29),
+(18,17,91,"2016-01-29",30),
+(2,17,97,"2016-05-24",31),
+(7,19,87,"2016-12-25",32),
+(13,14,118,"2017-10-11",33),
+(11,20,86,"2015-12-02",34),
+(16,14,49,"2016-08-16",35),
+(7,12,70,"2016-06-12",36),
+(10,13,93,"2017-09-20",37),
+(10,20,31,"2015-12-20",38),
+(6,14,80,"2017-10-19",39),
+(2,15,91,"2017-04-22",40),
+(5,8,26,"2017-08-30",41),
+(18,10,83,"2016-03-06",42),
+(16,9,8,"2016-01-04",43),
+(5,14,23,"2017-07-21",44),
+(16,10,45,"2017-09-22",45),
+(17,16,63,"2016-11-12",46),
+(10,11,115,"2017-11-08",47),
+(9,21,66,"2016-04-29",48),
+(16,10,82,"2016-07-12",49),
+(20,10,49,"2017-10-20",50),
+(4,8,33,"2016-04-18",51),
+(20,17,43,"2017-08-11",52),
+(8,21,115,"2017-03-07",53),
+(9,13,24,"2017-06-02",54),
+(12,19,49,"2017-02-22",55),
+(8,9,36,"2016-08-15",56),
+(6,10,25,"2017-01-30",57),
+(16,9,3,"2017-01-17",58),
+(2,18,67,"2016-08-24",59),
+(16,19,111,"2017-11-11",60),
+(1,11,80,"2016-02-27",61),
+(19,14,65,"2016-11-15",62),
+(9,10,74,"2017-05-07",63),
+(5,11,36,"2016-08-15",64),
+(10,20,115,"2017-04-10",65),
+(1,16,85,"2016-12-17",66),
+(2,7,36,"2016-01-08",67),
+(9,19,67,"2016-03-02",68),
+(12,7,91,"2016-02-18",69),
+(7,13,91,"2016-07-21",70),
+(1,15,37,"2016-04-03",71),
+(12,14,84,"2015-12-22",72),
+(11,19,40,"2015-12-24",73),
+(7,9,38,"2017-04-25",74),
+(20,7,101,"2017-04-11",75),
+(16,10,19,"2016-07-23",76),
+(15,16,77,"2016-05-06",77),
+(3,20,86,"2017-04-17",78),
+(17,17,25,"2016-12-02",79),
+(14,9,115,"2016-12-09",80),
+(4,9,20,"2017-01-26",81),
+(17,10,99,"2017-08-30",82),
+(13,16,94,"2016-09-26",83),
+(20,19,52,"2017-07-30",84),
+(3,9,22,"2017-09-09",85),
+(18,19,76,"2017-11-17",86),
+(20,18,51,"2016-09-11",87),
+(16,7,56,"2017-07-18",88),
+(11,8,40,"2017-09-03",89),
+(14,12,43,"2017-02-07",90),
+(3,7,49,"2015-12-04",91),
+(16,17,112,"2016-02-29",92),
+(1,14,30,"2017-09-26",93),
+(20,13,24,"2016-01-15",94),
+(14,21,90,"2017-03-05",95),
+(15,21,39,"2016-10-18",96),
+(5,10,46,"2017-01-15",97),
+(1,20,38,"2016-01-12",98),
+(6,13,79,"2016-08-14",99),
+(14,12,97,"2017-10-04",100),
+(1,7,39,"2017-08-20",101),
+(9,11,82,"2017-09-23",102),
+(19,8,64,"2016-02-03",103),
+(14,8,68,"2017-03-20",104),
+(9,13,4,"2017-03-20",105),
+(14,9,88,"2017-11-07",106),
+(19,14,59,"2017-11-11",107),
+(4,19,92,"2016-05-01",108),
+(6,21,48,"2016-01-16",109),
+(12,10,48,"2017-02-13",110),
+(20,11,95,"2016-12-15",111),
+(8,7,105,"2016-05-18",112),
+(5,20,51,"2017-03-21",113),
+(19,13,60,"2016-08-02",114),
+(16,9,90,"2016-12-10",115),
+(8,17,26,"2017-07-20",116),
+(14,9,93,"2017-09-23",117),
+(17,12,33,"2017-08-05",118),
+(14,17,96,"2016-02-21",119),
+(18,19,54,"2015-12-21",120),
+(9,19,87,"2015-12-28",121),
+(15,8,64,"2016-05-21",122),
+(10,10,95,"2017-06-22",123),
+(19,17,33,"2016-01-17",124),
+(15,14,80,"2017-02-16",125),
+(13,21,85,"2016-09-06",126),
+(7,13,42,"2017-10-20",127),
+(6,15,45,"2016-09-29",128),
+(15,20,4,"2016-03-09",129),
+(13,20,91,"2016-01-14",130),
+(8,9,21,"2016-12-21",131),
+(2,14,53,"2017-11-02",132),
+(10,16,7,"2016-04-25",133),
+(19,21,4,"2016-08-23",134),
+(8,17,20,"2015-12-03",135),
+(7,9,58,"2016-11-02",136),
+(2,12,5,"2017-11-19",137),
+(4,17,69,"2016-07-29",138),
+(8,18,63,"2016-12-12",139),
+(7,8,103,"2016-06-03",140),
+(13,21,76,"2016-12-08",141),
+(14,21,16,"2016-03-07",142),
+(13,11,30,"2017-01-27",143),
+(6,20,14,"2017-11-28",144),
+(20,20,89,"2016-12-13",145),
+(18,21,73,"2017-10-31",146),
+(13,12,46,"2017-09-19",147),
+(5,10,66,"2017-07-08",148),
+(9,9,74,"2016-04-06",149),
+(19,21,18,"2017-05-14",150),
+(1,7,38,"2016-08-25",151),
+(7,9,88,"2017-11-01",152),
+(14,17,41,"2017-08-28",153),
+(20,15,112,"2016-10-21",154),
+(16,12,14,"2016-06-27",155),
+(6,17,17,"2016-02-20",156),
+(15,9,119,"2016-12-24",157),
+(3,8,86,"2017-09-29",158),
+(10,13,73,"2016-12-25",159),
+(5,19,8,"2017-08-08",160),
+(15,8,58,"2016-11-15",161),
+(11,8,89,"2017-10-19",162),
+(5,21,91,"2016-05-23",163),
+(12,9,46,"2016-09-22",164),
+(18,7,95,"2017-11-20",165),
+(13,15,6,"2017-01-17",166),
+(3,17,32,"2017-02-06",167),
+(12,10,6,"2017-03-25",168),
+(3,15,74,"2017-07-03",169),
+(8,13,107,"2017-02-15",170),
+(10,21,73,"2016-09-11",171),
+(14,12,17,"2017-02-18",172),
+(20,14,69,"2016-07-05",173),
+(14,17,51,"2016-04-27",174),
+(7,8,108,"2017-07-29",175),
+(17,20,28,"2017-01-11",176),
+(15,14,84,"2017-01-26",177),
+(16,11,103,"2016-12-25",178),
+(2,18,80,"2017-05-05",179),
+(1,21,78,"2017-08-03",180),
+(17,12,51,"2017-03-07",181),
+(19,13,20,"2017-05-18",182),
+(12,7,16,"2017-11-02",183),
+(15,21,96,"2016-10-27",184),
+(15,16,59,"2017-01-26",185),
+(1,9,42,"2016-01-03",186),
+(2,18,26,"2017-07-16",187),
+(2,8,2,"2017-01-19",188),
+(7,12,113,"2016-07-18",189),
+(12,10,59,"2017-04-12",190),
+(17,8,50,"2017-05-03",191),
+(3,21,59,"2016-11-03",192),
+(16,8,102,"2016-04-12",193),
+(4,17,39,"2016-09-04",194),
+(15,21,75,"2016-03-22",195),
+(12,12,61,"2017-10-09",196),
+(3,19,27,"2016-08-14",197),
+(13,12,87,"2017-09-06",198),
+(4,18,37,"2017-10-22",199),
+(13,7,77,"2016-06-07",200),
+(4,13,87,"2017-11-27",201),
+(11,7,9,"2017-03-09",202),
+(7,21,47,"2017-06-01",203),
+(16,12,100,"2017-08-06",204),
+(10,12,36,"2016-06-25",205),
+(1,14,71,"2016-02-20",206),
+(19,7,65,"2017-10-11",207),
+(6,15,94,"2016-01-31",208),
+(6,20,20,"2017-04-09",209),
+(20,14,98,"2017-05-31",210),
+(17,13,25,"2016-03-31",211),
+(17,14,31,"2017-03-10",212),
+(16,16,2,"2015-11-29",213),
+(3,15,8,"2017-10-29",214),
+(15,14,50,"2017-07-12",215),
+(17,14,103,"2016-12-25",216),
+(18,13,26,"2017-04-09",217),
+(20,16,34,"2017-03-09",218),
+(11,16,112,"2017-09-12",219),
+(13,19,54,"2017-08-10",220),
+(15,10,28,"2016-09-09",221),
+(5,17,42,"2016-09-17",222),
+(15,9,12,"2016-06-05",223),
+(9,18,10,"2016-08-08",224),
+(12,16,92,"2017-06-02",225),
+(17,12,82,"2017-04-27",226),
+(3,7,49,"2015-12-18",227),
+(8,17,88,"2017-02-04",228),
+(12,19,90,"2017-05-26",229),
+(9,11,99,"2017-02-02",230),
+(17,15,105,"2017-11-15",231),
+(18,7,96,"2016-03-03",232),
+(12,21,76,"2017-07-13",233),
+(14,20,92,"2016-06-26",234),
+(18,10,77,"2016-07-23",235),
+(8,12,91,"2016-08-26",236),
+(6,18,103,"2016-11-22",237),
+(12,12,52,"2017-10-22",238),
+(10,17,90,"2016-09-25",239),
+(3,11,106,"2015-12-24",240),
+(11,9,112,"2015-12-09",241),
+(16,9,60,"2016-08-02",242),
+(16,9,26,"2016-07-30",243),
+(20,19,56,"2016-06-25",244),
+(6,16,51,"2017-04-03",245),
+(4,13,2,"2016-02-19",246),
+(12,10,41,"2016-11-01",247),
+(2,8,83,"2017-08-27",248),
+(6,15,51,"2017-04-05",249),
+(16,16,100,"2017-11-04",250),
+(1,14,39,"2017-10-11",251),
+(16,21,37,"2016-12-25",252),
+(7,15,66,"2016-08-11",253),
+(16,9,13,"2017-01-26",254),
+(11,13,78,"2017-07-18",255),
+(12,18,81,"2016-10-03",256),
+(17,19,67,"2016-03-18",257),
+(7,18,26,"2016-05-21",258),
+(12,10,4,"2016-07-12",259),
+(8,17,27,"2016-04-29",260),
+(9,18,110,"2017-06-04",261),
+(11,14,9,"2016-12-26",262),
+(20,14,31,"2016-08-17",263),
+(9,18,74,"2017-11-04",264),
+(4,13,14,"2017-11-14",265),
+(3,15,17,"2015-12-22",266),
+(13,8,85,"2015-12-07",267),
+(1,12,92,"2016-11-18",268),
+(8,21,93,"2017-08-04",269),
+(9,20,48,"2016-06-09",270),
+(16,14,102,"2016-10-27",271),
+(16,9,97,"2016-08-07",272),
+(20,10,55,"2017-05-10",273),
+(19,14,49,"2017-01-12",274),
+(4,20,50,"2017-11-22",275),
+(5,15,34,"2017-05-26",276),
+(1,19,65,"2017-04-05",277),
+(10,11,116,"2016-03-17",278),
+(20,20,108,"2016-09-15",279),
+(1,8,98,"2016-05-12",280),
+(1,16,67,"2016-11-18",281),
+(17,15,12,"2016-11-30",282),
+(12,8,20,"2016-09-10",283),
+(10,8,22,"2016-03-18",284),
+(14,7,56,"2016-09-30",285),
+(10,16,32,"2017-03-27",286),
+(1,9,17,"2016-03-09",287),
+(4,14,39,"2017-04-24",288),
+(10,20,54,"2016-03-15",289),
+(10,10,24,"2017-09-06",290),
+(14,13,67,"2016-01-02",291),
+(12,14,56,"2017-08-05",292),
+(11,15,79,"2017-11-27",293),
+(15,16,75,"2017-11-15",294),
+(17,20,101,"2017-04-07",295),
+(13,21,100,"2016-05-17",296),
+(5,16,96,"2017-04-14",297),
+(18,21,13,"2017-02-07",298),
+(17,12,47,"2016-04-12",299),
+(17,7,89,"2016-11-12",300);
 
 INSERT INTO `us` (`US_nom`, `US_chiffrageAbstrait`, `US_priorite`, `US_dateCreation`, `US_dateDernierCommit`, `US_idDernierCommit`, `US_auteurDernierCommit`, `PRO_id`, `SPR_id`) VALUES
 ('En tant que je souhaite01', '2', '2', Now(), NULL, NULL, NULL, 1, NULL), 
@@ -830,3 +1117,269 @@ INSERT INTO `tache` (`TAC_nom`, `TAC_description`, `TAC_nbJours`, `TAC_dateDepar
 ("Tache144", "Lorem ipsum dolor sit", 6, "2016-11-27", "2016-12-03", "TO DO", 29, 1), 
 ("Tache145", "Lorem ipsum dolor sit", 1, "2016-11-27", "2016-12-04", "TO DO", 26, 1), 
 ("Tache146", "Lorem", 4, "2016-11-29", "2016-12-01", "ON GOING", 10, 1);
+
+UPDATE `us` SET `US_numero` = 15 WHERE `US_id` = 1;
+UPDATE `us` SET `US_numero` = 6 WHERE `US_id` = 2;
+UPDATE `us` SET `US_numero` = 11 WHERE `US_id` = 3;
+UPDATE `us` SET `US_numero` = 19 WHERE `US_id` = 4;
+UPDATE `us` SET `US_numero` = 6 WHERE `US_id` = 5;
+UPDATE `us` SET `US_numero` = 1 WHERE `US_id` = 6;
+UPDATE `us` SET `US_numero` = 14 WHERE `US_id` = 7;
+UPDATE `us` SET `US_numero` = 4 WHERE `US_id` = 8;
+UPDATE `us` SET `US_numero` = 17 WHERE `US_id` = 9;
+UPDATE `us` SET `US_numero` = 2 WHERE `US_id` = 10;
+UPDATE `us` SET `US_numero` = 6 WHERE `US_id` = 11;
+UPDATE `us` SET `US_numero` = 19 WHERE `US_id` = 12;
+UPDATE `us` SET `US_numero` = 10 WHERE `US_id` = 13;
+UPDATE `us` SET `US_numero` = 9 WHERE `US_id` = 14;
+UPDATE `us` SET `US_numero` = 19 WHERE `US_id` = 15;
+UPDATE `us` SET `US_numero` = 2 WHERE `US_id` = 16;
+UPDATE `us` SET `US_numero` = 19 WHERE `US_id` = 17;
+UPDATE `us` SET `US_numero` = 2 WHERE `US_id` = 18;
+UPDATE `us` SET `US_numero` = 18 WHERE `US_id` = 19;
+UPDATE `us` SET `US_numero` = 10 WHERE `US_id` = 20;
+UPDATE `us` SET `US_numero` = 15 WHERE `US_id` = 21;
+UPDATE `us` SET `US_numero` = 2 WHERE `US_id` = 22;
+UPDATE `us` SET `US_numero` = 13 WHERE `US_id` = 23;
+UPDATE `us` SET `US_numero` = 1 WHERE `US_id` = 24;
+UPDATE `us` SET `US_numero` = 9 WHERE `US_id` = 25;
+UPDATE `us` SET `US_numero` = 10 WHERE `US_id` = 26;
+UPDATE `us` SET `US_numero` = 15 WHERE `US_id` = 27;
+UPDATE `us` SET `US_numero` = 17 WHERE `US_id` = 28;
+UPDATE `us` SET `US_numero` = 6 WHERE `US_id` = 29;
+UPDATE `us` SET `US_numero` = 12 WHERE `US_id` = 30;
+UPDATE `us` SET `US_numero` = 19 WHERE `US_id` = 31;
+UPDATE `us` SET `US_numero` = 8 WHERE `US_id` = 32;
+UPDATE `us` SET `US_numero` = 12 WHERE `US_id` = 33;
+UPDATE `us` SET `US_numero` = 3 WHERE `US_id` = 34;
+UPDATE `us` SET `US_numero` = 15 WHERE `US_id` = 35;
+UPDATE `us` SET `US_numero` = 16 WHERE `US_id` = 36;
+UPDATE `us` SET `US_numero` = 6 WHERE `US_id` = 37;
+UPDATE `us` SET `US_numero` = 4 WHERE `US_id` = 38;
+UPDATE `us` SET `US_numero` = 17 WHERE `US_id` = 39;
+UPDATE `us` SET `US_numero` = 17 WHERE `US_id` = 40;
+UPDATE `us` SET `US_numero` = 2 WHERE `US_id` = 41;
+UPDATE `us` SET `US_numero` = 15 WHERE `US_id` = 42;
+UPDATE `us` SET `US_numero` = 8 WHERE `US_id` = 43;
+UPDATE `us` SET `US_numero` = 5 WHERE `US_id` = 44;
+UPDATE `us` SET `US_numero` = 18 WHERE `US_id` = 45;
+UPDATE `us` SET `US_numero` = 10 WHERE `US_id` = 46;
+UPDATE `us` SET `US_numero` = 18 WHERE `US_id` = 47;
+UPDATE `us` SET `US_numero` = 6 WHERE `US_id` = 48;
+UPDATE `us` SET `US_numero` = 4 WHERE `US_id` = 49;
+UPDATE `us` SET `US_numero` = 14 WHERE `US_id` = 50;
+UPDATE `us` SET `US_numero` = 17 WHERE `US_id` = 51;
+UPDATE `us` SET `US_numero` = 2 WHERE `US_id` = 52;
+UPDATE `us` SET `US_numero` = 3 WHERE `US_id` = 53;
+UPDATE `us` SET `US_numero` = 1 WHERE `US_id` = 54;
+UPDATE `us` SET `US_numero` = 12 WHERE `US_id` = 55;
+UPDATE `us` SET `US_numero` = 14 WHERE `US_id` = 56;
+UPDATE `us` SET `US_numero` = 13 WHERE `US_id` = 57;
+UPDATE `us` SET `US_numero` = 6 WHERE `US_id` = 58;
+UPDATE `us` SET `US_numero` = 1 WHERE `US_id` = 59;
+UPDATE `us` SET `US_numero` = 12 WHERE `US_id` = 60;
+UPDATE `us` SET `US_numero` = 5 WHERE `US_id` = 61;
+UPDATE `us` SET `US_numero` = 11 WHERE `US_id` = 62;
+UPDATE `us` SET `US_numero` = 1 WHERE `US_id` = 63;
+UPDATE `us` SET `US_numero` = 11 WHERE `US_id` = 64;
+UPDATE `us` SET `US_numero` = 4 WHERE `US_id` = 65;
+UPDATE `us` SET `US_numero` = 2 WHERE `US_id` = 66;
+UPDATE `us` SET `US_numero` = 20 WHERE `US_id` = 67;
+UPDATE `us` SET `US_numero` = 13 WHERE `US_id` = 68;
+UPDATE `us` SET `US_numero` = 9 WHERE `US_id` = 69;
+UPDATE `us` SET `US_numero` = 15 WHERE `US_id` = 70;
+UPDATE `us` SET `US_numero` = 16 WHERE `US_id` = 71;
+UPDATE `us` SET `US_numero` = 15 WHERE `US_id` = 72;
+UPDATE `us` SET `US_numero` = 12 WHERE `US_id` = 73;
+UPDATE `us` SET `US_numero` = 3 WHERE `US_id` = 74;
+UPDATE `us` SET `US_numero` = 9 WHERE `US_id` = 75;
+UPDATE `us` SET `US_numero` = 14 WHERE `US_id` = 76;
+UPDATE `us` SET `US_numero` = 1 WHERE `US_id` = 77;
+UPDATE `us` SET `US_numero` = 14 WHERE `US_id` = 78;
+UPDATE `us` SET `US_numero` = 10 WHERE `US_id` = 79;
+UPDATE `us` SET `US_numero` = 2 WHERE `US_id` = 80;
+UPDATE `us` SET `US_numero` = 12 WHERE `US_id` = 81;
+UPDATE `us` SET `US_numero` = 13 WHERE `US_id` = 82;
+UPDATE `us` SET `US_numero` = 8 WHERE `US_id` = 83;
+UPDATE `us` SET `US_numero` = 8 WHERE `US_id` = 84;
+UPDATE `us` SET `US_numero` = 11 WHERE `US_id` = 85;
+UPDATE `us` SET `US_numero` = 15 WHERE `US_id` = 86;
+UPDATE `us` SET `US_numero` = 5 WHERE `US_id` = 87;
+UPDATE `us` SET `US_numero` = 13 WHERE `US_id` = 88;
+UPDATE `us` SET `US_numero` = 19 WHERE `US_id` = 89;
+UPDATE `us` SET `US_numero` = 12 WHERE `US_id` = 90;
+UPDATE `us` SET `US_numero` = 7 WHERE `US_id` = 91;
+UPDATE `us` SET `US_numero` = 18 WHERE `US_id` = 92;
+UPDATE `us` SET `US_numero` = 8 WHERE `US_id` = 93;
+UPDATE `us` SET `US_numero` = 1 WHERE `US_id` = 94;
+UPDATE `us` SET `US_numero` = 17 WHERE `US_id` = 95;
+UPDATE `us` SET `US_numero` = 6 WHERE `US_id` = 96;
+UPDATE `us` SET `US_numero` = 10 WHERE `US_id` = 97;
+UPDATE `us` SET `US_numero` = 14 WHERE `US_id` = 98;
+UPDATE `us` SET `US_numero` = 11 WHERE `US_id` = 99;
+UPDATE `us` SET `US_numero` = 13 WHERE `US_id` = 100;
+UPDATE `us` SET `US_numero` = 15 WHERE `US_id` = 101;
+UPDATE `us` SET `US_numero` = 6 WHERE `US_id` = 102;
+UPDATE `us` SET `US_numero` = 11 WHERE `US_id` = 103;
+UPDATE `us` SET `US_numero` = 19 WHERE `US_id` = 104;
+UPDATE `us` SET `US_numero` = 6 WHERE `US_id` = 105;
+UPDATE `us` SET `US_numero` = 1 WHERE `US_id` = 106;
+UPDATE `us` SET `US_numero` = 14 WHERE `US_id` = 107;
+UPDATE `us` SET `US_numero` = 4 WHERE `US_id` = 108;
+UPDATE `us` SET `US_numero` = 17 WHERE `US_id` = 109;
+UPDATE `us` SET `US_numero` = 2 WHERE `US_id` = 110;
+UPDATE `us` SET `US_numero` = 6 WHERE `US_id` = 111;
+UPDATE `us` SET `US_numero` = 19 WHERE `US_id` = 112;
+UPDATE `us` SET `US_numero` = 10 WHERE `US_id` = 113;
+UPDATE `us` SET `US_numero` = 9 WHERE `US_id` = 114;
+UPDATE `us` SET `US_numero` = 19 WHERE `US_id` = 115;
+UPDATE `us` SET `US_numero` = 2 WHERE `US_id` = 116;
+UPDATE `us` SET `US_numero` = 19 WHERE `US_id` = 117;
+UPDATE `us` SET `US_numero` = 2 WHERE `US_id` = 118;
+UPDATE `us` SET `US_numero` = 18 WHERE `US_id` = 119;
+UPDATE `us` SET `US_numero` = 10 WHERE `US_id` = 120;
+UPDATE `us` SET `US_numero` = 15 WHERE `US_id` = 121;
+UPDATE `us` SET `US_numero` = 2 WHERE `US_id` = 122;
+UPDATE `us` SET `US_numero` = 13 WHERE `US_id` = 123;
+UPDATE `us` SET `US_numero` = 1 WHERE `US_id` = 124;
+UPDATE `us` SET `US_numero` = 9 WHERE `US_id` = 125;
+UPDATE `us` SET `US_numero` = 10 WHERE `US_id` = 126;
+UPDATE `us` SET `US_numero` = 15 WHERE `US_id` = 127;
+UPDATE `us` SET `US_numero` = 17 WHERE `US_id` = 128;
+UPDATE `us` SET `US_numero` = 6 WHERE `US_id` = 129;
+UPDATE `us` SET `US_numero` = 12 WHERE `US_id` = 130;
+UPDATE `us` SET `US_numero` = 19 WHERE `US_id` = 131;
+UPDATE `us` SET `US_numero` = 8 WHERE `US_id` = 132;
+UPDATE `us` SET `US_numero` = 12 WHERE `US_id` = 133;
+UPDATE `us` SET `US_numero` = 3 WHERE `US_id` = 134;
+UPDATE `us` SET `US_numero` = 15 WHERE `US_id` = 135;
+UPDATE `us` SET `US_numero` = 16 WHERE `US_id` = 136;
+UPDATE `us` SET `US_numero` = 6 WHERE `US_id` = 137;
+UPDATE `us` SET `US_numero` = 4 WHERE `US_id` = 138;
+UPDATE `us` SET `US_numero` = 17 WHERE `US_id` = 139;
+UPDATE `us` SET `US_numero` = 17 WHERE `US_id` = 140;
+UPDATE `us` SET `US_numero` = 2 WHERE `US_id` = 141;
+UPDATE `us` SET `US_numero` = 15 WHERE `US_id` = 142;
+UPDATE `us` SET `US_numero` = 8 WHERE `US_id` = 143;
+UPDATE `us` SET `US_numero` = 5 WHERE `US_id` = 144;
+UPDATE `us` SET `US_numero` = 18 WHERE `US_id` = 145;
+UPDATE `us` SET `US_numero` = 10 WHERE `US_id` = 146;
+UPDATE `us` SET `US_numero` = 18 WHERE `US_id` = 147;
+UPDATE `us` SET `US_numero` = 6 WHERE `US_id` = 148;
+UPDATE `us` SET `US_numero` = 4 WHERE `US_id` = 149;
+UPDATE `us` SET `US_numero` = 14 WHERE `US_id` = 150;
+UPDATE `us` SET `US_numero` = 17 WHERE `US_id` = 151;
+UPDATE `us` SET `US_numero` = 2 WHERE `US_id` = 152;
+UPDATE `us` SET `US_numero` = 3 WHERE `US_id` = 153;
+UPDATE `us` SET `US_numero` = 1 WHERE `US_id` = 154;
+UPDATE `us` SET `US_numero` = 12 WHERE `US_id` = 155;
+UPDATE `us` SET `US_numero` = 14 WHERE `US_id` = 156;
+UPDATE `us` SET `US_numero` = 13 WHERE `US_id` = 157;
+UPDATE `us` SET `US_numero` = 6 WHERE `US_id` = 158;
+UPDATE `us` SET `US_numero` = 1 WHERE `US_id` = 159;
+UPDATE `us` SET `US_numero` = 12 WHERE `US_id` = 160;
+UPDATE `us` SET `US_numero` = 5 WHERE `US_id` = 161;
+UPDATE `us` SET `US_numero` = 11 WHERE `US_id` = 162;
+UPDATE `us` SET `US_numero` = 1 WHERE `US_id` = 163;
+UPDATE `us` SET `US_numero` = 11 WHERE `US_id` = 164;
+UPDATE `us` SET `US_numero` = 4 WHERE `US_id` = 165;
+UPDATE `us` SET `US_numero` = 2 WHERE `US_id` = 166;
+UPDATE `us` SET `US_numero` = 20 WHERE `US_id` = 167;
+UPDATE `us` SET `US_numero` = 13 WHERE `US_id` = 168;
+UPDATE `us` SET `US_numero` = 9 WHERE `US_id` = 169;
+UPDATE `us` SET `US_numero` = 15 WHERE `US_id` = 170;
+UPDATE `us` SET `US_numero` = 16 WHERE `US_id` = 171;
+UPDATE `us` SET `US_numero` = 15 WHERE `US_id` = 172;
+UPDATE `us` SET `US_numero` = 12 WHERE `US_id` = 173;
+UPDATE `us` SET `US_numero` = 3 WHERE `US_id` = 174;
+UPDATE `us` SET `US_numero` = 9 WHERE `US_id` = 175;
+UPDATE `us` SET `US_numero` = 14 WHERE `US_id` = 176;
+UPDATE `us` SET `US_numero` = 1 WHERE `US_id` = 177;
+UPDATE `us` SET `US_numero` = 14 WHERE `US_id` = 178;
+UPDATE `us` SET `US_numero` = 10 WHERE `US_id` = 179;
+UPDATE `us` SET `US_numero` = 2 WHERE `US_id` = 180;
+UPDATE `us` SET `US_numero` = 12 WHERE `US_id` = 181;
+UPDATE `us` SET `US_numero` = 13 WHERE `US_id` = 182;
+UPDATE `us` SET `US_numero` = 8 WHERE `US_id` = 183;
+UPDATE `us` SET `US_numero` = 8 WHERE `US_id` = 184;
+UPDATE `us` SET `US_numero` = 11 WHERE `US_id` = 185;
+UPDATE `us` SET `US_numero` = 15 WHERE `US_id` = 186;
+UPDATE `us` SET `US_numero` = 5 WHERE `US_id` = 187;
+UPDATE `us` SET `US_numero` = 13 WHERE `US_id` = 188;
+UPDATE `us` SET `US_numero` = 19 WHERE `US_id` = 189;
+UPDATE `us` SET `US_numero` = 12 WHERE `US_id` = 190;
+UPDATE `us` SET `US_numero` = 7 WHERE `US_id` = 191;
+UPDATE `us` SET `US_numero` = 18 WHERE `US_id` = 192;
+UPDATE `us` SET `US_numero` = 8 WHERE `US_id` = 193;
+UPDATE `us` SET `US_numero` = 1 WHERE `US_id` = 194;
+UPDATE `us` SET `US_numero` = 17 WHERE `US_id` = 195;
+UPDATE `us` SET `US_numero` = 6 WHERE `US_id` = 196;
+UPDATE `us` SET `US_numero` = 10 WHERE `US_id` = 197;
+UPDATE `us` SET `US_numero` = 14 WHERE `US_id` = 198;
+UPDATE `us` SET `US_numero` = 11 WHERE `US_id` = 199;
+UPDATE `us` SET `US_numero` = 13 WHERE `US_id` = 200;
+UPDATE `us` SET `US_numero` = 15 WHERE `US_id` = 201;
+UPDATE `us` SET `US_numero` = 6 WHERE `US_id` = 202;
+UPDATE `us` SET `US_numero` = 11 WHERE `US_id` = 203;
+UPDATE `us` SET `US_numero` = 19 WHERE `US_id` = 204;
+UPDATE `us` SET `US_numero` = 6 WHERE `US_id` = 205;
+UPDATE `us` SET `US_numero` = 1 WHERE `US_id` = 206;
+UPDATE `us` SET `US_numero` = 14 WHERE `US_id` = 207;
+UPDATE `us` SET `US_numero` = 4 WHERE `US_id` = 208;
+UPDATE `us` SET `US_numero` = 17 WHERE `US_id` = 209;
+UPDATE `us` SET `US_numero` = 2 WHERE `US_id` = 210;
+UPDATE `us` SET `US_numero` = 6 WHERE `US_id` = 211;
+UPDATE `us` SET `US_numero` = 19 WHERE `US_id` = 212;
+UPDATE `us` SET `US_numero` = 10 WHERE `US_id` = 213;
+UPDATE `us` SET `US_numero` = 9 WHERE `US_id` = 214;
+UPDATE `us` SET `US_numero` = 19 WHERE `US_id` = 215;
+UPDATE `us` SET `US_numero` = 2 WHERE `US_id` = 216;
+UPDATE `us` SET `US_numero` = 19 WHERE `US_id` = 217;
+UPDATE `us` SET `US_numero` = 2 WHERE `US_id` = 218;
+UPDATE `us` SET `US_numero` = 18 WHERE `US_id` = 219;
+UPDATE `us` SET `US_numero` = 10 WHERE `US_id` = 220;
+UPDATE `us` SET `US_numero` = 15 WHERE `US_id` = 221;
+UPDATE `us` SET `US_numero` = 2 WHERE `US_id` = 222;
+UPDATE `us` SET `US_numero` = 13 WHERE `US_id` = 223;
+UPDATE `us` SET `US_numero` = 1 WHERE `US_id` = 224;
+UPDATE `us` SET `US_numero` = 9 WHERE `US_id` = 225;
+UPDATE `us` SET `US_numero` = 10 WHERE `US_id` = 226;
+UPDATE `us` SET `US_numero` = 15 WHERE `US_id` = 227;
+UPDATE `us` SET `US_numero` = 17 WHERE `US_id` = 228;
+UPDATE `us` SET `US_numero` = 6 WHERE `US_id` = 229;
+UPDATE `us` SET `US_numero` = 12 WHERE `US_id` = 230;
+UPDATE `us` SET `US_numero` = 19 WHERE `US_id` = 231;
+UPDATE `us` SET `US_numero` = 8 WHERE `US_id` = 232;
+UPDATE `us` SET `US_numero` = 12 WHERE `US_id` = 233;
+UPDATE `us` SET `US_numero` = 3 WHERE `US_id` = 234;
+UPDATE `us` SET `US_numero` = 15 WHERE `US_id` = 235;
+UPDATE `us` SET `US_numero` = 16 WHERE `US_id` = 236;
+UPDATE `us` SET `US_numero` = 6 WHERE `US_id` = 237;
+UPDATE `us` SET `US_numero` = 4 WHERE `US_id` = 238;
+UPDATE `us` SET `US_numero` = 17 WHERE `US_id` = 239;
+UPDATE `us` SET `US_numero` = 17 WHERE `US_id` = 240;
+UPDATE `us` SET `US_numero` = 2 WHERE `US_id` = 241;
+UPDATE `us` SET `US_numero` = 15 WHERE `US_id` = 242;
+UPDATE `us` SET `US_numero` = 8 WHERE `US_id` = 243;
+UPDATE `us` SET `US_numero` = 5 WHERE `US_id` = 244;
+UPDATE `us` SET `US_numero` = 18 WHERE `US_id` = 245;
+UPDATE `us` SET `US_numero` = 10 WHERE `US_id` = 246;
+UPDATE `us` SET `US_numero` = 18 WHERE `US_id` = 247;
+UPDATE `us` SET `US_numero` = 6 WHERE `US_id` = 248;
+UPDATE `us` SET `US_numero` = 4 WHERE `US_id` = 249;
+UPDATE `us` SET `US_numero` = 14 WHERE `US_id` = 250;
+UPDATE `us` SET `US_numero` = 17 WHERE `US_id` = 251;
+UPDATE `us` SET `US_numero` = 2 WHERE `US_id` = 252;
+UPDATE `us` SET `US_numero` = 3 WHERE `US_id` = 253;
+UPDATE `us` SET `US_numero` = 1 WHERE `US_id` = 254;
+UPDATE `us` SET `US_numero` = 12 WHERE `US_id` = 255;
+UPDATE `us` SET `US_numero` = 14 WHERE `US_id` = 256;
+UPDATE `us` SET `US_numero` = 13 WHERE `US_id` = 257;
+UPDATE `us` SET `US_numero` = 6 WHERE `US_id` = 258;
+UPDATE `us` SET `US_numero` = 1 WHERE `US_id` = 259;
+UPDATE `us` SET `US_numero` = 12 WHERE `US_id` = 260;
+UPDATE `us` SET `US_numero` = 5 WHERE `US_id` = 261;
+UPDATE `us` SET `US_numero` = 11 WHERE `US_id` = 262;
+UPDATE `us` SET `US_numero` = 1 WHERE `US_id` = 263;
+UPDATE `us` SET `US_numero` = 11 WHERE `US_id` = 264;
+UPDATE `us` SET `US_numero` = 4 WHERE `US_id` = 265;

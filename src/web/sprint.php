@@ -1,4 +1,5 @@
 <?php
+echo print_r($_POST);
 require_once("../web/config.php");
 
 if (isset($_POST["ret_us"])){
@@ -98,7 +99,8 @@ if (isset($_COOKIE["id_projet"])) {
 	      <table id="tableSprint" class="table table-striped table-hover">
                 <thead>
                   <tr>
-                    <th>User story</th>
+                    <th>Numéro US</th>
+                    <th>Nom</th>
                     <th>Chiffrage abstrait</th>
                     <th>Priorité</th>
 <?php
@@ -119,6 +121,7 @@ if (isset($_COOKIE["id_projet"])) {
     $row3 = $infos_us->fetch_assoc();
 ?>
                 <tr>
+                  <td><?php echo 'US#'.$row3["US_numero"]; ?></td>
                   <td><?php echo $row3["US_nom"]; ?></td>
                   <td><?php echo $row3["US_chiffrageAbstrait"]; ?></td>
                   <td><?php echo $row3["US_priorite"]; ?></td>
@@ -151,7 +154,8 @@ if (isset($_COOKIE["id_projet"])) {
             <table id="tableAddUS" class="table table-striped table-hover">
               <thead>
                 <tr>
-                  <th>User story</th>
+                  <th>Numéro US</th>
+                  <th>Nom</th>
                   <th>Chiffrage abstrait</th>
                   <th>Priorité</th>
                   <th>Actions</th>
@@ -166,6 +170,7 @@ if (isset($_COOKIE["id_projet"])) {
       $row4 = $infos_us->fetch_assoc();
 ?>
                 <tr>
+                  <td><?php echo 'US#'.$row4["US_numero"]; ?></td>
                   <td><?php echo $row4["US_nom"]; ?></td>
                   <td><?php echo $row4["US_chiffrageAbstrait"]; ?></td>
                   <td><?php echo $row4["US_priorite"]; ?></td>

@@ -136,6 +136,7 @@ if (isset($_COOKIE["id_projet"])) {
               <table id="tableUS" class="table table-striped table-hover">
                 <thead>
                   <tr>
+                    <th>Numéro</th>
                     <th>Nom</th>
                     <th>Chiffrage</th>
                     <th>Priorité</th>
@@ -159,6 +160,7 @@ if (isset($_COOKIE["id_projet"])) {
   while ($row = $result->fetch_assoc()) {
 ?>
                   <tr>
+                    <td><?php echo 'US#'.$row["US_numero"]; ?></td>
                     <td><?php echo $row["US_nom"]; ?></td>
                     <td><?php echo $row["US_chiffrageAbstrait"]; ?></td>
                     <td><?php echo $row["US_priorite"]; ?></td>
@@ -180,7 +182,7 @@ if (isset($_COOKIE["id_projet"])) {
                           <form style="display: inline;" action="../web/modificationUserStory.php" method="post">
                             <div class="modal-header">
                               <button type="button" class="close" data-dismiss="modal">&times;</button>
-                              <h4 class="modal-title">Modification d'une User Story</h4>
+                              <h4 class="modal-title">Modifier une User Story</h4>
                             </div>
                             <div class="modal-body">
                               <div class="form-group">
@@ -289,9 +291,13 @@ if (isset($_COOKIE["id_projet"])) {
                   <form style="display: inline;" action="../web/ajoutUserStory.php" method="post">
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      <h4 class="modal-title">Ajout d'une User Story</h4>
+                      <h4 class="modal-title">Ajouter une User Story</h4>
                     </div>
                     <div class="modal-body">
+                      <div class="form-group">
+                        <label for="numeroInput">Numéro</label>
+                        <input type="number" class="form-control" id="numeroInput" placeholder="Numéro" name="numero_us" required>
+                      </div>
                       <div class="form-group">
                         <label for="nomInput">Nom</label>
                         <input type="text" class="form-control" id="nomInput" placeholder="En tant que... je souhaite..." name="nom_us" required>
