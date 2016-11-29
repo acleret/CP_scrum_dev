@@ -184,7 +184,11 @@ if ($liste_sprints->num_rows > 0) {
       setcookie("id_projet", false, time() - 3600);
       unset($_COOKIE["id_projet"]);
     }
-  }
+    if (isset($_COOKIE["id_sprint"])){
+      setcookie("id_sprint", false, time() - 3600);
+      unset($_COOKIE["id_sprint"]);
+    }
+	}
 
 }
 ?>

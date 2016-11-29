@@ -686,6 +686,17 @@ class Requetes {
         return $result;
     }
 
+    // retourne les tâches par US et par état
+    public function listeTachesUSEtat($id_us, $etat) {
+        $sql = "SELECT * FROM tache 
+								WHERE US_id = ".$id_us." AND TAC_etat = '".$etat."';";
+         if (!$result = $this->conn->query($sql)) {
+            printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
+						return NULL;
+        }
+        return $result;
+    }
+
     // retourne la somme du backlog d'un projet
     public function sommeChiffrageBacklog($id_pro) {
         $sql = "SELECT SUM(US_chiffrageAbstrait) FROM us
@@ -832,7 +843,8 @@ class Requetes {
         }
         return $res;
     }
-
+		
+    // retourne les tâches du sprint $id_spr qui ont pour état $etat
 		public function listeTachesEtatSprint($id_spr, $etat) {
 				$sql = "SELECT *	FROM tache
 								WHERE US_id IN (
@@ -841,6 +853,26 @@ class Requetes {
 									ORDER BY `US_id` ASC
 								)	AND TAC_etat = \"".$etat."\"
 								ORDER BY US_id ASC;";
+        if (!$res = $this->conn->query($sql)) {
+            printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
+            return NULL;
+        }
+        return $res;
+		}
+
+    // retourne les tâches de l'us $id_us regroupées selon leur état
+		public function listeTachesUSEtats($id_us) {
+				//SET SESSION group_concat_max_len = 1000000;
+				$sql = "SELECT  TAC_etat, 
+												GROUP_CONCAT(
+													DISTINCT CONCAT(
+														CAST(TAC_id AS CHAR), \" \", TAC_nom
+													) 
+													ORDER BY TAC_id ASC 
+													SEPARATOR \";\"
+												) AS MesTaches
+								FROM tache WHERE US_id = ".$id_us."
+								GROUP BY TAC_etat;";
         if (!$res = $this->conn->query($sql)) {
             printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
             return NULL;

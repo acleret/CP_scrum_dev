@@ -578,4 +578,24 @@ if ($test->testIDTache($id_tac)) {
 }
 echo "</ul><br>\n";
 
+echo "<b>// test listeTachesUSEtats</b><br>\n<ul>";
+$id_us = 13;
+$result = $test->listeTachesUSEtats($id_us);
+while ($row_etat = $result->fetch_assoc()) { // une ligne = un état
+	echo "<li><strong>Ligne de résultat pour l'us $id_us et l'état \"".$row_etat["TAC_etat"]."\"</strong> : [";
+  echo "(".$row_etat["TAC_etat"].") , (".$row_etat["MesTaches"].")]<br>\n";
+	
+	$lesTaches = explode(";", $row_etat["MesTaches"]);
+	// count($lesTaches); // nb de tâches par état	
+	echo "L'us $id_us a ".count($lesTaches)." tâches dans l'état ".$row_etat["TAC_etat"]." !<br>\n";
+	foreach($lesTaches as $key => $tacheInfo) {
+		echo "Tâche - info récupérée depuis le concat : ($tacheInfo)<br>\n";
+		$infosTrouveesTache = explode(" ", $tacheInfo);
+		// count($infosTrouveesTache); // nb d'infos trouvées par tâche
+		echo "Tâche - infos séparées : (Id: $infosTrouveesTache[0] - Nom: $infosTrouveesTache[1]) <br>\n"; // si on veut un itérateur c'est dans cette ligne qu'il faut s'en servir
+  }
+	echo "</li><br>\n";
+}
+echo "</ul><br>\n";
+
 ?>

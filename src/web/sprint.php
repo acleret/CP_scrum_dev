@@ -21,6 +21,11 @@ if (isset($_COOKIE["id_projet"])) {
 
   $id_spr = $_POST["id_sprint"];
   $infos_spr = $db->infosSprint($id_spr);
+
+	$row2 = $infos_spr->fetch_assoc();
+	$expire = time() + 60 * 60 * 24; // 24 heures
+	setcookie("id_sprint", $row2["SPR_id"], $expire);
+
   $nom_spr = $_POST["nom_sprint"];
 
   $s->head("Sprints");
