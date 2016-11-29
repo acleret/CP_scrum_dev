@@ -68,7 +68,7 @@ CREATE TABLE `projet` (
 
 CREATE TABLE `sprint` (
   `SPR_id` int(11) NOT NULL,
-  `SPR_numero` varchar(255) NOT NULL,
+  `SPR_numero` int(11) NOT NULL,
   `SPR_dateDebut` date NOT NULL,
   `SPR_duree` int NOT NULL,
   `PRO_id` int(11) NOT NULL
@@ -100,6 +100,7 @@ CREATE TABLE `tache` (
 
 CREATE TABLE `us` (
   `US_id` int(11) NOT NULL,
+  `US_numero` int(11) NOT NULL,
   `US_nom` varchar(255) NOT NULL,
   `US_chiffrageAbstrait` int(11) NOT NULL,
   `US_priorite` int(11) DEFAULT NULL,
