@@ -47,17 +47,17 @@ if (isset($_COOKIE["id_projet"])) {
                 ?></dd>
               </dl>
               <dl class="dl-horizontal">
-              <dt>Développeurs</dt>
-              <dd>
-              <ul class="list-inline">
+                <dt>Développeurs</dt>
+                <dd>
+                  <ul class="list-inline">
 <?php
     $result = $db->listeDeveloppeursProjet($id_pro);
     while ($row_dev = $result->fetch_assoc()) {
-        echo "                <li><a href=\"profil.php?profil=".$row_dev["DEV_pseudo"]."\">".$row_dev["DEV_pseudo"]."</a></li>\n";
+        echo "                    <li><a href=\"profil.php?profil=".$row_dev["DEV_pseudo"]."\">".$row_dev["DEV_pseudo"]."</a></li>\n";
     }
 ?>
-              </ul>
-              </dd>
+                  </ul>
+                </dd>
               </dl>
               <hr>
               <p class="text-justify"><?php echo $row["PRO_description"]; ?></p>
