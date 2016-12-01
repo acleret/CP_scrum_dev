@@ -1,5 +1,4 @@
 <?php
-echo print_r($_POST);
 require_once("../web/config.php");
 
 if (isset($_POST["ret_us"])){
