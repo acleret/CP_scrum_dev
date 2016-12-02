@@ -164,7 +164,7 @@ if (isset($_COOKIE["id_projet"])) {
                     <td><?php echo $row["US_nom"]; ?></td>
                     <td><?php echo $row["US_chiffrageAbstrait"]; ?></td>
                     <td><?php echo $row["US_priorite"]; ?></td>
-                    <td><?php $sprint_num = $db->numeroSprint($row["SPR_id"]); echo $sprint_num; ?></td>
+                    <td><?php echo ($db->numeroSprint($row["SPR_id"]) < 10) ?  'Sprint#0'.$db->numeroSprint($row["SPR_id"]) : 'Sprint#'.$db->numeroSprint($row["SPR_id"]); ?></td>
                     <td><?php echo $row["US_dateCreation"]; ?></td>
 <?php
     if (isset($_SESSION["session"])) {
