@@ -27,7 +27,7 @@ CREATE TABLE `burdown_chart` (
   `BDC_chargePlanifie` int(11) NOT NULL,
   `SPR_id` int(11) NOT NULL,
   `PRO_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
