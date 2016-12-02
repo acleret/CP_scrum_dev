@@ -1014,10 +1014,9 @@ class Requetes {
         $result = $this->listeSprints($id_pro);
         while ($row = $result->fetch_assoc()) {
             $id_spr = $row['SPR_id'];
-            if(($tmp = $this->listeUserStoriesSprintSansCommit($id_spr, $id_pro)->num_rows) == 0) {
+            if($this->listeUserStoriesSprintSansCommit($id_spr, $id_pro)->num_rows == 0) {
                 $tab[$id_spr] = $this->sommeChiffrageSprint($id_spr);
             }
-            echo $tmp."<br />\n";
         }
         return $tab;
     }
