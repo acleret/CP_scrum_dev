@@ -915,9 +915,10 @@ class Requetes {
 		}
 
 		// retourne vrai après avoir ajouté une tâche, sinon faux
-    public function ajoutTache($nom, $description, $nbJours, $dateDepart, $dateFin, $etat, $id_dev, $id_us) {
-        $sql = "INSERT INTO tache (TAC_nom, TAC_description, TAC_nbJours, TAC_dateDepart, TAC_dateFin, TAC_etat, DEV_id, US_id)
-                VALUES ('".$nom."', '".$description."', '".$nbJours."', '".$dateDepart."', '".$dateFin."', '".$etat."', '".$id_dev."', '".$id_us."');";
+    public function ajoutTache($nom, $description, $nbJours, $dateDepart, $id_dev, $id_us) {
+				$etat = "TO DO";
+        $sql = "INSERT INTO tache (TAC_nom, TAC_description, TAC_nbJours, TAC_dateDepart, TAC_etat, DEV_id, US_id)
+                VALUES ('".$nom."', '".$description."', '".$nbJours."', '".$dateDepart."', '".$etat."', '".$id_dev."', '".$id_us."');";
         if (!$result = $this->conn->query($sql)) {
             printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>", $this->conn->error);
             return NULL;
@@ -936,9 +937,9 @@ class Requetes {
 		}
 
     // modifie les données de la tâche $id_tac et retourne vrai quand c'est fait
-    public function modifTache($id_tac, $nom, $description, $nbJours, $dateDepart, $dateFin, $etat, $id_dev, $id_us){
+    public function modifTache($id_tac, $nom, $description, $nbJours, $dateDepart, $etat, $id_dev, $id_us){
         $sql = "UPDATE tache
-                SET TAC_nom='".$nom."', TAC_description='".$description."', TAC_nbJours='".$nbJours."',	TAC_dateDepart='".$dateDepart."', TAC_dateFin='".$dateFin."', TAC_etat='".$etat."', DEV_id='".$id_dev."', US_id='".$id_us."'
+                SET TAC_nom='".$nom."', TAC_description='".$description."', TAC_nbJours='".$nbJours."',	TAC_dateDepart='".$dateDepart."', TAC_etat='".$etat."', DEV_id='".$id_dev."', US_id='".$id_us."'
                 WHERE TAC_id=".$id_tac.";";
 				if (!$result = $this->conn->query($sql)) {
             printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);

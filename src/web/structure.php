@@ -74,18 +74,50 @@ if ($liste_sprints->num_rows > 0) {
     }
 ?>
               </li>
+              <li class="dropdown">
+                <a class="dropdown-toggle" href="listeSprints.php">Kanban
+                <span class="caret"></span></a>
+<?php
+$liste_sprints = $db->listeSprints($_COOKIE["id_projet"]);
+if ($liste_sprints->num_rows > 0) {
+?>
+                <ul class="dropdown-menu">
+<?php
+    while ($row_sprint = $liste_sprints->fetch_assoc()) {
+        $id_spr = $row_sprint["SPR_id"];
+        //$infos_spr = $db->infosSprint($id_spr);
+        //$row_sprint = $infos_spr->fetch_assoc();
+        $num_spr = $row_sprint["SPR_numero"];
+        $nom_kanban = "Kanban-Sprint#".$num_spr;
+?>
+                  <li>
+                    <form id="<?php echo "form_kanban".$id_spr;?>" style="display: inline;" action="kanban.php" method="post">
+                      <input type="hidden" name="id_sprint" value="<?php echo $id_spr; ?>"/>
+                    </form>
+                    <a onclick=<?php echo 'document.getElementById("form_kanban'.$id_spr.'").submit()' ;?>>
+                      <?php echo $nom_kanban."\n"; ?>
+                    </a>
+                  </li>
+<?php
+    }
+?>
+                </ul>
+<?php
+    }
+?>
+              </li>
               <li><a href="../web/tracabilite.php">Traçabilité</a></li>
               <li><a href="../web/burndownchart.php">Burndown Chart</a></li>
 <?php
     }
 ?>
             </ul>
-            <form class="navbar-form navbar-right inline-form">
+            <!--<form class="navbar-form navbar-right inline-form">
               <div class="form-group">
                 <input type="search" class="input-sm form-control" placeholder="Recherche">
                 <button type="submit" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-eye-open"></span> Chercher</button>
               </div>
-            </form>
+            </form>-->
           </div>
         </div>
       </nav>
@@ -118,7 +150,7 @@ if ($liste_sprints->num_rows > 0) {
 <?php
       }
 ?>
-                <a href="profil.php"><?php echo $_SESSION["pseudo_co"]; ?></a>
+                <a href="profil.php"><?php echo htmlspecialchars($_SESSION["pseudo_co"]); ?></a>
               </p>
               <p> - </p>
               <p>
@@ -179,6 +211,5 @@ if ($liste_sprints->num_rows > 0) {
       unset($_COOKIE["id_sprint"]);
     }
 	}
-
 }
 ?>

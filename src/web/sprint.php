@@ -98,6 +98,7 @@ if (!isset($_POST["id_sprint"]) || !isset($_POST["nom_sprint"])) {
               </div>
               <div class="col-sm-4 text-right">
                 <form style="display: inline;" action="../web/kanban.php" method="post">
+									<input type="hidden" name="id_sprint" value="<?php echo $id_spr; ?>"/>
                   <input class="btn btn-primary" type="submit" value="Kanban"/>
                 </form>
               </div>
