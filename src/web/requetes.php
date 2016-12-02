@@ -706,7 +706,7 @@ class Requetes {
             return NULL;
         }
         $row = $res->fetch_assoc();
-        return $row["SUM(US_chiffrageAbstrait)"];
+        return (empty($row["SUM(US_chiffrageAbstrait)"])) ? 0 : $row["SUM(US_chiffrageAbstrait)"];
     }
 
     // retourne la somme du chiffrage d'un sprint
@@ -718,7 +718,7 @@ class Requetes {
             return NULL;
         }
         $row = $res->fetch_assoc();
-        return $row["SUM(US_chiffrageAbstrait)"];
+        return (empty($row["SUM(US_chiffrageAbstrait)"])) ? 0 : $row["SUM(US_chiffrageAbstrait)"];
     }
 
     // retourne la lite des US commiter
@@ -1025,6 +1025,7 @@ class Requetes {
         $sql = "DELETE FROM burdown_chart WHERE PRO_id = ".$id_pro.";";
         if (!$result = $this->conn->query($sql)) {
             printf("<b style=\"color:red;\">Message d'erreur: %s<br></b>", $this->conn->error);
+            echo "stringcdgcydsgchsdcghsdgcs\n";
             return NULL;
         }
         $liste_sprints = $this->listeSprints($id_pro);
@@ -1033,6 +1034,7 @@ class Requetes {
                     VALUES (".$this->sommeChiffrageSprint($row['SPR_id']).", ".$row['SPR_id'].", ".$id_pro.");";
             if (!$result = $this->conn->query($sql)) {
                 printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>", $this->conn->error);
+                echo "gggggdgdg\n";
                 return NULL;
             }
         }
@@ -1047,7 +1049,7 @@ class Requetes {
           return NULL;
       }
       $row = $res->fetch_assoc();
-      return $row["SUM(BDC_chargePlanifie)"];
+      return (empty($row["SUM(BDC_chargePlanifie)"])) ? 0 : $row["SUM(BDC_chargePlanifie)"];
     }
 
 }

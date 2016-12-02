@@ -57,7 +57,7 @@ if (isset($_COOKIE["id_projet"])) {
                 },
                 data: [
                   {
-                    type: "spline",
+                    type: "line",
                     showInLegend: true,
                     name: "series1",
                     legendText: "planifié",
@@ -65,24 +65,26 @@ if (isset($_COOKIE["id_projet"])) {
                       <?php
                         $resultat = $db->listeChiffragePlanifie($id_pro);
                         $somme = $db->sommeChiffragePlanifie($id_pro);
-                        echo "{ x: 0, y : ".$somme."},";
+                        if(empty($somme)) $somme = 0;
+                        echo "{ x: 0, y : ".$somme." },\n";
                         while ($row = $resultat->fetch_assoc()) {
-                            echo "{ x: ".$db->numeroSprint($row["SPR_id"]).", y : ".($somme-=$row['BDC_chargePlanifie'])."},";
+                            echo "{ x: ".$db->numeroSprint($row["SPR_id"]).", y : ".($somme-=$row['BDC_chargePlanifie'])." },\n";
                         }
                       ?>
                     ]
                   },
                   {
-                    type: "spline",
+                    type: "line",
                     showInLegend: true,
                     name: "series2",
                     legendText: "réel",
                     dataPoints: [
                       <?php
                         $somme = $db->sommeChiffrageBacklog($id_pro);
-                        echo "{ x: 0, y : ".$somme."},";
+                        if(empty($somme)) $somme = 0;
+                        echo "{ x: 0, y: ".$somme." },\n";
                         foreach ($tab as $key => $value) {
-                          echo "{ x: ".$db->numeroSprint($key).", y : ".($somme-=$value)."},";
+                          echo "{ x: ".$db->numeroSprint($key).", y: ".($somme-=$value)." },\n";
                         }
                       ?>
                     ]
