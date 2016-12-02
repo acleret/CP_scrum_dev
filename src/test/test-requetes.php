@@ -660,7 +660,6 @@ if ($test->testIDProjet($id_pro)) {
 			$row["TAC_description"]." | ".
 			$row["TAC_nbJours"]." | ".
 			$row["TAC_dateDepart"]." | ".
-			$row["TAC_dateFin"]." | ".
 			$row["TAC_etat"]." | ".
 			$row["DEV_id"]." | ".
 			$row["US_id"]."<br>\n";
@@ -670,7 +669,7 @@ if ($test->testIDProjet($id_pro)) {
 echo "</ul><br>\n";
 
 echo "<b>// test ajoutTache</b><br>\n<ul>";
-if ($test->ajoutTache("DernièreTache", "Dernière tâche", 1, "2016-11-26", "2016-12-03", "TO DO", 1, 141)) {
+if ($test->ajoutTache("DernièreTache", "Dernière tâche", 1, "2016-11-26", 1, 141)) {
 	$id_tac = $test->maxIDTache();
   echo "<li class=\"correct\">Tâche $id_tac créée</li>\n";
 } else {
@@ -688,11 +687,10 @@ if ($test->testIDTache($id_tac)) {
 			$row["TAC_description"]." | ".
 			$row["TAC_nbJours"]." | ".
 			$row["TAC_dateDepart"]." | ".
-			$row["TAC_dateFin"]." | ".
 			$row["TAC_etat"]." | ".
 			$row["DEV_id"]." | ".
 			$row["US_id"]."<br>\n";
-	if ($test->modifTache($id_tac, "MaTacheModifiee", "Description de la dernière tâche", 1, "2016-11-26", "2016-12-03", "ON GOING", 2, 141)) {
+	if ($test->modifTache($id_tac, "MaTacheModifiee", "Description de la dernière tâche", 1, "2016-11-26", "ON GOING", 2, 141)) {
 		echo "<li class=\"correct\">Tâche $id_tac bien modifiée : <br>";
 		$result2 = $test->infosTache($id_tac);
 		$row2 = $result2->fetch_assoc();
@@ -701,7 +699,6 @@ if ($test->testIDTache($id_tac)) {
 			$row2["TAC_description"]." | ".
 			$row2["TAC_nbJours"]." | ".
 			$row2["TAC_dateDepart"]." | ".
-			$row2["TAC_dateFin"]." | ".
 			$row2["TAC_etat"]." | ".
 			$row2["DEV_id"]." | ".
 			$row2["US_id"]."<br>\n";
@@ -724,7 +721,6 @@ if ($test->testIDTache($id_tac)) {
 			$row["TAC_description"]." | ".
 			$row["TAC_nbJours"]." | ".
 			$row["TAC_dateDepart"]." | ".
-			$row["TAC_dateFin"]." | ".
 			$row["TAC_etat"]." | ".
 			$row["DEV_id"]." | ".
 			$row["US_id"]."<br>\n";
@@ -747,7 +743,6 @@ if ($test->testIDTache($id_tac)) {
 			$row["TAC_description"]." | ".
 			$row["TAC_nbJours"]." | ".
 			$row["TAC_dateDepart"]." | ".
-			$row["TAC_dateFin"]." | ".
 			$row["TAC_etat"]." | ".
 			$row["DEV_id"]." | ".
 			$row["US_id"]."<br>\n";
