@@ -14,10 +14,20 @@ if (isset($_COOKIE["id_projet"])) {
   $infos = $db->infosProjet($id_pro);
   $row = $infos->fetch_assoc();
 
- if (!isset($_POST["id_sprint"]) || !isset($_POST["nom_sprint"])) {
+if (isset($_POST["modif_sprint"])) {
+    $id_sprint_modif = $_POST["modif_sprint"];
+    $infos_sprint_modif = $db->infosSprint($id_sprint_modif);
+    $row_sprint_modif = $infos_sprint_modif->fetch_assoc();
+    if($_POST["num_sprint"] == NULL) $modif_num = $row_sprint_modif["SPR_numero"]; else $modif_num = $_POST["num_sprint"];
+    if($_POST["date_sprint"] == NULL) $modif_date = $row_sprint_modif["SPR_dateDebut"]; else $modif_date = $_POST["date_sprint"];
+    if($_POST["duree_sprint"] == NULL) $modif_duree = $row_sprint_modif["SPR_duree"]; else $modif_duree = $_POST["duree_sprint"];
+    $db->modifSprint($id_sprint_modif, $modif_num, $modif_date, $modif_duree);
+}
+
+if (!isset($_POST["id_sprint"]) || !isset($_POST["nom_sprint"])) {
     header("Location: ../web/index.php");
     exit();
-  }
+}
 
   $id_spr = $_POST["id_sprint"];
   $infos_spr = $db->infosSprint($id_spr);
@@ -190,18 +200,46 @@ if (isset($_COOKIE["id_projet"])) {
           </div>
           <aside>
             <div class="col-sm-2 sidenav">
-              <form  action="../web/modificationSprint.php" method="post">
-                <input type="hidden" name="id_sprint" value="<?php echo $id_spr; ?>"/>
-                <input type="hidden" name="nom_sprint" value="<?php echo $nom_spr; ?>"/>
-                <input type="hidden" name="num_sprint" value="<?php echo $row2["SPR_numero"]; ?>"/>
-                <input type="hidden" name="duree_sprint" value="<?php echo $row2["SPR_duree"]; ?>"/>
-                <input class="btn btn-default" type="submit" value="Modifier"/>
-              </form>
-              <br>
+              <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalModif<?php echo $row2["SPR_id"];?>">Modifier</button><br><br>
               <form  action="../web/listeSprints.php" method="post">
                 <input type="hidden" name="suppression" value="<?php echo $id_spr; ?>"/>
                 <input class="btn btn-danger" type="submit" value="Supprimer"/>
               </form>
+                    <!-- Modal Modification -->
+                    <div id="modalModif<?php echo $row2["SPR_id"];?>" class="modal fade" role="dialog" style="text-align:left">
+                      <div class="modal-dialog">
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <form style="display: inline;" action="" method="post">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Modifier un sprint</h4>
+                          </div>
+                          <div class="modal-body">
+                            <div class="form-group">
+                              <label>Numéro</label>
+                              <input class="form-control" type="number" name="num_sprint" placeholder="Numéro" value="<?php echo $row2["SPR_numero"];?>"/>
+                            </div>
+                            <div class="form-group">
+                              <label>Date de début</label>
+                              <input class="form-control" type="date" name="date_sprint" value="<?php echo $row2["SPR_dateDebut"];?>"/>
+                            </div>
+                            <div class="form-group">
+                              <label>Durée</label>
+                              <input class="form-control" type="number" name="duree_sprint" placeholder="Nombre de jours" value="<?php echo $row2["SPR_duree"]; ?>"/>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                            <input type="hidden" name="modif_sprint" value="<?php echo $id_spr; ?>">
+                            <input type="hidden" name="id_sprint" value="<?php echo $id_spr; ?>">
+                            <input type="hidden" name="nom_sprint" value="<?php echo $nom_spr; ?>">
+                            <input class="btn btn-primary" type="submit" value="Modifier"/>
+                          </div>
+                        </form>
+                        </div>
+                      </div>
+                    </div>
             </div>
           </aside>
 <?php
