@@ -23,7 +23,7 @@ if (isset($_COOKIE["id_projet"])) {
           <script>
             $(document).ready(function() {
               $('#tableUS').DataTable( {
-                "order": [[ 4, "asc" ]],
+                "order": [[ 0, "asc" ]],
                 "oLanguage": {
                   "sLengthMenu": "Afficher _MENU_ entrées",
                   "sSearch": "<span class=\"glyphicon glyphicon-search\"></span> Recherche:",
@@ -160,11 +160,11 @@ if (isset($_COOKIE["id_projet"])) {
   while ($row = $result->fetch_assoc()) {
 ?>
                   <tr>
-                    <td><?php echo 'US#'.$row["US_numero"]; ?></td>
+                    <td><?php echo ($row["US_numero"] < 10) ?  'US#0'.$row["US_numero"] : 'US#'.$row["US_numero"]; ?></td>
                     <td><?php echo $row["US_nom"]; ?></td>
                     <td><?php echo $row["US_chiffrageAbstrait"]; ?></td>
                     <td><?php echo $row["US_priorite"]; ?></td>
-                    <td><?php echo $db->numeroSprint($row["SPR_id"]); ?></td>
+                    <td><?php $sprint_num = $db->numeroSprint($row["SPR_id"]); echo $sprint_num; ?></td>
                     <td><?php echo $row["US_dateCreation"]; ?></td>
 <?php
     if (isset($_SESSION["session"])) {
@@ -185,6 +185,10 @@ if (isset($_COOKIE["id_projet"])) {
                               <h4 class="modal-title">Modifier une User Story</h4>
                             </div>
                             <div class="modal-body">
+                              <div class="form-group">
+                                <label for="numInput">Numéro US</label>
+                                <input class="form-control" id="numInput" type="number" name="numero_us" placeholder="Numéro US" value="<?php echo $row["US_numero"];?>"/>
+                              </div>
                               <div class="form-group">
                                 <label for="nomInput">Nom</label>
                                 <input type="text" class="form-control" id="nomInput" placeholder="En tant que... je souhaite..." name="nom_us" value="<?php echo $row["US_nom"]; ?>" required>
@@ -295,8 +299,8 @@ if (isset($_COOKIE["id_projet"])) {
                     </div>
                     <div class="modal-body">
                       <div class="form-group">
-                        <label for="numeroInput">Numéro</label>
-                        <input type="number" class="form-control" id="numeroInput" placeholder="Numéro" name="numero_us" required>
+                        <label for="numeroInput">Numéro US</label>
+                        <input type="number" class="form-control" id="numeroInput" placeholder="Numéro US" name="numero_us" required>
                       </div>
                       <div class="form-group">
                         <label for="nomInput">Nom</label>

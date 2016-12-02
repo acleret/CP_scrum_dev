@@ -22,10 +22,10 @@ if (isset($_COOKIE["id_projet"])) {
   $id_spr = $_POST["id_sprint"];
   $infos_spr = $db->infosSprint($id_spr);
   $row2 = $infos_spr->fetch_assoc();
-  
+
   $expire = time() + 60 * 60 * 24; // 24 heures
   setcookie("id_sprint", $row2["SPR_id"], $expire);
-  
+
   $nom_spr = $_POST["nom_sprint"];
 
   $s->head("Sprints");
@@ -35,7 +35,7 @@ if (isset($_COOKIE["id_projet"])) {
           <script>
             $(document).ready(function() {
               $('#tableSprint').DataTable( {
-                "order": [[ 2, "asc" ]],
+                "order": [[ 3, "asc" ]],
                 "oLanguage": {
                   "sLengthMenu": "Afficher _MENU_ entrées",
                   "sSearch": "<span class=\"glyphicon glyphicon-search\"></span> Recherche:",
@@ -49,7 +49,7 @@ if (isset($_COOKIE["id_projet"])) {
                 }
               } );
               $('#tableAddUS').DataTable( {
-                "order": [[ 2, "asc" ]],
+                "order": [[ 3, "asc" ]],
                 "oLanguage": {
                   "sLengthMenu": "Afficher _MENU_ entrées",
                   "sSearch": "<span class=\"glyphicon glyphicon-search\"></span> Recherche:",
@@ -162,7 +162,7 @@ if (isset($_COOKIE["id_projet"])) {
               </thead>
               <tbody>
 <?php
-    $listeUS2 = $db->listeUserStoryOutOfSprint($id_spr, $id_pro);
+    $listeUS2 = $db->listeUserStoryOutOfSprints($id_pro);
     while ($row4 = $listeUS2->fetch_assoc()) {
       $id_us = $row4["US_id"];
       $infos_us = $db->infosUserStory($id_us);

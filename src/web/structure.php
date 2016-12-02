@@ -55,7 +55,7 @@ if ($liste_sprints->num_rows > 0) {
         $id_spr = $row_sprints["SPR_id"];
         $infos_spr = $db->infosSprint($id_spr);
         $row_sprints = $infos_spr->fetch_assoc();
-        $nom_spr = "Sprint#".$row_sprints["SPR_numero"];
+        $nom_spr = ($row_sprints["SPR_numero"] < 10) ? "Sprint#0".$row_sprints["SPR_numero"] : "Sprint#".$row_sprints["SPR_numero"];
 ?>
                   <li>
                     <form id="<?php echo "form_spr".$id_spr;?>" style="display: inline;" action="../web/sprint.php" method="post">

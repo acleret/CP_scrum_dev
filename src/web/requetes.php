@@ -439,7 +439,7 @@ class Requetes {
 								return false;
 					}
 
-					$liste_idUS_out = $this->listeUserStoryOutOfSprint($row_sprint["SPR_id"], $idPro);
+					$liste_idUS_out = $this->listeUserStoryOutOfSprints($idPro);
 					while ($row_us_out = $liste_idUS_out->fetch_assoc()) {
 						$liste_idTaches_out = $this->listeTachesUS($row_us_out["US_id"]);
 						while ($row_tache_out = $liste_idTaches_out->fetch_assoc()) {
@@ -555,8 +555,8 @@ class Requetes {
         return $result;
     }
 
-    // retourne les US du backlog qui ne sont pas dans le sprint
-    public function listeUserStoryOutOfSprint($id_spr, $id_pro) {
+    // retourne les US du backlog qui ne sont pas dans un sprint
+    public function listeUserStoryOutOfSprints($id_pro) {
         $sql = "SELECT * FROM us WHERE (SPR_id IS NULL && PRO_id = ".$id_pro.") ORDER BY US_priorite;";
          if (!$result = $this->conn->query($sql)) {
             printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
@@ -577,9 +577,9 @@ class Requetes {
 
 
     // modif US
-    public function modifUserStory($id_us, $nom_us, $chiffrage, $id_pro) {
+    public function modifUserStory($id_us, $numero_us, $nom_us, $chiffrage) {
         $sql = "UPDATE us
-                SET US_nom = '".$nom_us."', US_chiffrageAbstrait = ".$chiffrage.", PRO_id = ".$id_pro."
+                SET US_numero = ".$numero_us.", US_nom = '".$nom_us."', US_chiffrageAbstrait = ".$chiffrage."
                 WHERE US_id = ".$id_us.";";
         if (!$result = $this->conn->query($sql)) {
             printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
@@ -589,9 +589,9 @@ class Requetes {
     }
 
     // modif US en tant que ProductOwner
-    public function modifUserStoryProductOwner($id_us, $nom_us, $chiffrage, $priorite, $id_pro) {
+    public function modifUserStoryProductOwner($id_us, $numero_us, $nom_us, $chiffrage, $priorite) {
         $sql = "UPDATE us
-                SET US_nom = '".$nom_us."', US_chiffrageAbstrait = ".$chiffrage.", US_priorite = ".$priorite.", PRO_id = ".$id_pro."
+                SET US_numero = ".$numero_us.", US_nom = '".$nom_us."', US_chiffrageAbstrait = ".$chiffrage.", US_priorite = ".$priorite."
                 WHERE US_id = ".$id_us.";";
         if (!$result = $this->conn->query($sql)) {
             printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
@@ -688,7 +688,7 @@ class Requetes {
 
     // retourne les tâches par US et par état
     public function listeTachesUSEtat($id_us, $etat) {
-        $sql = "SELECT * FROM tache 
+        $sql = "SELECT * FROM tache
 								WHERE US_id = ".$id_us." AND TAC_etat = '".$etat."';";
          if (!$result = $this->conn->query($sql)) {
             printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
@@ -709,6 +709,7 @@ class Requetes {
         return $row["SUM(US_chiffrageAbstrait)"];
     }
 
+    // retourne la somme du chiffrage d'un sprint
     public function sommeChiffrageSprint($id_sprint) {
         $sql = "SELECT SUM(US_chiffrageAbstrait) FROM us
                 WHERE SPR_id = ".$id_sprint.";";
@@ -718,6 +719,28 @@ class Requetes {
         }
         $row = $res->fetch_assoc();
         return $row["SUM(US_chiffrageAbstrait)"];
+    }
+
+    // retourne la lite des US commiter
+    public function listeUserStoriesAvecCommit($id_pro) {
+        $sql = "SELECT * FROM us
+                WHERE PRO_id = ".$id_pro." AND US_idDernierCommit is not NULL;";
+        if (!$result = $this->conn->query($sql)) {
+            printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
+						return NULL;
+       }
+       return $result;
+    }
+
+    // retourne la lite des US commiter
+    public function listeUserStoriesSprintSansCommit($id_spr, $id_pro) {
+        $sql = "SELECT * FROM us
+                WHERE SPR_id = ".$id_spr." AND PRO_id = ".$id_pro." AND US_idDernierCommit is NULL;";
+        if (!$result = $this->conn->query($sql)) {
+            printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
+						return NULL;
+       }
+       return $result;
     }
 
 
@@ -772,6 +795,18 @@ class Requetes {
         return true;
     }
 
+    // modifie les données du sprint et retourne vrai quand c'est fait
+    public function modifSprint($id_spr, $num, $date, $duree){
+        $sql = "UPDATE sprint
+                SET SPR_numero='".$num."', SPR_dateDebut='".$date."', SPR_duree='".$duree."'
+                WHERE SPR_id=".$id_spr.";";
+        if (!$result = $this->conn->query($sql)) {
+            printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
+            return NULL;
+       }
+        return true;
+    }
+
    // retourne vrai après avoir retiré un sprint, sinon faux
     public function supprimerSprint($id_spr) {
         $sql_ret_us = "UPDATE us SET SPR_id = NULL WHERE SPR_id = ".$id_spr.";";
@@ -783,18 +818,6 @@ class Requetes {
             printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>", $this->conn->error);
             return NULL;
         }
-        return true;
-    }
-
-    // modifie les données du sprint et retourne vrai quand c'est fait
-    public function modifSprint($id_spr, $num, $date, $duree){
-        $sql = "UPDATE sprint
-                SET SPR_numero='".$num."', SPR_dateDebut='".$date."', SPR_duree='".$duree."'
-                WHERE SPR_id=".$id_spr.";";
-        if (!$result = $this->conn->query($sql)) {
-            printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
-            return NULL;
-       }
         return true;
     }
 
@@ -829,6 +852,17 @@ class Requetes {
         }
     }
 
+    // retourne le plus grand des id de sprint
+    public function maxIDSprint() {
+        $sql = "SELECT MAX(SPR_id) FROM sprint;";
+        if (!$res = $this->conn->query($sql)) {
+            printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
+            return NULL;
+        }
+        $row = $res->fetch_assoc();
+        return $row["MAX(SPR_id)"];
+    }
+
 
   /******************************************/
   /** Fonctions pour la gestion des tâches **/
@@ -843,7 +877,7 @@ class Requetes {
         }
         return $res;
     }
-		
+
     // retourne les tâches du sprint $id_spr qui ont pour état $etat
 		public function listeTachesEtatSprint($id_spr, $etat) {
 				$sql = "SELECT *	FROM tache
@@ -863,12 +897,12 @@ class Requetes {
     // retourne les tâches de l'us $id_us regroupées selon leur état
 		public function listeTachesUSEtats($id_us) {
 				//SET SESSION group_concat_max_len = 1000000;
-				$sql = "SELECT  TAC_etat, 
+				$sql = "SELECT  TAC_etat,
 												GROUP_CONCAT(
 													DISTINCT CONCAT(
 														CAST(TAC_id AS CHAR), \" \", TAC_nom
-													) 
-													ORDER BY TAC_id ASC 
+													)
+													ORDER BY TAC_id ASC
 													SEPARATOR \";\"
 												) AS MesTaches
 								FROM tache WHERE US_id = ".$id_us."
@@ -960,6 +994,61 @@ class Requetes {
             return true;
         }
         return false;
+    }
+
+    /*************************************************/
+    /** Fonctions pour la gestion du Burndown Chart **/
+    /*************************************************/
+
+    public function listeChiffragePlanifie($id_pro) {
+        $sql = "SELECT * FROM burdown_chart
+                WHERE PRO_id = ".$id_pro.";";
+        if (!$result = $this->conn->query($sql)) {
+            printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
+            return NULL;
+        }
+        return $result;
+    }
+
+    public function listeChiffrageReel($id_pro) {
+        $result = $this->listeSprints($id_pro);
+        while ($row = $result->fetch_assoc()) {
+            $id_spr = $row['SPR_id'];
+            if(($tmp = $this->listeUserStoriesSprintSansCommit($id_spr, $id_pro)->num_rows) == 0) {
+                $tab[$id_spr] = $this->sommeChiffrageSprint($id_spr);
+            }
+            echo $tmp."<br />\n";
+        }
+        return $tab;
+    }
+
+    public function modifChiffragePlanifie($id_pro) {
+        $sql = "DELETE FROM burdown_chart WHERE PRO_id = ".$id_pro.";";
+        if (!$result = $this->conn->query($sql)) {
+            printf("<b style=\"color:red;\">Message d'erreur: %s<br></b>", $this->conn->error);
+            return NULL;
+        }
+        $liste_sprints = $this->listeSprints($id_pro);
+        while ($row = $liste_sprints->fetch_assoc()) {
+            $sql = "INSERT INTO burdown_chart (BDC_chargePlanifie, SPR_id, PRO_id)
+                    VALUES (".$this->sommeChiffrageSprint($row['SPR_id']).", ".$row['SPR_id'].", ".$id_pro.");";
+            if (!$result = $this->conn->query($sql)) {
+                printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>", $this->conn->error);
+                return NULL;
+            }
+        }
+        return true;
+    }
+
+    public function sommeChiffragePlanifie($id_pro) {
+      $sql = "SELECT SUM(BDC_chargePlanifie) FROM burdown_chart
+              WHERE PRO_id = ".$id_pro.";";
+      if (!$res = $this->conn->query($sql)) {
+          printf("<b style=\"color:red;\">Message d'erreur: %s</b><br>\n", $this->conn->error);
+          return NULL;
+      }
+      $row = $res->fetch_assoc();
+      return $row["SUM(BDC_chargePlanifie)"];
     }
 
 }

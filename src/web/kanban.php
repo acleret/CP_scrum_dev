@@ -6,7 +6,7 @@ if (isset($_COOKIE["id_projet"]) && isset($_COOKIE["id_sprint"])) {
   //$infos_sprint = $db->infosProjet($id_sprint);
   //$row_sprint = $infos_sprint->fetch_assoc();
 
-	$id_pro = $_COOKIE["id_projet"];	
+	$id_pro = $_COOKIE["id_projet"];
   $infos_pro = $db->infosProjet($id_pro);
   $row_pro = $infos_pro->fetch_assoc();
 
@@ -14,7 +14,7 @@ if (isset($_COOKIE["id_projet"]) && isset($_COOKIE["id_sprint"])) {
   $s->header($db);
   $s->nav($db);
 ?>
-		
+
 	<script>
 		$(document).ready(function() {
 			$('#tableTaches').DataTable( {
@@ -64,10 +64,10 @@ if (isset($_COOKIE["id_projet"]) && isset($_COOKIE["id_sprint"])) {
 <?php
 			$listeUS = $db->listeUserStorySprint($id_sprint);
 			while ($row_us = $listeUS->fetch_assoc()) {
-				$id_us = $row_us['US_id'];
-?>	
+        $id_us = $row_us['US_id'];
+?>
 						<tr>
-							<td><?php echo $id_us; ?></td>
+							<td><?php echo ($row_us["US_numero"] < 10) ?  'US#0'.$row_us["US_numero"] : 'US#'.$row_us["US_numero"]; ?></td>
 <?php
 				$result = $db->listeTachesUSEtats($id_us);
 				$varHtmlToDo = null;
@@ -113,15 +113,15 @@ if (isset($_COOKIE["id_projet"]) && isset($_COOKIE["id_sprint"])) {
 							$varHtmlDone .= "</td>";
 							break;
 					}
-					
+
 				}
 				if ($varHtmlToDo == null) $varHtmlToDo = "<td></td>";
 				if ($varHtmlOnGoing == null) $varHtmlOnGoing = "<td></td>";
 				if ($varHtmlToTest == null) $varHtmlToTest = "<td></td>";
 				if ($varHtmlDone == null) $varHtmlDone = "<td></td>";
-				
+
 				echo $varHtmlToDo.$varHtmlOnGoing.$varHtmlToTest.$varHtmlDone;
-					
+
 				if (isset($_SESSION["session"])) {
 					if ($db->estMembreProjet($id_pro, $_SESSION["id_co"])) {
 ?>

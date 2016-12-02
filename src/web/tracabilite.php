@@ -57,7 +57,7 @@ if (isset($_COOKIE["id_projet"])) {
   while ($row = $result->fetch_assoc()) {
 ?>
                   <tr>
-                    <td><?php echo 'US#'.$row["US_numero"]; ?></td>
+                    <td><?php echo ($row["US_numero"] < 10) ?  'US#0'.$row["US_numero"] : 'US#'.$row["US_numero"]; ?></td>
                     <td><?php echo $row["US_nom"]; ?></td>
                     <td><?php echo $row["US_idDernierCommit"]; ?></td>
 				    <td><?php echo $db->ordonnerDate($row["US_dateDernierCommit"]); ?></td>

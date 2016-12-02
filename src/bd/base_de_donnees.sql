@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.4
--- https://www.phpmyadmin.net/
+-- version 4.5.4.1deb2ubuntu2
+-- http://www.phpmyadmin.net
 --
--- Client :  127.0.0.1
--- Généré le :  Mar 08 Novembre 2016 à 11:06
--- Version du serveur :  5.7.14
--- Version de PHP :  5.6.25
+-- Client :  localhost
+-- Généré le :  Ven 02 Décembre 2016 à 01:40
+-- Version du serveur :  5.7.16-0ubuntu0.16.04.1
+-- Version de PHP :  7.0.8-0ubuntu0.16.04.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -15,6 +15,19 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `cp_scrum` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `cp_scrum`;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `burdown_chart`
+--
+
+CREATE TABLE `burdown_chart` (
+  `BDC_id` int(11) NOT NULL,
+  `BDC_chargePlanifie` int(11) NOT NULL,
+  `SPR_id` int(11) NOT NULL,
+  `PRO_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -70,7 +83,7 @@ CREATE TABLE `sprint` (
   `SPR_id` int(11) NOT NULL,
   `SPR_numero` int(11) NOT NULL,
   `SPR_dateDebut` date NOT NULL,
-  `SPR_duree` int NOT NULL,
+  `SPR_duree` int(11) NOT NULL,
   `PRO_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -115,6 +128,14 @@ CREATE TABLE `us` (
 --
 -- Index pour les tables exportées
 --
+
+--
+-- Index pour la table `burdown_chart`
+--
+ALTER TABLE `burdown_chart`
+  ADD PRIMARY KEY (`BDC_id`),
+  ADD KEY `PRO_id` (`PRO_id`),
+  ADD KEY `SPR_id` (`SPR_id`);
 
 --
 -- Index pour la table `developpeur`
@@ -167,33 +188,45 @@ ALTER TABLE `us`
 --
 
 --
+-- AUTO_INCREMENT pour la table `burdown_chart`
+--
+ALTER TABLE `burdown_chart`
+  MODIFY `BDC_id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT pour la table `developpeur`
 --
 ALTER TABLE `developpeur`
-  MODIFY `DEV_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `DEV_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 --
 -- AUTO_INCREMENT pour la table `projet`
 --
 ALTER TABLE `projet`
-  MODIFY `PRO_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `PRO_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
 --
 -- AUTO_INCREMENT pour la table `sprint`
 --
 ALTER TABLE `sprint`
-  MODIFY `SPR_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `SPR_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=310;
 --
 -- AUTO_INCREMENT pour la table `tache`
 --
 ALTER TABLE `tache`
-  MODIFY `TAC_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `TAC_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=147;
 --
 -- AUTO_INCREMENT pour la table `us`
 --
 ALTER TABLE `us`
-  MODIFY `US_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `US_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=266;
 --
 -- Contraintes pour les tables exportées
 --
+
+--
+-- Contraintes pour la table `burdown_chart`
+--
+ALTER TABLE `burdown_chart`
+  ADD CONSTRAINT `burdown_chart_ibfk_1` FOREIGN KEY (`SPR_id`) REFERENCES `sprint` (`SPR_id`),
+  ADD CONSTRAINT `burdown_chart_ibfk_2` FOREIGN KEY (`PRO_id`) REFERENCES `projet` (`PRO_id`);
 
 --
 -- Contraintes pour la table `inter_dev_projet`
