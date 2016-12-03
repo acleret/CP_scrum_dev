@@ -60,7 +60,7 @@ if (isset($_COOKIE["id_projet"])) {
                   <tr>
                     <td><?php echo ($row["US_numero"] < 10) ?  'US#0'.$row["US_numero"] : 'US#'.$row["US_numero"]; ?></td>
                     <td><?php echo $row["US_nom"]; ?></td>
-                    <td><?php echo ($db->numeroSprint($row["SPR_id"]) < 10) ?  'Sprint#0'.$db->numeroSprint($row["SPR_id"]) : 'Sprint#'.$db->numeroSprint($row["SPR_id"]); ?></td>
+                    <td><?php echo (empty($db->numeroSprint($row["SPR_id"]))) ? "" : (($db->numeroSprint($row["SPR_id"]) < 10) ?  'Sprint#0'.$db->numeroSprint($row["SPR_id"]) : 'Sprint#'.$db->numeroSprint($row["SPR_id"])); ?></td>
                     <td><?php echo $row["US_idDernierCommit"]; ?></td>
 				    <td><?php echo $db->ordonnerDate($row["US_dateDernierCommit"]); ?></td>
                     <td><?php echo $row["US_auteurDernierCommit"]; ?></td>

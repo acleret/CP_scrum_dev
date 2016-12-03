@@ -1,20 +1,26 @@
 <?php
 require_once("../web/config.php");
 
-if (isset($_POST["ret_us"])){
-    $retirer_us_sprint = $db->retirerUserStorySprint($_POST["ret_us"]);
-}
-
-if (isset($_POST["inser_us"])){
-    $retirer_us_sprint = $db->affecterUserStorySprint($_POST["inser_us"], $_POST["id_sprint"]);
-}
-
 if (isset($_COOKIE["id_projet"])) {
+
   $id_pro = $_COOKIE["id_projet"];
   $infos = $db->infosProjet($id_pro);
   $row = $infos->fetch_assoc();
 
-if (isset($_POST["modif_sprint"])) {
+  if (isset($_POST["ret_us"])) {
+    $retirer_us_sprint = $db->retirerUserStorySprint($_POST["ret_us"]);
+  }
+
+  if (isset($_POST["inser_us"])) {
+    $retirer_us_sprint = $db->affecterUserStorySprint($_POST["inser_us"], $_POST["id_sprint"]);
+    if($db->listeUserStoriesAvecCommit($id_pro)->num_rows == 0) {
+      if (($db->listeUserStoryOutOfSprints($id_pro)->num_rows == 0) && ($db->listeUserStories($id_pro)->num_rows > 0)) {
+          $db->modifChiffragePlanifie($id_pro);
+      }
+    }
+  }
+
+  if (isset($_POST["modif_sprint"])) {
     $id_sprint_modif = $_POST["modif_sprint"];
     $infos_sprint_modif = $db->infosSprint($id_sprint_modif);
     $row_sprint_modif = $infos_sprint_modif->fetch_assoc();
@@ -22,12 +28,12 @@ if (isset($_POST["modif_sprint"])) {
     if($_POST["date_sprint"] == NULL) $modif_date = $row_sprint_modif["SPR_dateDebut"]; else $modif_date = $_POST["date_sprint"];
     if($_POST["duree_sprint"] == NULL) $modif_duree = $row_sprint_modif["SPR_duree"]; else $modif_duree = $_POST["duree_sprint"];
     $db->modifSprint($id_sprint_modif, $modif_num, $modif_date, $modif_duree);
-}
+  }
 
-if (!isset($_POST["id_sprint"]) || !isset($_POST["nom_sprint"])) {
+  if (!isset($_POST["id_sprint"]) || !isset($_POST["nom_sprint"])) {
     header("Location: ../web/index.php");
     exit();
-}
+  }
 
   $id_spr = $_POST["id_sprint"];
   $infos_spr = $db->infosSprint($id_spr);
@@ -98,15 +104,15 @@ if (!isset($_POST["id_sprint"]) || !isset($_POST["nom_sprint"])) {
               </div>
               <div class="col-sm-4 text-right">
                 <form style="display: inline;" action="../web/kanban.php" method="post">
-									<input type="hidden" name="id_sprint" value="<?php echo $id_spr; ?>"/>
+                  <input type="hidden" name="id_sprint" value="<?php echo $id_spr; ?>"/>
                   <input class="btn btn-primary" type="submit" value="Kanban"/>
                 </form>
               </div>
-	      <br>
-	      <br>
-	      <br>
-	      <hr>
-	      <table id="tableSprint" class="table table-striped table-hover">
+              <br>
+              <br>
+              <br>
+              <hr>
+              <table id="tableSprint" class="table table-striped table-hover">
                 <thead>
                   <tr>
                     <th>Numéro US</th>

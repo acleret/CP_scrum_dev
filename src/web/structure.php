@@ -88,7 +88,7 @@ if ($liste_sprints->num_rows > 0) {
         //$infos_spr = $db->infosSprint($id_spr);
         //$row_sprint = $infos_spr->fetch_assoc();
         $num_spr = $row_sprint["SPR_numero"];
-        $nom_kanban = "Kanban-Sprint#".$num_spr;
+        $nom_kanban = ($num_spr < 10) ? "Kanban-Sprint#0".$num_spr : "Kanban-Sprint#".$num_spr;
 ?>
                   <li>
                     <form id="<?php echo "form_kanban".$id_spr;?>" style="display: inline;" action="kanban.php" method="post">

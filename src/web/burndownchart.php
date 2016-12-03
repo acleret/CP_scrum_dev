@@ -11,25 +11,12 @@ if (isset($_COOKIE["id_projet"])) {
 
   $tab = [];
   if($db->listeUserStoriesAvecCommit($id_pro)->num_rows > 0) {
-      if (($db->listeUserStoryOutOfSprints($id_pro)->num_rows == 0) && ($db->listeUserStories($id_pro)->num_rows > 0)) {
-          $tab = $db->listeChiffrageReel($id_pro);
-      }
-?>
-    <!--<button class="btn btn-primary disabled" data-toggle="tooltip" title="Au moins une US a été commiter">calcul du Burndown Chart planifié</button>-->
-<?php
+    if (($db->listeUserStoryOutOfSprints($id_pro)->num_rows == 0) && ($db->listeUserStories($id_pro)->num_rows > 0)) {
+        $tab = $db->listeChiffrageReel($id_pro);
+    }
   } else {
-    if (($db->listeUserStoryOutOfSprints($id_pro)->num_rows > 0) || ($db->listeUserStories($id_pro)->num_rows == 0)) {
-?>
-    <!--<button class="btn btn-primary disabled" data-toggle="tooltip" title="Toutes les US ne sont pas dans un sprint">calcul du Burndown Chart planifié</button>-->
-<?php
-    } else {
-      $db->modifChiffragePlanifie($id_pro);
-?>
-    <!--<form style="display: inline;" action="../web/calculBurndownChart.php" method="post">
-      <input type="hidden" name="calculBurndownChart" value="1" />
-      <input class="btn btn-primary" type="submit" value="calcul du Burndown Chart planifié" />
-    </form>-->
-<?php
+    if (($db->listeUserStoryOutOfSprints($id_pro)->num_rows == 0) && ($db->listeUserStories($id_pro)->num_rows > 0)) {
+      // $db->modifChiffragePlanifie($id_pro);
     }
   }
 ?>
