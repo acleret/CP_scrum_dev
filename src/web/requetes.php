@@ -732,7 +732,7 @@ class Requetes {
        return $result;
     }
 
-    // retourne la lite des US commiter
+    // retourne la lite des US d'un sprint sans commit
     public function listeUserStoriesSprintSansCommit($id_spr, $id_pro) {
         $sql = "SELECT * FROM us
                 WHERE SPR_id = ".$id_spr." AND PRO_id = ".$id_pro." AND US_idDernierCommit is NULL;";
