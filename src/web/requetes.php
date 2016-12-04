@@ -721,7 +721,7 @@ class Requetes {
         return (empty($row["SUM(US_chiffrageAbstrait)"])) ? 0 : $row["SUM(US_chiffrageAbstrait)"];
     }
 
-    // retourne la lite des US commiter
+    // retourne la liste des US commiter
     public function listeUserStoriesAvecCommit($id_pro) {
         $sql = "SELECT * FROM us
                 WHERE PRO_id = ".$id_pro." AND US_idDernierCommit is not NULL;";
@@ -732,7 +732,7 @@ class Requetes {
        return $result;
     }
 
-    // retourne la lite des US d'un sprint sans commit
+    // retourne la liste des US d'un sprint qui n'ont pas été commiter
     public function listeUserStoriesSprintSansCommit($id_spr, $id_pro) {
         $sql = "SELECT * FROM us
                 WHERE SPR_id = ".$id_spr." AND PRO_id = ".$id_pro." AND US_idDernierCommit is NULL;";
