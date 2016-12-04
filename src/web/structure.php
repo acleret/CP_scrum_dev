@@ -85,8 +85,6 @@ if ($liste_sprints->num_rows > 0) {
 <?php
     while ($row_sprint = $liste_sprints->fetch_assoc()) {
         $id_spr = $row_sprint["SPR_id"];
-        //$infos_spr = $db->infosSprint($id_spr);
-        //$row_sprint = $infos_spr->fetch_assoc();
         $num_spr = $row_sprint["SPR_numero"];
         $nom_kanban = ($num_spr < 10) ? "Kanban-Sprint#0".$num_spr : "Kanban-Sprint#".$num_spr;
 ?>

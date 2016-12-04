@@ -656,6 +656,7 @@ if ($test->testIDProjet($id_pro)) {
 	$result = $test->infosTache($id_tac);
 	$row = $result->fetch_assoc();
 	echo $row["TAC_id"]." | ".
+			$row["TAC_numero"]." | ".
 			$row["TAC_nom"]." | ".
 			$row["TAC_description"]." | ".
 			$row["TAC_nbJours"]." | ".
@@ -668,8 +669,19 @@ if ($test->testIDProjet($id_pro)) {
 }
 echo "</ul><br>\n";
 
+echo "<b>// test estNumeroTache</b><br>\n<ul>";
+$numeroTache = 12;
+$us = 141;
+$numSprint = $db->infosUS($us)->fetch_assoc()["SPR_id"];
+if ($test->estNumeroTache($numSprint, 12)) {
+  echo "<li class=\"correct\">Correct : le $numeroTache est un numéro qui peut être utilisé dans le cadre de la création d'une nouvelle tâche</li>\n";
+} else {
+  echo "<li class=\"erreur\">Erreur lors du repérage d'un numéro de tâche libre</li>\n";
+}
+echo "</ul><br>\n";
+
 echo "<b>// test ajoutTache</b><br>\n<ul>";
-if ($test->ajoutTache("DernièreTache", "Dernière tâche", 1, "2016-11-26", 1, 141)) {
+if ($test->ajoutTache($numeroTache, "DernièreTache", "Dernière tâche", 1, "2016-11-26", 1, $us)) {
 	$id_tac = $test->maxIDTache();
   echo "<li class=\"correct\">Tâche $id_tac créée</li>\n";
 } else {
@@ -683,6 +695,7 @@ if ($test->testIDTache($id_tac)) {
 	$row = $result->fetch_assoc();
 	echo "<li>Tâche ".$id_tac." avant modif : <br>";
 	echo $row["TAC_id"]." | ".
+			$row["TAC_num"]." | ".
 			$row["TAC_nom"]." | ".
 			$row["TAC_description"]." | ".
 			$row["TAC_nbJours"]." | ".
@@ -695,6 +708,7 @@ if ($test->testIDTache($id_tac)) {
 		$result2 = $test->infosTache($id_tac);
 		$row2 = $result2->fetch_assoc();
 		echo $row2["TAC_id"]." | ".
+			$row2["TAC_num"]." | ".
 			$row2["TAC_nom"]." | ".
 			$row2["TAC_description"]." | ".
 			$row2["TAC_nbJours"]." | ".
@@ -717,6 +731,7 @@ if ($test->testIDTache($id_tac)) {
 		$result = $test->infosTache($id_tac);
 		$row = $result->fetch_assoc();
 		echo $row["TAC_id"]." | ".
+			$row["TAC_num"]." | ".
 			$row["TAC_nom"]." | ".
 			$row["TAC_description"]." | ".
 			$row["TAC_nbJours"]." | ".
@@ -739,6 +754,7 @@ if ($test->testIDTache($id_tac)) {
 		$result = $test->infosTache($id_tac);
 		$row = $result->fetch_assoc();
 		echo $row["TAC_id"]." | ".
+			$row["TAC_num"]." | ".
 			$row["TAC_nom"]." | ".
 			$row["TAC_description"]." | ".
 			$row["TAC_nbJours"]." | ".
@@ -778,9 +794,12 @@ while ($row_etat = $result->fetch_assoc()) { // une ligne = un état
 	echo "L'us $id_us a ".count($lesTaches)." tâches dans l'état ".$row_etat["TAC_etat"]." !<br>\n";
 	foreach($lesTaches as $key => $tacheInfo) {
 		echo "Tâche - info récupérée depuis le concat : ($tacheInfo)<br>\n";
-		$infosTrouveesTache = explode(" ", $tacheInfo);
-		// count($infosTrouveesTache); // nb d'infos trouvées par tâche
-		echo "Tâche - infos séparées : (Id: $infosTrouveesTache[0] - Nom: $infosTrouveesTache[1]) <br>\n"; // si on veut un itérateur c'est dans cette ligne qu'il faut s'en servir
+		$infosTrouveesTache = explode("|", $tacheInfo);
+		echo "Tâche - infos séparées : ( ";
+		for($i=0; $i<count($infosTrouveesTache); $i++) {	// count($iTT) : nb d'infos trouvées
+			echo $infosTrouveesTache[$i]." ";
+		}
+		echo ")<br>\n";
   }
 	echo "</li><br>\n";
 }

@@ -721,7 +721,7 @@ class Requetes {
         return (empty($row["SUM(US_chiffrageAbstrait)"])) ? 0 : $row["SUM(US_chiffrageAbstrait)"];
     }
 
-    // retourne la liste des US commiter
+    // retourne la liste des US commitées
     public function listeUserStoriesAvecCommit($id_pro) {
         $sql = "SELECT * FROM us
                 WHERE PRO_id = ".$id_pro." AND US_idDernierCommit is not NULL;";
@@ -732,7 +732,7 @@ class Requetes {
        return $result;
     }
 
-    // retourne la liste des US d'un sprint qui n'ont pas été commiter
+    // retourne la liste des US d'un sprint qui n'ont pas été commitées
     public function listeUserStoriesSprintSansCommit($id_spr, $id_pro) {
         $sql = "SELECT * FROM us
                 WHERE SPR_id = ".$id_spr." AND PRO_id = ".$id_pro." AND US_idDernierCommit is NULL;";
@@ -898,11 +898,19 @@ class Requetes {
 		public function listeTachesUSEtats($id_us) {
 				//SET SESSION group_concat_max_len = 1000000;
 				$sql = "SELECT  TAC_etat,
-												GROUP_CONCAT(
+											 GROUP_CONCAT(
 													DISTINCT CONCAT(
-														CAST(TAC_id AS CHAR), \" \", TAC_nom
+														CAST(TAC_id AS CHAR), \"|\", 
+														CAST(TAC_numero AS CHAR), \"|\", 
+														TAC_nom, \"|\", 
+														TAC_etat, \"|\", 
+														TAC_description, \"|\",
+														TAC_nbJours, \"|\",
+														CAST(TAC_dateDepart AS CHAR), \"|\", 
+														CAST(DEV_id AS CHAR), \"|\", 
+														CAST(US_id AS CHAR)
 													)
-													ORDER BY TAC_id ASC
+													ORDER BY TAC_numero ASC
 													SEPARATOR \";\"
 												) AS MesTaches
 								FROM tache WHERE US_id = ".$id_us."
@@ -915,17 +923,30 @@ class Requetes {
 		}
 
 		// retourne vrai après avoir ajouté une tâche, sinon faux
-    public function ajoutTache($nom, $description, $nbJours, $dateDepart, $id_dev, $id_us) {
+    public function ajoutTache($numero, $nom, $description, $nbJours, $dateDepart, $id_dev, $id_us) {
 				$etat = "TO DO";
-        $sql = "INSERT INTO tache (TAC_nom, TAC_description, TAC_nbJours, TAC_dateDepart, TAC_etat, DEV_id, US_id)
-                VALUES ('".$nom."', '".$description."', '".$nbJours."', '".$dateDepart."', '".$etat."', '".$id_dev."', '".$id_us."');";
+        $sql = "INSERT INTO tache (TAC_numero, TAC_nom, TAC_description, TAC_nbJours, TAC_dateDepart, TAC_etat, DEV_id, US_id)
+                VALUES ('".$numero."', '".$nom."', '".$description."', '".$nbJours."', '".$dateDepart."', '".$etat."', '".$id_dev."', '".$id_us."');";
         if (!$result = $this->conn->query($sql)) {
             printf("<b style=\"color:red;\">Message d'erreur dans ajoutTache(): %s</b><br>", $this->conn->error);
             return NULL;
         }
         return true;
     }
-
+		
+		// retourne vrai si le numero de tâche $numero_tac est non présente dans les tâches du sprint $id_spr, sinon faux
+		public function estNumeroTache($id_spr, $numero_tac) {
+        $listeUS = $this->listeUserStorySprint($id_spr);
+				while($row_us = $listeUS->fetch_assoc()) {
+					$listeTaches = $this->listeTachesUS($row_us["US_id"]);
+					while($row_tache = $listeTaches->fetch_assoc()) {
+						if($numero_tac == $row_tache["TAC_numero"]) {
+							return false;
+						}
+					}
+				}
+        return true;		
+		}
 		// retourne vrai après avoir retiré une tâche, sinon faux
 		public function suppressionTache($id_tac) {
 			$sql = "DELETE FROM tache WHERE TAC_id = ".$id_tac.";";
@@ -1026,7 +1047,6 @@ class Requetes {
         $sql = "DELETE FROM burdown_chart WHERE PRO_id = ".$id_pro.";";
         if (!$result = $this->conn->query($sql)) {
             printf("<b style=\"color:red;\">Message d'erreur dans modifChiffragePlanifie().1: %s<br></b>", $this->conn->error);
-            echo "stringcdgcydsgchsdcghsdgcs\n";
             return NULL;
         }
         $liste_sprints = $this->listeSprints($id_pro);
@@ -1035,7 +1055,6 @@ class Requetes {
                     VALUES (".$this->sommeChiffrageSprint($row['SPR_id']).", ".$row['SPR_id'].", ".$id_pro.");";
             if (!$result = $this->conn->query($sql)) {
                 printf("<b style=\"color:red;\">Message d'erreur dans modifChiffragePlanifie().2: %s</b><br>", $this->conn->error);
-                echo "gggggdgdg\n";
                 return NULL;
             }
         }

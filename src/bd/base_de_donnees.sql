@@ -95,6 +95,7 @@ CREATE TABLE `sprint` (
 
 CREATE TABLE `tache` (
   `TAC_id` int(11) NOT NULL,
+  `TAC_numero` int(11) NOT NULL,
   `TAC_nom` varchar(255) NOT NULL,
   `TAC_description` text NOT NULL,
   `TAC_nbJours` int(11) NOT NULL,
