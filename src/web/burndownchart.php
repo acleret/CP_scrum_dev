@@ -5,7 +5,7 @@ if (isset($_COOKIE["id_projet"])) {
   $id_pro = $_COOKIE["id_projet"];
   $infos_pro = $db->infosProjet($id_pro);
   $row_pro = $infos_pro->fetch_assoc();
-  $s->head("Burdown Chart");
+  $s->head("Burndown Chart");
   $s->header($db);
   $s->nav($db);
 
@@ -16,7 +16,7 @@ if (isset($_COOKIE["id_projet"])) {
     }
   } else {
     if (($db->listeUserStoryOutOfSprints($id_pro)->num_rows == 0) && ($db->listeUserStories($id_pro)->num_rows > 0)) {
-      // $db->modifChiffragePlanifie($id_pro);
+      $db->modifChiffragePlanifie($id_pro);
     }
   }
 ?>
@@ -27,7 +27,7 @@ if (isset($_COOKIE["id_projet"])) {
               //Better to construct options first and then pass it as a parameter
               var options = {
                 title: {
-                  text: "Burdown Chart"
+                  text: "Burndown Chart"
                 },
                 legend: {
                   horizontalAlign: "right", // left, center ,right
@@ -83,7 +83,7 @@ if (isset($_COOKIE["id_projet"])) {
           </script>
           <article>
             <div class="col-sm-8 text-left">
-              <h2><?php echo $row_pro["PRO_nom"]; ?> - Burdown Chart</h2>
+              <h2><?php echo $row_pro["PRO_nom"]; ?> - Burndown Chart</h2>
               <hr>
               <div id="chartContainer" style="height: 500px; width: 100%;"></div>
               <br />

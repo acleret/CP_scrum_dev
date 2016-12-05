@@ -669,16 +669,16 @@ if ($test->testIDProjet($id_pro)) {
 }
 echo "</ul><br>\n";
 
-echo "<b>// test estNumeroTache</b><br>\n<ul>";
-$numeroTache = 12;
-$us = 141;
-$numSprint = $db->infosUS($us)->fetch_assoc()["SPR_id"];
-if ($test->estNumeroTache($numSprint, 12)) {
-  echo "<li class=\"correct\">Correct : le $numeroTache est un numéro qui peut être utilisé dans le cadre de la création d'une nouvelle tâche</li>\n";
-} else {
-  echo "<li class=\"erreur\">Erreur lors du repérage d'un numéro de tâche libre</li>\n";
-}
-echo "</ul><br>\n";
+/* echo "<b>// test estNumeroTache</b><br>\n<ul>"; */
+/* $numeroTache = 12; */
+/* $us = $db->maxIDUS(); */
+/* $numSprint = $db->infosUS($us)->fetch_assoc()["SPR_id"]; */
+/* if ($test->estNumeroTache($numSprint, 12)) { */
+/*   echo "<li class=\"correct\">Correct : le $numeroTache est un numéro qui peut être utilisé dans le cadre de la création d'une nouvelle tâche</li>\n"; */
+/* } else { */
+/*   echo "<li class=\"erreur\">Erreur lors du repérage d'un numéro de tâche libre</li>\n"; */
+/* } */
+/* echo "</ul><br>\n"; */
 
 echo "<b>// test ajoutTache</b><br>\n<ul>";
 if ($test->ajoutTache($numeroTache, "DernièreTache", "Dernière tâche", 1, "2016-11-26", 1, $us)) {
@@ -807,7 +807,7 @@ echo "</ul><br>\n";
 
 
 /****************************************************************************/
-echo ("<h1>/* Tests des fonctions concernant le burdown_chart */</h1><br>\n");
+echo ("<h1>/* Tests des fonctions concernant le burndown_chart */</h1><br>\n");
 /*****************************************************************************/
 
 echo "<b>// test listeChiffragePlanifie</b><br>\n<ul>";

@@ -1,6 +1,6 @@
-ALTER TABLE `burdown_chart`
-  DROP FOREIGN KEY `burdown_chart_ibfk_1`,
-  DROP FOREIGN KEY `burdown_chart_ibfk_2`;
+ALTER TABLE `burndown_chart`
+  DROP FOREIGN KEY `burndown_chart_ibfk_1`,
+  DROP FOREIGN KEY `burndown_chart_ibfk_2`;
 ALTER TABLE `inter_dev_projet`
   DROP FOREIGN KEY `inter_dev_projet_ibfk_1`,
   DROP FOREIGN KEY `inter_dev_projet_ibfk_2`;
@@ -16,7 +16,7 @@ ALTER TABLE `us`
   DROP FOREIGN KEY `us_ibfk_1`,
   DROP FOREIGN KEY `us_ibfk_2`;
 
-TRUNCATE TABLE `burdown_chart`;
+TRUNCATE TABLE `burndown_chart`;
 TRUNCATE TABLE `projet`;
 TRUNCATE TABLE `developpeur`;
 TRUNCATE TABLE `inter_dev_projet`;
@@ -24,9 +24,9 @@ TRUNCATE TABLE `sprint`;
 TRUNCATE TABLE `tache`;
 TRUNCATE TABLE `us`;
 
-ALTER TABLE `burdown_chart`
-  ADD CONSTRAINT `burdown_chart_ibfk_1` FOREIGN KEY (`SPR_id`) REFERENCES `sprint` (`SPR_id`),
-  ADD CONSTRAINT `burdown_chart_ibfk_2` FOREIGN KEY (`PRO_id`) REFERENCES `projet` (`PRO_id`);
+ALTER TABLE `burndown_chart`
+  ADD CONSTRAINT `burndown_chart_ibfk_1` FOREIGN KEY (`SPR_id`) REFERENCES `sprint` (`SPR_id`),
+  ADD CONSTRAINT `burndown_chart_ibfk_2` FOREIGN KEY (`PRO_id`) REFERENCES `projet` (`PRO_id`);
 ALTER TABLE `inter_dev_projet`
   ADD CONSTRAINT `inter_dev_projet_ibfk_1` FOREIGN KEY (`DEV_id`) REFERENCES `developpeur` (`DEV_id`),
   ADD CONSTRAINT `inter_dev_projet_ibfk_2` FOREIGN KEY (`PRO_id`) REFERENCES `projet` (`PRO_id`);

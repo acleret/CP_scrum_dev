@@ -19,10 +19,10 @@ USE `cp_scrum`;
 -- --------------------------------------------------------
 
 --
--- Structure de la table `burdown_chart`
+-- Structure de la table `burndown_chart`
 --
 
-CREATE TABLE `burdown_chart` (
+CREATE TABLE `burndown_chart` (
   `BDC_id` int(11) NOT NULL,
   `BDC_chargePlanifie` int(11) NOT NULL,
   `SPR_id` int(11) NOT NULL,
@@ -130,9 +130,9 @@ CREATE TABLE `us` (
 --
 
 --
--- Index pour la table `burdown_chart`
+-- Index pour la table `burndown_chart`
 --
-ALTER TABLE `burdown_chart`
+ALTER TABLE `burndown_chart`
   ADD PRIMARY KEY (`BDC_id`),
   ADD KEY `PRO_id` (`PRO_id`),
   ADD KEY `SPR_id` (`SPR_id`);
@@ -188,9 +188,9 @@ ALTER TABLE `us`
 --
 
 --
--- AUTO_INCREMENT pour la table `burdown_chart`
+-- AUTO_INCREMENT pour la table `burndown_chart`
 --
-ALTER TABLE `burdown_chart`
+ALTER TABLE `burndown_chart`
   MODIFY `BDC_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `developpeur`
@@ -222,11 +222,11 @@ ALTER TABLE `us`
 --
 
 --
--- Contraintes pour la table `burdown_chart`
+-- Contraintes pour la table `burndown_chart`
 --
-ALTER TABLE `burdown_chart`
-  ADD CONSTRAINT `burdown_chart_ibfk_1` FOREIGN KEY (`SPR_id`) REFERENCES `sprint` (`SPR_id`),
-  ADD CONSTRAINT `burdown_chart_ibfk_2` FOREIGN KEY (`PRO_id`) REFERENCES `projet` (`PRO_id`);
+ALTER TABLE `burndown_chart`
+  ADD CONSTRAINT `burndown_chart_ibfk_1` FOREIGN KEY (`SPR_id`) REFERENCES `sprint` (`SPR_id`),
+  ADD CONSTRAINT `burndown_chart_ibfk_2` FOREIGN KEY (`PRO_id`) REFERENCES `projet` (`PRO_id`);
 
 --
 -- Contraintes pour la table `inter_dev_projet`

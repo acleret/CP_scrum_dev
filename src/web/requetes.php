@@ -810,12 +810,16 @@ class Requetes {
    // retourne vrai après avoir retiré un sprint, sinon faux
     public function supprimerSprint($id_spr) {
         $sql_ret_us = "UPDATE us SET SPR_id = NULL WHERE SPR_id = ".$id_spr.";";
+        $sql_ret_bdc = "DELETE FROM burndown_chart WHERE SPR_id = ".$id_spr.";";
         $sql_ret_spr = "DELETE FROM sprint WHERE SPR_id = ".$id_spr.";";
         if (!$result = $this->conn->query($sql_ret_us)) {
             printf("<b style=\"color:red;\">Message d'erreur dans supprimerSprint().1: %s</b><br>", $this->conn->error);
             return NULL;
-        } else if (!$result = $this->conn->query($sql_ret_spr)) {
+        } else if (!$result = $this->conn->query($sql_ret_bdc)) {
             printf("<b style=\"color:red;\">Message d'erreur dans supprimerSprint().2: %s</b><br>", $this->conn->error);
+            return NULL;
+        } else if (!$result = $this->conn->query($sql_ret_spr)) {
+            printf("<b style=\"color:red;\">Message d'erreur dans supprimerSprint().3: %s</b><br>", $this->conn->error);
             return NULL;
         }
         return true;
@@ -1023,7 +1027,7 @@ class Requetes {
     /*************************************************/
 
     public function listeChiffragePlanifie($id_pro) {
-        $sql = "SELECT * FROM burdown_chart
+        $sql = "SELECT * FROM burndown_chart
                 WHERE PRO_id = ".$id_pro.";";
         if (!$result = $this->conn->query($sql)) {
             printf("<b style=\"color:red;\">Message d'erreur dans listeChiffragePlanifie(): %s</b><br>\n", $this->conn->error);
@@ -1044,14 +1048,14 @@ class Requetes {
     }
 
     public function modifChiffragePlanifie($id_pro) {
-        $sql = "DELETE FROM burdown_chart WHERE PRO_id = ".$id_pro.";";
+        $sql = "DELETE FROM burndown_chart WHERE PRO_id = ".$id_pro.";";
         if (!$result = $this->conn->query($sql)) {
             printf("<b style=\"color:red;\">Message d'erreur dans modifChiffragePlanifie().1: %s<br></b>", $this->conn->error);
             return NULL;
         }
         $liste_sprints = $this->listeSprints($id_pro);
         while ($row = $liste_sprints->fetch_assoc()) {
-            $sql = "INSERT INTO burdown_chart (BDC_chargePlanifie, SPR_id, PRO_id)
+            $sql = "INSERT INTO burndown_chart (BDC_chargePlanifie, SPR_id, PRO_id)
                     VALUES (".$this->sommeChiffrageSprint($row['SPR_id']).", ".$row['SPR_id'].", ".$id_pro.");";
             if (!$result = $this->conn->query($sql)) {
                 printf("<b style=\"color:red;\">Message d'erreur dans modifChiffragePlanifie().2: %s</b><br>", $this->conn->error);
@@ -1062,7 +1066,7 @@ class Requetes {
     }
 
     public function sommeChiffragePlanifie($id_pro) {
-      $sql = "SELECT SUM(BDC_chargePlanifie) FROM burdown_chart
+      $sql = "SELECT SUM(BDC_chargePlanifie) FROM burndown_chart
               WHERE PRO_id = ".$id_pro.";";
       if (!$res = $this->conn->query($sql)) {
           printf("<b style=\"color:red;\">Message d'erreur dans sommeChiffragePlanifie(): %s</b><br>\n", $this->conn->error);
