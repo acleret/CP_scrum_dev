@@ -19,7 +19,7 @@ if (isset($_COOKIE["id_projet"])) {
   $infos_pro = $db->infosProjet($id_pro);
   $row_pro = $infos_pro->fetch_assoc();
 
-  $s->head($row['PRO_nom']." - Kanban");
+  $s->head($row_pro['PRO_nom']." - Kanban");
   $s->header($db);
   $s->nav($db);
 ?>
@@ -184,7 +184,7 @@ if (isset($_COOKIE["id_projet"])) {
 								$varHtmlToDo .= "<div class=\"link tooltip-link modifiable draggable\" id=\"tacheDraggableUS$id_us$id_tache\" data-toggle=\"tooltip\" data-placement=\"bottom\" data-original-title=\"Nom de la tâche: $nom_tache - Responsable: $pseudoResponsable_tache - Début: $dateDepart_tache - Etat : $etat_tache \" draggable=\"true\" style=\"text-align:center;\">[Tache#$num_tache]<span id=\"TODO-$id_tache\" style=\"display:none;\">$tacheInfo</span></div>\n";
 ?>
 								<!-- Modal Etat -->
-								<div id="modifierEtatModal<?php echo $id_us; echo $id_tache; ?>" class="modal fade" role="dialog">
+								<div id="modifierEtatModal<?php echo $id_us."-"; echo $id_tache; ?>" class="modal fade" role="dialog">
 									<div class="modal-dialog">
 										<!-- Modal content-->
 										<div class="modal-content">
@@ -205,6 +205,71 @@ if (isset($_COOKIE["id_projet"])) {
 										</div>
 									</div>
 								</div>
+								<!-- Modal Modification -->
+								<div id="modifierModal<?php echo $id_us."-".$id_tache; ?>" class="modal fade" role="dialog">
+									<div class="modal-dialog">
+										<!-- Modal content-->
+										<div class="modal-content">
+											<form style="display: inline;" action="../web/modificationTache.php" onsubmit="return verifForm(this);" method="post">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal">&times;</button>
+													<h4 class="modal-title">Modification des informations d'une tâche</h4>
+												</div>
+												<div class="modal-body">
+													<div class="form-group">
+														<label for="nom">Nom</label>
+														<input type="text" name="nom" class="form-control" id="nom" placeholder="Nom" />
+													</div>
+													<div class="form-group">
+														<label for="etat">Etat</label>
+														<input type="text" name="etat" class="form-control" id="etat" size="7" placeholder="Etat" onblur="verifEtat(this);" />
+													</div>
+													<div class="form-group">
+														<label for="description">Description</label>
+														<textarea name="description" class="form-control" rows="3" id="description" placeholder="Description..." ></textarea>
+													</div>
+													<div class="form-group">
+														<label for="nbJours">Nombre de jours</label>
+														<input type="number" name="nbJours" class="form-control" id="nbJours" placeholder="Nombre de jours" />
+													</div>
+													<div class="form-group">
+														<label for="dateDebut">Date de début</label>
+														<input type="date" name="dateDepart" class="form-control" id="dateDepart" placeholder="Date de début" />
+													</div>
+													<div class="form-group" >
+														<label for="responsable">Pseudo du responsable</label>
+														<select class="form-control" name="responsable" id="responsable">
+						<?php 					$listeDeveloppeurs = $db->listeDeveloppeurs(); 
+														while ($row_dev = $listeDeveloppeurs->fetch_assoc()) {							
+						?>
+															<option value="<?php echo $row_dev["DEV_id"]; ?>"><?php echo $row_dev["DEV_pseudo"]; ?></option>
+						<?php 					}		?>
+														</select>
+													</div>											
+													<div class="form-group" >
+														<label for="idUS_tache">Rattacher la tâche à une autre user story :</label>
+														
+														<select class="form-control" name="us" id="us">
+						<?php 
+														$liste_us = $db->listeUserStorySprint($id_sprint);
+														while ($row_us = $liste_us->fetch_assoc()) {
+															$infosUS = $db->infosTache($row_us["US_id"]);
+						?>
+															<option value="<?php echo $row_us["US_id"]; ?>"><?php echo $row_us["US_numero"]." : ".$row_us["US_nom"]; ?></option>
+						<?php 					}		?>
+														</select>
+													</div>											
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+													<input type="hidden" name="id_tache" value=""/>
+													<input class="btn btn-primary" type="submit" value="Valider"/>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+								<!-- end ModifierModal -->
 <?php
 							}
 							$varHtmlToDo .= "</td>";
@@ -227,7 +292,7 @@ if (isset($_COOKIE["id_projet"])) {
 								$varHtmlOnGoing .= "<div class=\"link tooltip-link modifiable draggable\" id=\"tacheDraggableUS$id_us$id_tache\" data-toggle=\"tooltip\" data-placement=\"bottom\" data-original-title=\"Nom de la tâche: $nom_tache - Responsable : $pseudoResponsable_tache - Début : $dateDepart_tache - Etat : $etat_tache \" draggable=\"true\" style=\"text-align:center;\">[Tache#$num_tache]<span id=\"ONGOING-$id_tache\" style=\"display:none;\">$tacheInfo</span></div>\n";
 ?>
 								<!-- Modal Etat -->
-								<div id="modifierEtatModal<?php echo $id_us; echo $id_tache; ?>" class="modal fade" role="dialog">
+								<div id="modifierEtatModal<?php echo $id_us."-"; echo $id_tache; ?>" class="modal fade" role="dialog">
 									<div class="modal-dialog">
 										<!-- Modal content-->
 										<div class="modal-content">
@@ -240,7 +305,7 @@ if (isset($_COOKIE["id_projet"])) {
 												
 												</div>
 												<div class="modal-footer">
-													<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+													<button type="button" class="btn btn-default" data-dismiss="modal" onclick="document.location.reload(false)">Annuler</button>
 													<input type="hidden" name="etat_tache" value=""/>
 													<input type="hidden" name="id_tache" value="<?php echo $id_tache; ?>"/>
 													<input class="btn btn-danger" type="submit" value="Continuer"/>
@@ -249,6 +314,71 @@ if (isset($_COOKIE["id_projet"])) {
 										</div>
 									</div>
 								</div>
+								<!-- Modal Modification -->
+								<div id="modifierModal<?php echo $id_us."-".$id_tache; ?>" class="modal fade" role="dialog">
+									<div class="modal-dialog">
+										<!-- Modal content-->
+										<div class="modal-content">
+											<form style="display: inline;" action="../web/modificationTache.php" onsubmit="return verifForm(this);" method="post">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal">&times;</button>
+													<h4 class="modal-title">Modification des informations d'une tâche</h4>
+												</div>
+												<div class="modal-body">
+													<div class="form-group">
+														<label for="nom">Nom</label>
+														<input type="text" name="nom" class="form-control" id="nom" placeholder="Nom" />
+													</div>
+													<div class="form-group">
+														<label for="etat">Etat</label>
+														<input type="text" name="etat" class="form-control" id="etat" size="7" placeholder="Etat" onblur="verifEtat(this);" />
+													</div>
+													<div class="form-group">
+														<label for="description">Description</label>
+														<textarea name="description" class="form-control" rows="3" id="description" placeholder="Description..." ></textarea>
+													</div>
+													<div class="form-group">
+														<label for="nbJours">Nombre de jours</label>
+														<input type="number" name="nbJours" class="form-control" id="nbJours" placeholder="Nombre de jours" />
+													</div>
+													<div class="form-group">
+														<label for="dateDebut">Date de début</label>
+														<input type="date" name="dateDepart" class="form-control" id="dateDepart" placeholder="Date de début" />
+													</div>
+													<div class="form-group" >
+														<label for="responsable">Pseudo du responsable</label>
+														<select class="form-control" name="responsable" id="responsable">
+						<?php 					$listeDeveloppeurs = $db->listeDeveloppeurs(); 
+														while ($row_dev = $listeDeveloppeurs->fetch_assoc()) {							
+						?>
+															<option value="<?php echo $row_dev["DEV_id"]; ?>"><?php echo $row_dev["DEV_pseudo"]; ?></option>
+						<?php 					}		?>
+														</select>
+													</div>											
+													<div class="form-group" >
+														<label for="idUS_tache">Rattacher la tâche à une autre user story :</label>
+														
+														<select class="form-control" name="us" id="us">
+						<?php 
+														$liste_us = $db->listeUserStorySprint($id_sprint);
+														while ($row_us = $liste_us->fetch_assoc()) {
+															$infosUS = $db->infosTache($row_us["US_id"]);
+						?>
+															<option value="<?php echo $row_us["US_id"]; ?>"><?php echo $row_us["US_numero"]." : ".$row_us["US_nom"]; ?></option>
+						<?php 					}		?>
+														</select>
+													</div>											
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+													<input type="hidden" name="id_tache" value=""/>
+													<input class="btn btn-primary" type="submit" value="Valider"/>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+								<!-- end ModifierModal -->
 
 <?php						}
 							$varHtmlOnGoing .= "</td>";
@@ -271,7 +401,7 @@ if (isset($_COOKIE["id_projet"])) {
 								$varHtmlToTest .= "<div class=\"link tooltip-link modifiable draggable\" id=\"tacheDraggableUS$id_us$id_tache\" data-toggle=\"tooltip\" data-placement=\"bottom\" data-original-title=\"Nom de la tâche: $nom_tache - Responsable: $pseudoResponsable_tache - Début: $dateDepart_tache - Etat : $etat_tache \" draggable=\"true\" style=\"text-align:center;\">[Tache#$num_tache]<span id=\"TOTEST-$id_tache\" style=\"display:none;\">$tacheInfo</span></div><br>\n";
 	?>
 								<!-- Modal Etat -->
-								<div id="modifierEtatModal<?php echo $id_us; echo $id_tache; ?>" class="modal fade" role="dialog">
+								<div id="modifierEtatModal<?php echo $id_us."-"; echo $id_tache; ?>" class="modal fade" role="dialog">
 									<div class="modal-dialog">
 										<!-- Modal content-->
 										<div class="modal-content">
@@ -283,7 +413,7 @@ if (isset($_COOKIE["id_projet"])) {
 												<div class="modal-body">
 												</div>
 												<div class="modal-footer">
-													<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+													<button type="button" class="btn btn-default" data-dismiss="modal" onclick="document.location.reload(false)">Annuler</button>
 													<input type="hidden" name="etat_tache" value=""/>
 													<input type="hidden" name="id_tache" value="<?php echo $id_tache; ?>"/>
 													<input class="btn btn-danger" type="submit" value="Continuer"/>
@@ -292,7 +422,71 @@ if (isset($_COOKIE["id_projet"])) {
 										</div>
 									</div>
 								</div>
-
+								<!-- Modal Modification -->
+								<div id="modifierModal<?php echo $id_us."-".$id_tache; ?>" class="modal fade" role="dialog">
+									<div class="modal-dialog">
+										<!-- Modal content-->
+										<div class="modal-content">
+											<form style="display: inline;" action="../web/modificationTache.php" onsubmit="return verifForm(this);" method="post">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal">&times;</button>
+													<h4 class="modal-title">Modification des informations d'une tâche</h4>
+												</div>
+												<div class="modal-body">
+													<div class="form-group">
+														<label for="nom">Nom</label>
+														<input type="text" name="nom" class="form-control" id="nom" placeholder="Nom" />
+													</div>
+													<div class="form-group">
+														<label for="etat">Etat</label>
+														<input type="text" name="etat" class="form-control" id="etat" size="7" placeholder="Etat" onblur="verifEtat(this);" />
+													</div>
+													<div class="form-group">
+														<label for="description">Description</label>
+														<textarea name="description" class="form-control" rows="3" id="description" placeholder="Description..." ></textarea>
+													</div>
+													<div class="form-group">
+														<label for="nbJours">Nombre de jours</label>
+														<input type="number" name="nbJours" class="form-control" id="nbJours" placeholder="Nombre de jours" />
+													</div>
+													<div class="form-group">
+														<label for="dateDebut">Date de début</label>
+														<input type="date" name="dateDepart" class="form-control" id="dateDepart" placeholder="Date de début" />
+													</div>
+													<div class="form-group" >
+														<label for="responsable">Pseudo du responsable</label>
+														<select class="form-control" name="responsable" id="responsable">
+						<?php 					$listeDeveloppeurs = $db->listeDeveloppeurs(); 
+														while ($row_dev = $listeDeveloppeurs->fetch_assoc()) {							
+						?>
+															<option value="<?php echo $row_dev["DEV_id"]; ?>"><?php echo $row_dev["DEV_pseudo"]; ?></option>
+						<?php 					}		?>
+														</select>
+													</div>											
+													<div class="form-group" >
+														<label for="idUS_tache">Rattacher la tâche à une autre user story :</label>
+														
+														<select class="form-control" name="us" id="us">
+						<?php 
+														$liste_us = $db->listeUserStorySprint($id_sprint);
+														while ($row_us = $liste_us->fetch_assoc()) {
+															$infosUS = $db->infosTache($row_us["US_id"]);
+						?>
+															<option value="<?php echo $row_us["US_id"]; ?>"><?php echo $row_us["US_numero"]." : ".$row_us["US_nom"]; ?></option>
+						<?php 					}		?>
+														</select>
+													</div>											
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+													<input type="hidden" name="id_tache" value=""/>
+													<input class="btn btn-primary" type="submit" value="Valider"/>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+								<!-- end ModifierModal -->
 <?php					}
 							$varHtmlToTest .= "</td>";
 							break;
@@ -314,7 +508,7 @@ if (isset($_COOKIE["id_projet"])) {
 								$varHtmlDone .= "<div class=\"link tooltip-link modifiable draggable\" id=\"tacheDraggableUS$id_us$id_tache\" data-toggle=\"tooltip\" data-placement=\"bottom\" data-original-title=\"Nom de la tâche: $nom_tache - Responsable: $pseudoResponsable_tache - Début: $dateDepart_tache - Etat : $etat_tache \" draggable=\"true\" style=\"text-align:center;\">[Tache#$num_tache]<span id=\"DONE-$id_tache\" style=\"display:none;\">$tacheInfo</span></div><br>\n";
 ?>
 								<!-- Modal Etat -->
-								<div id="modifierEtatModal<?php echo $id_us; echo $id_tache; ?>" class="modal fade" role="dialog">
+								<div id="modifierEtatModal<?php echo $id_us."-"; echo $id_tache; ?>" class="modal fade" role="dialog">
 									<div class="modal-dialog">
 										<!-- Modal content-->
 										<div class="modal-content">
@@ -326,7 +520,7 @@ if (isset($_COOKIE["id_projet"])) {
 												<div class="modal-body">
 												</div>
 												<div class="modal-footer">
-													<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+													<button type="button" class="btn btn-default" data-dismiss="modal" onclick="document.location.reload(false)">Annuler</button>
 													<input type="hidden" name="etat_tache" value=""/>
 													<input type="hidden" name="id_tache" value="<?php echo $id_tache; ?>"/>
 													<input class="btn btn-danger" type="submit" value="Continuer"/>
@@ -335,6 +529,71 @@ if (isset($_COOKIE["id_projet"])) {
 										</div>
 									</div>
 								</div>
+								<!-- Modal Modification -->
+								<div id="modifierModal<?php echo $id_us."-".$id_tache; ?>" class="modal fade" role="dialog">
+									<div class="modal-dialog">
+										<!-- Modal content-->
+										<div class="modal-content">
+											<form style="display: inline;" action="../web/modificationTache.php" onsubmit="return verifForm(this);" method="post">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal">&times;</button>
+													<h4 class="modal-title">Modification des informations d'une tâche</h4>
+												</div>
+												<div class="modal-body">
+													<div class="form-group">
+														<label for="nom">Nom</label>
+														<input type="text" name="nom" class="form-control" id="nom" placeholder="Nom" />
+													</div>
+													<div class="form-group">
+														<label for="etat">Etat</label>
+														<input type="text" name="etat" class="form-control" id="etat" size="7" placeholder="Etat" onblur="verifEtat(this);" />
+													</div>
+													<div class="form-group">
+														<label for="description">Description</label>
+														<textarea name="description" class="form-control" rows="3" id="description" placeholder="Description..." ></textarea>
+													</div>
+													<div class="form-group">
+														<label for="nbJours">Nombre de jours</label>
+														<input type="number" name="nbJours" class="form-control" id="nbJours" placeholder="Nombre de jours" />
+													</div>
+													<div class="form-group">
+														<label for="dateDebut">Date de début</label>
+														<input type="date" name="dateDepart" class="form-control" id="dateDepart" placeholder="Date de début" />
+													</div>
+													<div class="form-group" >
+														<label for="responsable">Pseudo du responsable</label>
+														<select class="form-control" name="responsable" id="responsable">
+						<?php 					$listeDeveloppeurs = $db->listeDeveloppeurs(); 
+														while ($row_dev = $listeDeveloppeurs->fetch_assoc()) {							
+						?>
+															<option value="<?php echo $row_dev["DEV_id"]; ?>"><?php echo $row_dev["DEV_pseudo"]; ?></option>
+						<?php 					}		?>
+														</select>
+													</div>											
+													<div class="form-group" >
+														<label for="idUS_tache">Rattacher la tâche à une autre user story :</label>
+														
+														<select class="form-control" name="us" id="us">
+						<?php 
+														$liste_us = $db->listeUserStorySprint($id_sprint);
+														while ($row_us = $liste_us->fetch_assoc()) {
+															$infosUS = $db->infosTache($row_us["US_id"]);
+						?>
+															<option value="<?php echo $row_us["US_id"]; ?>"><?php echo $row_us["US_numero"]." : ".$row_us["US_nom"]; ?></option>
+						<?php 					}		?>
+														</select>
+													</div>											
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+													<input type="hidden" name="id_tache" value=""/>
+													<input class="btn btn-primary" type="submit" value="Valider"/>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+								<!-- end ModifierModal -->
 
 <?php					}
 							$varHtmlDone .= "</td>";
@@ -410,70 +669,6 @@ if (isset($_COOKIE["id_projet"])) {
 										<div class="modal-footer">
 											<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
 											<input type="hidden" name="id_us" value="<?php echo $id_us; ?>"/>
-											<input class="btn btn-primary" type="submit" value="Valider"/>
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
-						<!-- Modal Modification -->
-						<div id="modifierModal<?php echo $id_us; ?>" class="modal fade" role="dialog">
-							<div class="modal-dialog">
-								<!-- Modal content-->
-								<div class="modal-content">
-									<form style="display: inline;" action="../web/modificationTache.php" onsubmit="return verifForm(this);" method="post">
-										<div class="modal-header">
-											<button type="button" class="close" data-dismiss="modal">&times;</button>
-											<h4 class="modal-title">Modification des informations d'une tâche</h4>
-										</div>
-										<div class="modal-body">
-											<div class="form-group">
-												<label for="nom">Nom</label>
-												<input type="text" name="nom" class="form-control" id="nom" placeholder="Nom" />
-											</div>
-											<div class="form-group">
-												<label for="etat">Etat</label>
-												<input type="text" name="etat" class="form-control" id="etat" size="7" placeholder="Etat" onblur="verifEtat(this);" />
-											</div>
-											<div class="form-group">
-												<label for="description">Description</label>
-												<textarea name="description" class="form-control" rows="3" id="description" placeholder="Description..." ></textarea>
-											</div>
-											<div class="form-group">
-												<label for="nbJours">Nombre de jours</label>
-                        <input type="number" name="nbJours" class="form-control" id="nbJours" placeholder="Nombre de jours" />
-											</div>
-											<div class="form-group">
-												<label for="dateDebut">Date de début</label>
-                        <input type="date" name="dateDepart" class="form-control" id="dateDepart" placeholder="Date de début" />
-											</div>
-											<div class="form-group" >
-												<label for="responsable">Pseudo du responsable</label>
-												<select class="form-control" name="responsable" id="responsable">
-				<?php 					$listeDeveloppeurs = $db->listeDeveloppeurs(); 
-												while ($row_dev = $listeDeveloppeurs->fetch_assoc()) {							
-				?>
-													<option value="<?php echo $row_dev["DEV_id"]; ?>"><?php echo $row_dev["DEV_pseudo"]; ?></option>
-				<?php 					}		?>
-												</select>
-											</div>											
-											<div class="form-group" >
-												<label for="idUS_tache">Rattacher la tâche à une autre user story :</label>
-												
-												<select class="form-control" name="us" id="us">
-				<?php 
-												$liste_us = $db->listeUserStorySprint($id_sprint);
-												while ($row_us = $liste_us->fetch_assoc()) {
-													$infosUS = $db->infosTache($row_us["US_id"]);
-				?>
-													<option value="<?php echo $row_us["US_id"]; ?>"><?php echo $row_us["US_numero"]." : ".$row_us["US_nom"]; ?></option>
-				<?php 					}		?>
-												</select>
-											</div>											
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-											<input type="hidden" name="id_tache" value=""/>
 											<input class="btn btn-primary" type="submit" value="Valider"/>
 										</div>
 									</form>
@@ -566,8 +761,10 @@ if (isset($_COOKIE["id_projet"])) {
 			
 			$('.modifiable').on("click", function (event) {				
 				var str = $(this).find("span").text();
-				var infosTache = str.split("|");
-				var nomModalDeclenche = "#modifierModal"+infosTache[7];
+				var infosTache = str.split("|"); //text = $id_tache|$nom_tache|$etat_tache|etc...|$id_us
+				var id_tache = infosTache[0]; //ok : id_tache = $id_tache
+				var idUS_tache = infosTache[8]; //ok : id_tache = $id_tache
+				var nomModalDeclenche = "#modifierModal"+idUS_tache+"-"+id_tache;
 								
 				$(nomModalDeclenche+' #nom').val(infosTache[2]);
 				$(nomModalDeclenche+' #etat').val(infosTache[3]);
@@ -612,7 +809,7 @@ if (isset($_COOKIE["id_projet"])) {
 						de.appendTo($(this));
 
 
-						var nomModalDeclenche = "#modifierEtatModal"+idUS_zone+id_tache;
+						var nomModalDeclenche = "#modifierEtatModal"+idUS_zone+"-"+id_tache;
 						var indiceColonneDropzoneus = $(this).parent().children().index($(this));
 						var nomNouvelEtat;
 						switch(indiceColonneDropzoneus) {

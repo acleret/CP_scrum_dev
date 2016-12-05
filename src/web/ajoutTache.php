@@ -19,7 +19,7 @@ if (isset($_COOKIE["id_projet"]) && isset($_SESSION["session"])) {
 				$nom_tache = htmlspecialchars($_POST["nom"]);
 				$description_tache = isset($_POST["description"]) ?htmlspecialchars($_POST["description"]) : ""; //peut être vide à l'ajout
 				$nbJours = $_POST["nbJours"];
-				$dateDepart = $_POST["date"];
+				$dateDepart = $_POST["dateDepart"];
 				$id_dev = $_POST["responsable"];
 			
 				if ($db->ajoutTache($num_tache, $nom_tache, $description_tache, $nbJours, $dateDepart, $id_dev, $id_us)) {
