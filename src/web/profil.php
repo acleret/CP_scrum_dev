@@ -6,7 +6,7 @@ $s->suppressionCookies();
 if (isset($_POST["modif_profil"])) {
     if (empty($_POST["url"]))
         $_SESSION["image_co"] = NULL;
-    else 
+    else
         $_SESSION["image_co"] = $_POST["url"];
     $db->modifDeveloppeur($_POST["id_dev"], $_POST["prenom"], $_POST["nom"], $_POST["pseudo_dev"], $_POST["url"]);
 }
@@ -104,7 +104,7 @@ if(isset($_POST['modif_mdp'])){
               </div>
 <?php
     }
-}  
+}
 
 /* if (isset($_GET["url"])) { */
 /*     if (!strcmp($_GET["url"], "OK")) { */
@@ -116,13 +116,13 @@ if(isset($_POST['modif_mdp'])){
 				  <div class="row">
 				    <div class="col-sm-3">
 <?php
-    if (empty($_SESSION["image_co"])) {
+    if (isset($_SESSION["session"]) || isset($_GET["profil"])) {
 ?>
-					  <img class="pull-left .img-fluid" src="../web/img/avatar-default.jpg" alt="Avatar" height="164" width="164" class="img-rounded"/>
+					  <img class="pull-left .img-fluid" src="<?php echo $row["DEV_urlAvatar"]; ?>" alt="Avatar" height="164" width="164" class="img-rounded"/>
 <?php
     } else {
 ?>
-					  <img class="pull-left .img-fluid" src="<?php echo $_SESSION["image_co"]; ?>" alt="Avatar" height="164" width="164" class="img-rounded"/>
+					  <img class="pull-left .img-fluid" src="../web/img/avatar-default.jpg" alt="Avatar" height="164" width="164" class="img-rounded"/>
 <?php
     }
 ?>
@@ -167,7 +167,7 @@ if ((isset($_SESSION["session"]) && empty($_GET["profil"]))
 								    <label>Confirmer mot de passe</label>
                                     <input class="form-control" type="password" name="vmdp" placeholder="Confirmer mot de passe" required />
 							      </div>
-						        </div>       
+						        </div>
                                 <div class="modal-footer">
                                   <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
 			                      <input class="btn btn-primary" name="modif_mdp" type="submit" value="Modifier"/>
@@ -251,14 +251,14 @@ if ((isset($_SESSION["session"]) && empty($_GET["profil"]))
 			  </div>
 		    </article>
 <?php
-    if ((isset($_SESSION["session"]) && empty($_GET["profil"])) 
+    if ((isset($_SESSION["session"]) && empty($_GET["profil"]))
 		 ||	((isset($_GET["profil"])
              && isset($_SESSION["session"])
 			 && $_GET["profil"]==$_SESSION["pseudo_co"]))) {
 ?>
 		  <aside>
 			<div class="col-sm-2 sidenav">
-			  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalModifProfil">Modifier</button>    
+			  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalModifProfil">Modifier</button>
 			    <div id="modalModifProfil" class="modal fade text-left" role="dialog">
 			      <div class="modal-dialog">
 				    <div class="modal-content">
