@@ -19,7 +19,7 @@ if (isset($_COOKIE["id_projet"])) {
   $infos_pro = $db->infosProjet($id_pro);
   $row_pro = $infos_pro->fetch_assoc();
 
-  $s->head("CDP - Kanban");
+  $s->head($row['PRO_nom']." - Kanban");
   $s->header($db);
   $s->nav($db);
 ?>
@@ -196,7 +196,7 @@ if (isset($_COOKIE["id_projet"])) {
 												<div class="modal-body">
 												</div>
 												<div class="modal-footer">
-													<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+													<button type="button" class="btn btn-default" data-dismiss="modal" onclick="document.location.reload(false)">Annuler</button>
 													<input type="hidden" name="etat_tache" value=""/>
 													<input type="hidden" name="id_tache" value="<?php echo $id_tache; ?>"/>
 													<input class="btn btn-danger" type="submit" value="Continuer"/>
@@ -643,31 +643,6 @@ if (isset($_COOKIE["id_projet"])) {
 					}
 				};
 			});
-			
-			$('body').append('<a href="#top" class="top_link" title="Revenir en haut de la page">Haut</a>');
-			$('.top_link').css({
-				'position':	'fixed',
-				'right'   :	'20px',
-				'bottom'  :	'50px',
-				'display' :	'none',
-				'padding'	:	'15px',
-				'background' : '#fff',
-				'-moz-border-radius'	:	'40px',
-				'-webkit-border-radius'	:	'40px',
-				'border-radius'	  :	'40px',
-				'opacity'				  :	'1',
-				'z-index'				  :	'2000',
-				'color'           : '#fff',
-				'background-color': '#222'
-			});
-			$(window).scroll(function(){
-				posScroll = $(document).scrollTop();
-				if(posScroll >=550) 
-					$('.top_link').fadeIn(600);
-				else
-					$('.top_link').fadeOut(600);
-			});
-
 		});
 		
 		function surligne(champ, erreur) {
