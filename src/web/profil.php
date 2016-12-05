@@ -116,7 +116,7 @@ if(isset($_POST['modif_mdp'])){
 				  <div class="row">
 				    <div class="col-sm-3">
 <?php
-    if (isset($_SESSION["session"]) || isset($_GET["profil"])) {
+    if (!empty($row["DEV_urlAvatar"])) {
 ?>
 					  <img class="pull-left .img-fluid" src="<?php echo $row["DEV_urlAvatar"]; ?>" alt="Avatar" height="164" width="164" class="img-rounded"/>
 <?php
