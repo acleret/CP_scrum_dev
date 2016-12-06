@@ -74,10 +74,30 @@ while ($row = $result->fetch_assoc()) {
                         <input type="hidden" name="id_sm" value="<?php echo $row["DEV_idScrumMaster"];?>"/>
                         <input class="btn btn-default" type="submit" value="Modifier"/>
                       </form>
-                        <form style="display: inline;" action="projet.php" method="post">
-                        <input type="hidden" name="suppr_projet" value="<?php echo $row["PRO_id"]; ?>"/>
-                        <input class="btn btn-danger" type="submit" value="Supprimer"/>
-                      </form>
+                      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#supprimerModal<?php echo $row["PRO_id"]; ?>">Supprimer</button>
+
+                      <!-- Modal Suppression -->
+                      <div id="supprimerModal<?php echo $row["PRO_id"]; ?>" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                          <!-- Modal content-->
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              <h4 class="modal-title">Confirmation de suppression d'un projet</h4>
+                            </div>
+                            <div class="modal-body">
+                              <p>Attention action irréversible</p>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                              <form style="display: inline;" action="projet.php" method="post">
+                                <input type="hidden" name="suppr_projet" value="<?php echo $row["PRO_id"]; ?>"/>
+                                <input class="btn btn-danger" type="submit" value="Supprimer"/>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
 <?php
     }
 ?>

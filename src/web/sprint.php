@@ -30,6 +30,9 @@ if (isset($_COOKIE["id_projet"])) {
     $db->modifSprint($id_sprint_modif, $modif_num, $modif_date, $modif_duree);
   }
 
+  // le numero a t-il été modifié
+  $nom_spr = (isset($modif_num)) ? "Sprint#0".$modif_num : $_POST["nom_sprint"] ;
+
   if (!isset($_POST["id_sprint"]) || !isset($_POST["nom_sprint"])) {
     header("Location: ../web/index.php");
     exit();
@@ -42,7 +45,6 @@ if (isset($_COOKIE["id_projet"])) {
   $expire = time() + 60 * 60 * 24; // 24 heures
   setcookie("id_sprint", $row2["SPR_id"], $expire);
 
-  $nom_spr = $_POST["nom_sprint"];
 
   $s->head("Sprints");
   $s->header($db);
@@ -208,10 +210,32 @@ if (isset($_COOKIE["id_projet"])) {
           <aside>
             <div class="col-sm-2 sidenav">
               <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalModif<?php echo $row2["SPR_id"];?>">Modifier</button><br><br>
-              <form  action="../web/listeSprints.php" method="post">
-                <input type="hidden" name="suppression" value="<?php echo $id_spr; ?>"/>
-                <input class="btn btn-danger" type="submit" value="Supprimer"/>
-              </form>
+              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#supprimerModal<?php echo $id_spr; ?>">Supprimer</button>
+
+              <!-- Modal Suppression -->
+              <div style="text-align: left" id="supprimerModal<?php echo $id_spr; ?>" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Confirmation de suppression d'un sprint</h4>
+                    </div>
+                    <div class="modal-body">
+                      <p>Attention action irréversible</p>
+                    </div>
+                    <div class="modal-footer">
+                      <form  action="../web/listeSprints.php" method="post">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                        <input type="hidden" name="suppr_sprint" value="<?php echo $id_spr; ?>"/>
+                        <input class="btn btn-danger" type="submit" value="Supprimer"/>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
                     <!-- Modal Modification -->
                     <div id="modalModif<?php echo $row2["SPR_id"];?>" class="modal fade" role="dialog" style="text-align:left">
                       <div class="modal-dialog">
@@ -240,7 +264,7 @@ if (isset($_COOKIE["id_projet"])) {
                             <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
                             <input type="hidden" name="modif_sprint" value="<?php echo $id_spr; ?>">
                             <input type="hidden" name="id_sprint" value="<?php echo $id_spr; ?>">
-                            <input type="hidden" name="nom_sprint" value="<?php echo $nom_spr; ?>">
+                            <input type="hidden" name="nom_sprint" value="<?php echo "Sprint#0".$row2["SPR_numero"]; ?>">
                             <input class="btn btn-primary" type="submit" value="Modifier"/>
                           </div>
                         </form>
