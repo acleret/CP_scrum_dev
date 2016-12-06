@@ -691,7 +691,7 @@ if (isset($_COOKIE["id_projet"])) {
 												$liste_taches = $db->listeTachesUS($id_us);
 												while ($row_tache = $liste_taches->fetch_assoc()) {
 				?>
-													<input type="radio" name="id_tache" value="<?php echo $row_tache["TAC_id"]; ?>">T#<?php echo $row_tache["TAC_id"]." : ".$row_tache["TAC_nom"]; ?>&nbsp;
+													<input type="radio" name="id_tache" value="<?php echo $row_tache["TAC_id"]; ?>">T#<?php echo $row_tache["TAC_numero"]." : ".$row_tache["TAC_nom"]; ?>&nbsp;
 				<?php 					}		?>
 											</div>											
 										</div>
