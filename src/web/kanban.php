@@ -26,7 +26,7 @@ if (isset($_COOKIE["id_projet"])) {
 	<article>
 		<div class="col-sm-8 text-left">
 			<h2><?php echo $row_pro["PRO_nom"];?> - Kanban du Sprint n°<?php echo $num_sprint; ?></h2>
-			<h5><a href="#suivi">Suivi des tâches</a> | <a href="#interdépendance">Interdépendance des tâches</a> | <a href="#liste">Liste détaillée des tâches par user story</a></h5>
+			<h5><a href="#suivi">Suivi des tâches</a> | <!--<a href="#interdépendance">Interdépendance des tâches</a> |--> <a href="#liste">Liste détaillée des tâches par user story</a></h5>
 			<hr>
 			<h3 id="suivi">Suivi des tâches</h3>
 			<h4>Informations utiles</h4>
@@ -712,10 +712,10 @@ if (isset($_COOKIE["id_projet"])) {
 ?>
 					</tbody>
 				</table>
-			<h3 id="interdépendance">Interdépendance des tâches</h3>
+			<!--<h3 id="interdépendance">Interdépendance des tâches</h3>
 			<br> [A VENIR]
 			<br>
-			<br>
+			<br>-->
 			<h3 id="liste">Liste détaillée des tâches par user stories (classées par ordre de priorité)</h3> 
 <?php
 	$result_us = $db->listeUserStorySprint($id_sprint);
