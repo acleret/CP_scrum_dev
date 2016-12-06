@@ -4,10 +4,10 @@ require_once("../web/config.php");
 if (!isset($_POST["id_sprint"]) && isset($_COOKIE["id_sprint"])) {
 	$id_sprint = $_COOKIE["id_sprint"];
 } else if (isset($_POST["id_sprint"])) {
-  $id_sprint = $_POST["id_sprint"];
+    $id_sprint = $_POST["id_sprint"];
 } else {
 	header("Location: ../web/index.php");
-  exit();
+    exit();
 }
  
 $infos_sprint = $db->infosSprint($id_sprint);
@@ -16,24 +16,24 @@ $num_sprint = $row_sprint["SPR_numero"];
 	
 if (isset($_COOKIE["id_projet"])) {
 	$id_pro = $_COOKIE["id_projet"];
-  $infos_pro = $db->infosProjet($id_pro);
-  $row_pro = $infos_pro->fetch_assoc();
+    $infos_pro = $db->infosProjet($id_pro);
+    $row_pro = $infos_pro->fetch_assoc();
 
-  $s->head($row_pro['PRO_nom']." - Kanban");
-  $s->header($db);
-  $s->nav($db);
+    $s->head($row_pro['PRO_nom']." - Kanban");
+    $s->header($db);
+    $s->nav($db);
 ?>
 	<article>
-		<div class="col-sm-8 text-left">
-			<h2><?php echo $row_pro["PRO_nom"];?> - Kanban du Sprint n°<?php echo $num_sprint; ?></h2>
-			<h5><a href="#suivi">Suivi des tâches</a> | <!--<a href="#interdépendance">Interdépendance des tâches</a> |--> <a href="#liste">Liste détaillée des tâches par user story</a></h5>
-			<hr>
-			<h3 id="suivi">Suivi des tâches</h3>
-			<h4>Informations utiles</h4>
-			<p style="font-style:italic;">
-				Survolez les tâches pour avoir quelques informations supplémentaires dessus. <br>
+    <div class="col-sm-8 text-left">
+    <h2><?php echo $row_pro["PRO_nom"];?> - Kanban du Sprint n°<?php echo $num_sprint; ?></h2>
+    <h5><a href="#suivi">Suivi des tâches</a> | <!--<a href="#interdépendance">Interdépendance des tâches</a> |--> <a href="#liste">Liste détaillée des tâches par user story</a></h5>
+    <hr>
+    <h3 id="suivi">Suivi des tâches</h3>
+    <h4>Informations utiles</h4>
+    <p style="font-style:italic;">
+    Survolez les tâches pour avoir quelques informations supplémentaires dessus. <br>
 <?php  if (isset($_SESSION["session"])) { ?>
-				Pour modifier les informations d'une tâche, veuillez cliquer dessus. <br>
+    Pour modifier les informations d'une tâche, veuillez cliquer dessus. <br>
 				Vous pouvez déplacer une tâche sur sa ligne pour seulement mettre à jour son état (méthode du "drag and drop").
 <?php  } ?>
 			</p>
@@ -52,13 +52,13 @@ if (isset($_COOKIE["id_projet"])) {
 			<div class="alert alert-danger alert-dismissible">
 				<a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 				<strong>Erreur!</strong> L'ajout de la tâche a échoué car le numéro de la tâche est déjà pris par une autre dans ce sprint.
-			</div>
+    </div>
 <?php
-    } else if (!strcmp($_GET["ajout"], "erreur")) {
+} else if (!strcmp($_GET["ajout"], "erreur")) {
 ?>
-			<div class="alert alert-danger alert-dismissible">
-				<a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-				<strong>Erreur!</strong> L'ajout de la tâche a échoué.
+    <div class="alert alert-danger alert-dismissible">
+    <a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Erreur!</strong> L'ajout de la tâche a échoué.
 			</div>
 <?php
     }
@@ -83,47 +83,54 @@ if (isset($_COOKIE["id_projet"])) {
 			<div class="alert alert-danger alert-dismissible">
 				<a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 				<strong>Erreur!</strong> La tâche n'existe pas.
-			</div>
+    </div>
 <?php
-    }
-  }
-	if (isset($_GET["modifEtat"])) {
+} else if (!strcmp($_GET["modif"], "pasConnecte")) {
+?>
+    <div class="alert alert-danger alert-dismissible">
+    <a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Erreur!</strong> N'étant pas connecté vous n'avez pas les droits pour modifier ce kanban.
+    </div>
+<?php
+} else if (!strcmp($_GET["modif"], "pasMembre")) {
+?>
+    <div class="alert alert-danger alert-dismissible">
+    <a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Erreur!</strong> N'étant pas membre du projet vous n'avez pas les droits pour modifier ce kanban.
+    </div>
+<?php
+}
+}
+if (isset($_GET["modifEtat"])) {
     if (!strcmp($_GET["modifEtat"], "OK")) {
 ?>
-			<div class="alert alert-success alert-dismissible">
-				<a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-				<strong>OK!</strong> État de la tâche mis à jour.
-			</div>
-<?php
-    } else if (!strcmp($_GET["modifEtat"], "pasConnecte")) {
-?>
-			<div class="alert alert-danger alert-dismissible">
-				<a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-				<strong>Erreur!</strong> Vous n'avez pas les droits pour modifier ce kanban.
-			</div>
+        <div class="alert alert-success alert-dismissible">
+        <a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>OK!</strong> État de la tâche mis à jour.
+        </div>
 <?php
     }
-	}
-	if (isset($_GET["suppr"])) {
+}
+if (isset($_GET["suppr"])) {
     if (!strcmp($_GET["suppr"], "OK")) {
 ?>
-			<div class="alert alert-success alert-dismissible">
-				<a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-				<strong>OK!</strong> Tâche supprimée.
-			</div>
+        <div class="alert alert-success alert-dismissible">
+        <a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>OK!</strong> Tâche supprimée.
+        </div>
 <?php
     } else if (!strcmp($_GET["suppr"], "erreur")) {
 ?>
-			<div class="alert alert-danger alert-dismissible">
-				<a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-				<strong>Erreur!</strong> La supression de la tâche a échoué.
-			</div>
+        <div class="alert alert-danger alert-dismissible">
+        <a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Erreur!</strong> La supression de la tâche a échoué.
+        </div>
 <?php
     } else if (!strcmp($_GET["suppr"], "erreurID")) {
 ?>
-			<div class="alert alert-danger alert-dismissible">
-				<a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-				<strong>Erreur!</strong> Cette tâche n'existe pas.
+        <div class="alert alert-danger alert-dismissible">
+        <a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Erreur!</strong> Cette tâche n'existe pas.
 			</div>
 <?php
     }
@@ -192,28 +199,28 @@ if (isset($_COOKIE["id_projet"])) {
 												<div class="modal-header">
 													<button type="button" class="close" data-dismiss="modal">&times;</button>
 													<h4 class="modal-title">Confirmation du changement d'état de la tâche <?php echo $num_tache; ?></h4>
-												</div>
-												<div class="modal-body">
-												</div>
-												<div class="modal-footer">
-													<button type="button" class="btn btn-default" data-dismiss="modal" onclick="document.location.reload(false)">Annuler</button>
-													<input type="hidden" name="etat_tache" value=""/>
-													<input type="hidden" name="id_tache" value="<?php echo $id_tache; ?>"/>
-													<input class="btn btn-danger" type="submit" value="Continuer"/>
-												</div>
-											</form>
-										</div>
-									</div>
-								</div>
-								<!-- Modal Modification -->
-								<div id="modifierModal<?php echo $id_us."-".$id_tache; ?>" class="modal fade" role="dialog">
-									<div class="modal-dialog">
-										<!-- Modal content-->
-										<div class="modal-content">
-											<form style="display: inline;" action="../web/modificationTache.php" onsubmit="return verifForm(this);" method="post">
-												<div class="modal-header">
-													<button type="button" class="close" data-dismiss="modal">&times;</button>
-													<h4 class="modal-title">Modification des informations d'une tâche</h4>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="document.location.reload(false)">Annuler</button>
+        <input type="hidden" name="etat_tache" value=""/>
+        <input type="hidden" name="id_tache" value="<?php echo $id_tache; ?>"/>
+        <input class="btn btn-primary" type="submit" value="Continuer"/>
+        </div>
+        </form>
+        </div>
+        </div>
+        </div>
+        <!-- Modal Modification -->
+             <div id="modifierModal<?php echo $id_us."-".$id_tache; ?>" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+        <!-- Modal content-->
+             <div class="modal-content">
+        <form style="display: inline;" action="../web/modificationTache.php" onsubmit="return verifForm(this);" method="post">
+        <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modification des informations d'une tâche</h4>
 												</div>
 												<div class="modal-body">
 													<div class="form-group">
@@ -300,29 +307,29 @@ if (isset($_COOKIE["id_projet"])) {
 												<div class="modal-header">
 													<button type="button" class="close" data-dismiss="modal">&times;</button>
 													<h4 class="modal-title">Confirmation du changement d'état de la tâche <?php echo $num_tache; ?></h4>
-												</div>
-												<div class="modal-body">
+        </div>
+        <div class="modal-body">
 												
-												</div>
-												<div class="modal-footer">
-													<button type="button" class="btn btn-default" data-dismiss="modal" onclick="document.location.reload(false)">Annuler</button>
-													<input type="hidden" name="etat_tache" value=""/>
-													<input type="hidden" name="id_tache" value="<?php echo $id_tache; ?>"/>
-													<input class="btn btn-danger" type="submit" value="Continuer"/>
-												</div>
-											</form>
-										</div>
-									</div>
-								</div>
-								<!-- Modal Modification -->
-								<div id="modifierModal<?php echo $id_us."-".$id_tache; ?>" class="modal fade" role="dialog">
-									<div class="modal-dialog">
-										<!-- Modal content-->
-										<div class="modal-content">
-											<form style="display: inline;" action="../web/modificationTache.php" onsubmit="return verifForm(this);" method="post">
-												<div class="modal-header">
-													<button type="button" class="close" data-dismiss="modal">&times;</button>
-													<h4 class="modal-title">Modification des informations d'une tâche</h4>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="document.location.reload(false)">Annuler</button>
+        <input type="hidden" name="etat_tache" value=""/>
+        <input type="hidden" name="id_tache" value="<?php echo $id_tache; ?>"/>
+        <input class="btn btn-primary" type="submit" value="Continuer"/>
+        </div>
+        </form>
+        </div>
+        </div>
+        </div>
+        <!-- Modal Modification -->
+             <div id="modifierModal<?php echo $id_us."-".$id_tache; ?>" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+        <!-- Modal content-->
+             <div class="modal-content">
+        <form style="display: inline;" action="../web/modificationTache.php" onsubmit="return verifForm(this);" method="post">
+        <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modification des informations d'une tâche</h4>
 												</div>
 												<div class="modal-body">
 													<div class="form-group">
@@ -398,7 +405,7 @@ if (isset($_COOKIE["id_projet"])) {
 								$infosResponsable_tache = $db->infosDeveloppeur($idResponsable_tache);
 								$pseudoResponsable_tache = $infosResponsable_tache->fetch_assoc()['DEV_pseudo'];
 
-								$varHtmlToTest .= "<div class=\"link tooltip-link modifiable draggable\" id=\"tacheDraggableUS$id_us$id_tache\" data-toggle=\"tooltip\" data-placement=\"bottom\" data-original-title=\"Nom de la tâche: $nom_tache - Responsable: $pseudoResponsable_tache - Début: $dateDepart_tache - Etat : $etat_tache \" draggable=\"true\" style=\"text-align:center;\">[Tache#$num_tache]<span id=\"TOTEST-$id_tache\" style=\"display:none;\">$tacheInfo</span></div><br>\n";
+								$varHtmlToTest .= "<div class=\"link tooltip-link modifiable draggable\" id=\"tacheDraggableUS$id_us$id_tache\" data-toggle=\"tooltip\" data-placement=\"bottom\" data-original-title=\"Nom de la tâche: $nom_tache - Responsable: $pseudoResponsable_tache - Début: $dateDepart_tache - Etat : $etat_tache \" draggable=\"true\" style=\"text-align:center;\">[Tache#$num_tache]<span id=\"TOTEST-$id_tache\" style=\"display:none;\">$tacheInfo</span></div>\n";
 	?>
 								<!-- Modal Etat -->
 								<div id="modifierEtatModal<?php echo $id_us."-"; echo $id_tache; ?>" class="modal fade" role="dialog">
@@ -409,28 +416,28 @@ if (isset($_COOKIE["id_projet"])) {
 												<div class="modal-header">
 													<button type="button" class="close" data-dismiss="modal">&times;</button>
 													<h4 class="modal-title">Confirmation du changement d'état de la tâche <?php echo $num_tache; ?></h4>
-												</div>
-												<div class="modal-body">
-												</div>
-												<div class="modal-footer">
-													<button type="button" class="btn btn-default" data-dismiss="modal" onclick="document.location.reload(false)">Annuler</button>
-													<input type="hidden" name="etat_tache" value=""/>
-													<input type="hidden" name="id_tache" value="<?php echo $id_tache; ?>"/>
-													<input class="btn btn-danger" type="submit" value="Continuer"/>
-												</div>
-											</form>
-										</div>
-									</div>
-								</div>
-								<!-- Modal Modification -->
-								<div id="modifierModal<?php echo $id_us."-".$id_tache; ?>" class="modal fade" role="dialog">
-									<div class="modal-dialog">
-										<!-- Modal content-->
-										<div class="modal-content">
-											<form style="display: inline;" action="../web/modificationTache.php" onsubmit="return verifForm(this);" method="post">
-												<div class="modal-header">
-													<button type="button" class="close" data-dismiss="modal">&times;</button>
-													<h4 class="modal-title">Modification des informations d'une tâche</h4>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="document.location.reload(false)">Annuler</button>
+        <input type="hidden" name="etat_tache" value=""/>
+        <input type="hidden" name="id_tache" value="<?php echo $id_tache; ?>"/>
+        <input class="btn btn-primary" type="submit" value="Continuer"/>
+        </div>
+        </form>
+        </div>
+        </div>
+        </div>
+        <!-- Modal Modification -->
+             <div id="modifierModal<?php echo $id_us."-".$id_tache; ?>" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+        <!-- Modal content-->
+             <div class="modal-content">
+        <form style="display: inline;" action="../web/modificationTache.php" onsubmit="return verifForm(this);" method="post">
+        <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modification des informations d'une tâche</h4>
 												</div>
 												<div class="modal-body">
 													<div class="form-group">
@@ -505,7 +512,7 @@ if (isset($_COOKIE["id_projet"])) {
 								$infosResponsable_tache = $db->infosDeveloppeur($idResponsable_tache);
 								$pseudoResponsable_tache = $infosResponsable_tache->fetch_assoc()['DEV_pseudo'];
 
-								$varHtmlDone .= "<div class=\"link tooltip-link modifiable draggable\" id=\"tacheDraggableUS$id_us$id_tache\" data-toggle=\"tooltip\" data-placement=\"bottom\" data-original-title=\"Nom de la tâche: $nom_tache - Responsable: $pseudoResponsable_tache - Début: $dateDepart_tache - Etat : $etat_tache \" draggable=\"true\" style=\"text-align:center;\">[Tache#$num_tache]<span id=\"DONE-$id_tache\" style=\"display:none;\">$tacheInfo</span></div><br>\n";
+								$varHtmlDone .= "<div class=\"link tooltip-link modifiable draggable\" id=\"tacheDraggableUS$id_us$id_tache\" data-toggle=\"tooltip\" data-placement=\"bottom\" data-original-title=\"Nom de la tâche: $nom_tache - Responsable: $pseudoResponsable_tache - Début: $dateDepart_tache - Etat : $etat_tache \" draggable=\"true\" style=\"text-align:center;\">[Tache#$num_tache]<span id=\"DONE-$id_tache\" style=\"display:none;\">$tacheInfo</span></div>\n";
 ?>
 								<!-- Modal Etat -->
 								<div id="modifierEtatModal<?php echo $id_us."-"; echo $id_tache; ?>" class="modal fade" role="dialog">
@@ -516,28 +523,28 @@ if (isset($_COOKIE["id_projet"])) {
 												<div class="modal-header">
 													<button type="button" class="close" data-dismiss="modal">&times;</button>
 													<h4 class="modal-title">Confirmation du changement d'état de la tâche <?php echo $num_tache; ?></h4>
-												</div>
-												<div class="modal-body">
-												</div>
-												<div class="modal-footer">
-													<button type="button" class="btn btn-default" data-dismiss="modal" onclick="document.location.reload(false)">Annuler</button>
-													<input type="hidden" name="etat_tache" value=""/>
-													<input type="hidden" name="id_tache" value="<?php echo $id_tache; ?>"/>
-													<input class="btn btn-danger" type="submit" value="Continuer"/>
-												</div>
-											</form>
-										</div>
-									</div>
-								</div>
-								<!-- Modal Modification -->
-								<div id="modifierModal<?php echo $id_us."-".$id_tache; ?>" class="modal fade" role="dialog">
-									<div class="modal-dialog">
-										<!-- Modal content-->
-										<div class="modal-content">
-											<form style="display: inline;" action="../web/modificationTache.php" onsubmit="return verifForm(this);" method="post">
-												<div class="modal-header">
-													<button type="button" class="close" data-dismiss="modal">&times;</button>
-													<h4 class="modal-title">Modification des informations d'une tâche</h4>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="document.location.reload(false)">Annuler</button>
+        <input type="hidden" name="etat_tache" value=""/>
+        <input type="hidden" name="id_tache" value="<?php echo $id_tache; ?>"/>
+        <input class="btn btn-primary" type="submit" value="Continuer"/>
+        </div>
+        </form>
+        </div>
+        </div>
+        </div>
+        <!-- Modal Modification -->
+             <div id="modifierModal<?php echo $id_us."-".$id_tache; ?>" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+        <!-- Modal content-->
+             <div class="modal-content">
+        <form style="display: inline;" action="../web/modificationTache.php" onsubmit="return verifForm(this);" method="post">
+        <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modification des informations d'une tâche</h4>
 												</div>
 												<div class="modal-body">
 													<div class="form-group">
@@ -723,7 +730,7 @@ if (isset($_COOKIE["id_projet"])) {
 	while ($row_us = $result_us->fetch_assoc()) {
 		echo "<li class=\"list-group-item\" id=\"detailUS".$row_us['US_numero']."\"><strong>US#".$row_us['US_numero']." : ".$row_us['US_nom']."</strong></li>";
 
-		echo "<ul class=\"list-group\">";
+               echo "<ul class=\"list-group\">";
 		$result_taches = $db->listeTachesUS($row_us['US_id']);
 		while ($row_tache = $result_taches->fetch_assoc()) {
 			$dateDepart_tache = $row_tache['TAC_dateDepart'];
@@ -734,145 +741,145 @@ if (isset($_COOKIE["id_projet"])) {
 	}
 	echo "</ul>";		
 ?>			
-			</div>
-		</article>
+    </div>
+    </article>
 
 <?php
-  $s->footer();
+    $s->footer();
 ?>
 	<script>
-		$(document).ready(function() {
-			$('#tableTaches').DataTable( {
-				"order": [[ 0, "asc" ]],
+    $(document).ready(function() {
+        $('#tableTaches').DataTable( {
+            "order": [[ 0, "asc" ]],
 				"oLanguage": {
-					"sLengthMenu": "Afficher _MENU_ entrées",
+                "sLengthMenu": "Afficher _MENU_ entrées",
 					"sSearch": "<span class=\"glyphicon glyphicon-search\"></span> Recherche:",
 					"sEmptyTable": "Aucune donnée",
 					"sInfo": "Affichage de _START_ à _END_ sur _TOTAL_ entrées",
 					"sInfoEmpty": "",
 					"oPaginate": {
-						"sPrevious": "Précédent",
+                    "sPrevious": "Précédent",
 						"sNext": "Suivant"
-					}
-				}
-			});
+                        }
+            }
+        });
 			
-			$('.tooltip-link').tooltip();
+        $('.tooltip-link').tooltip();
 			
-			$('.modifiable').on("click", function (event) {				
-				var str = $(this).find("span").text();
-				var infosTache = str.split("|"); //text = $id_tache|$nom_tache|$etat_tache|etc...|$id_us
-				var id_tache = infosTache[0]; //ok : id_tache = $id_tache
-				var idUS_tache = infosTache[8]; //ok : id_tache = $id_tache
-				var nomModalDeclenche = "#modifierModal"+idUS_tache+"-"+id_tache;
+        $('.modifiable').on("click", function (event) {				
+            var str = $(this).find("span").text();
+            var infosTache = str.split("|"); //text = $id_tache|$nom_tache|$etat_tache|etc...|$id_us
+            var id_tache = infosTache[0]; //ok : id_tache = $id_tache
+            var idUS_tache = infosTache[8]; //ok : id_tache = $id_tache
+            var nomModalDeclenche = "#modifierModal"+idUS_tache+"-"+id_tache;
 								
-				$(nomModalDeclenche+' #nom').val(infosTache[2]);
-				$(nomModalDeclenche+' #etat').val(infosTache[3]);
-				$(nomModalDeclenche+' #description').val(infosTache[4]);
-				$(nomModalDeclenche+' #nbJours').val(infosTache[5]);
-				$(nomModalDeclenche+' #dateDepart').val(infosTache[6]);
-				$(nomModalDeclenche+' #responsable').val(infosTache[7]);
-				$(nomModalDeclenche+' #us').val(infosTache[8]);
+            $(nomModalDeclenche+' #nom').val(infosTache[2]);
+            $(nomModalDeclenche+' #etat').val(infosTache[3]);
+            $(nomModalDeclenche+' #description').val(infosTache[4]);
+            $(nomModalDeclenche+' #nbJours').val(infosTache[5]);
+            $(nomModalDeclenche+' #dateDepart').val(infosTache[6]);
+            $(nomModalDeclenche+' #responsable').val(infosTache[7]);
+            $(nomModalDeclenche+' #us').val(infosTache[8]);
 								
-				$(nomModalDeclenche+' input[name=\"id_tache\"]').val(infosTache[0]);
+            $(nomModalDeclenche+' input[name=\"id_tache\"]').val(infosTache[0]);
 				
-				$(nomModalDeclenche).modal('show');
-			});
+            $(nomModalDeclenche).modal('show');
+        });
 			
-			$('.draggable').on("dragstart", {param1:"nice"}, function (event) {
-				var dt = event.originalEvent.dataTransfer;
-			  dt.setData('Text', $(this).text()); //text = [Tache#$numero]$id_tache|$nom_tache|$etat_tache|etc...|$id_us
-			});
+        $('.draggable').on("dragstart", {param1:"nice"}, function (event) {
+            var dt = event.originalEvent.dataTransfer;
+            dt.setData('Text', $(this).text()); //text = [Tache#$numero]$id_tache|$nom_tache|$etat_tache|etc...|$id_us
+        });
 			
-			$('.dropzone').on("dragenter dragover drop", function (event) {	
-				event.preventDefault();
-				var id_zone = $(this).attr('id'); //ok : id = "$id_us-$etat"
-				if (event.type == 'drop') {
-					var data = event.originalEvent.dataTransfer.getData('Text',$(this).text()); //ok : text = [Tache#$numero_tache]$id_tache|Tache$id_tache|etat_tache|etc...|$id_us
-					var infos_tache = data.split('|');
+        $('.dropzone').on("dragenter dragover drop", function (event) {	
+            event.preventDefault();
+            var id_zone = $(this).attr('id'); //ok : id = "$id_us-$etat"
+            if (event.type == 'drop') {
+                var data = event.originalEvent.dataTransfer.getData('Text',$(this).text()); //ok : text = [Tache#$numero_tache]$id_tache|Tache$id_tache|etat_tache|etc...|$id_us
+                var infos_tache = data.split('|');
 
-					var ancienEtat_tache = infos_tache[3];
-					var idUS_tache = infos_tache[infos_tache.length-1];
-					//alert("idUS_tache: "+idUS_tache);
+                var ancienEtat_tache = infos_tache[3];
+                var idUS_tache = infos_tache[infos_tache.length-1];
+                //alert("idUS_tache: "+idUS_tache);
 					
-					var result = id_zone.split('-');
-					var idUS_zone = result[0]; //ok : idUS_zone = $id_us
-					//alert("idUS_zone: "+idUS_zone);
+                var result = id_zone.split('-');
+                var idUS_zone = result[0]; //ok : idUS_zone = $id_us
+                //alert("idUS_zone: "+idUS_zone);
 
-					if(idUS_tache == idUS_zone) {
-						var caseEtId_tache = infos_tache[0];
-						var infosCaseEtId_tache = caseEtId_tache.split("]");
-						var id_tache = infosCaseEtId_tache[1]; //ok : id_tache = $id_tache
+                if(idUS_tache == idUS_zone) {
+                    var caseEtId_tache = infos_tache[0];
+                    var infosCaseEtId_tache = caseEtId_tache.split("]");
+                    var id_tache = infosCaseEtId_tache[1]; //ok : id_tache = $id_tache
 					
-						var recompositionIDTacheDragged = "tacheDraggableUS"+idUS_zone+id_tache; //ok : id = "tacheDraggableUS$id_us$id_tache\"
-						de = $('#'+recompositionIDTacheDragged).detach();
-						de.appendTo($(this));
+                    var recompositionIDTacheDragged = "tacheDraggableUS"+idUS_zone+id_tache; //ok : id = "tacheDraggableUS$id_us$id_tache\"
+                    de = $('#'+recompositionIDTacheDragged).detach();
+                    de.appendTo($(this));
 
 
-						var nomModalDeclenche = "#modifierEtatModal"+idUS_zone+"-"+id_tache;
-						var indiceColonneDropzoneus = $(this).parent().children().index($(this));
-						var nomNouvelEtat;
-						switch(indiceColonneDropzoneus) {
-							case 1:
-								nomNouvelEtat = "TO DO";
-								break;
-							case 2:
-								nomNouvelEtat = "ON GOING";
-								break;
-							case 3:
-								nomNouvelEtat = "TO TEST";
-								break;
-							case 4:
-								nomNouvelEtat = "DONE";
-								break;
-							default:
-								nomNouvelEtat = "";
-								alert("Impossible d'arriver ici ou alors la raison est un mystère.");
-								break;
-						}
+                    var nomModalDeclenche = "#modifierEtatModal"+idUS_zone+"-"+id_tache;
+                    var indiceColonneDropzoneus = $(this).parent().children().index($(this));
+                    var nomNouvelEtat;
+                    switch(indiceColonneDropzoneus) {
+                    case 1:
+                        nomNouvelEtat = "TO DO";
+                        break;
+                    case 2:
+                        nomNouvelEtat = "ON GOING";
+                        break;
+                    case 3:
+                        nomNouvelEtat = "TO TEST";
+                        break;
+                    case 4:
+                        nomNouvelEtat = "DONE";
+                        break;
+                    default:
+                        nomNouvelEtat = "";
+                        alert("Impossible d'arriver ici ou alors la raison est un mystère.");
+                        break;
+                    }
 						
-						$(nomModalDeclenche+' input[name=\"etat_tache\"]').val(nomNouvelEtat);
-						$(nomModalDeclenche+' .modal-body').text(ancienEtat_tache+" --> "+nomNouvelEtat);
-						$(nomModalDeclenche).modal('show');						
-					}
-					else {
-						alert("Attention: les tâches ne sont pas autorisées à changer d'us !");
-					}
-				};
-			});
-		});
+                    $(nomModalDeclenche+' input[name=\"etat_tache\"]').val(nomNouvelEtat);
+                    $(nomModalDeclenche+' .modal-body').text(ancienEtat_tache+" --> "+nomNouvelEtat);
+                    $(nomModalDeclenche).modal('show');						
+                }
+                else {
+                    alert("Attention: les tâches ne sont pas autorisées à changer d'us !");
+                }
+            };
+        });
+    });
 		
-		function surligne(champ, erreur) {
-			 if(erreur)
-					champ.style.backgroundColor = "#fba";
-			 else
-					champ.style.backgroundColor = "";
-		}
+    function surligne(champ, erreur) {
+        if(erreur)
+            champ.style.backgroundColor = "#fba";
+        else
+            champ.style.backgroundColor = "";
+    }
 
-		function verifEtat(champ) {
-			 if(champ.value == "TO DO" || champ.value == "ON GOING" ||
-					champ.value == "TO TEST" || champ.value == "DONE") {
-					surligne(champ, false);
-					return true;
-			 } else {
-					surligne(champ, true);
-					return false;
-			 }
-		};
-		function verifForm(f) {
-			 var etatOk = verifEtat(f.etat);
-			 if(etatOk)
-					return true;
-			 else {
-					alert("Veuillez remplir correctement le champs Etat (i.e avec \"TO DO\", \"ON GOING\", \"TO TEST\" ou \"DONE\") !");
-					return false;
-			 }
-		}
+    function verifEtat(champ) {
+        if(champ.value == "TO DO" || champ.value == "ON GOING" ||
+        champ.value == "TO TEST" || champ.value == "DONE") {
+            surligne(champ, false);
+            return true;
+        } else {
+            surligne(champ, true);
+            return false;
+        }
+    };
+    function verifForm(f) {
+        var etatOk = verifEtat(f.etat);
+        if(etatOk)
+            return true;
+        else {
+            alert("Veuillez remplir correctement le champs Etat (i.e avec \"TO DO\", \"ON GOING\", \"TO TEST\" ou \"DONE\") !");
+            return false;
+        }
+    }
 	</script>
 
 <?php
 }  else {
 	header("Location: ../web/index.php");
-  exit();
+    exit();
 }
 ?>

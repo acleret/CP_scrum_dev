@@ -669,16 +669,16 @@ if ($test->testIDProjet($id_pro)) {
 }
 echo "</ul><br>\n";
 
-/* echo "<b>// test estNumeroTache</b><br>\n<ul>"; */
-/* $numeroTache = 12; */
-/* $us = $db->maxIDUS(); */
-/* $numSprint = $db->infosUS($us)->fetch_assoc()["SPR_id"]; */
-/* if ($test->estNumeroTache($numSprint, 12)) { */
-/*   echo "<li class=\"correct\">Correct : le $numeroTache est un numéro qui peut être utilisé dans le cadre de la création d'une nouvelle tâche</li>\n"; */
-/* } else { */
-/*   echo "<li class=\"erreur\">Erreur lors du repérage d'un numéro de tâche libre</li>\n"; */
-/* } */
-/* echo "</ul><br>\n"; */
+echo "<b>// test estNumeroTache</b><br>\n<ul>";
+$numeroTache = 12;
+$us = 141;
+$numSprint = $db->infosUserStory($us)->fetch_assoc()["SPR_id"];
+if ($test->estNumeroTache($numSprint, $numeroTache)) {
+    echo "<li class=\"correct\">Correct : le numéro peut être utilisé dans le cadre de la création d'une nouvelle tâche</li>\n";
+} else {
+    echo "<li class=\"erreur\">Erreur lors du repérage d'un numéro de tâche libre</li>\n";
+}
+echo "</ul><br>\n";
 
 echo "<b>// test ajoutTache</b><br>\n<ul>";
 if ($test->ajoutTache($numeroTache, "DernièreTache", "Dernière tâche", 1, "2016-11-26", 1, $us)) {
@@ -695,7 +695,7 @@ if ($test->testIDTache($id_tac)) {
 	$row = $result->fetch_assoc();
 	echo "<li>Tâche ".$id_tac." avant modif : <br>";
 	echo $row["TAC_id"]." | ".
-			$row["TAC_num"]." | ".
+			$row["TAC_numero"]." | ".
 			$row["TAC_nom"]." | ".
 			$row["TAC_description"]." | ".
 			$row["TAC_nbJours"]." | ".
