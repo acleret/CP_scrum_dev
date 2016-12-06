@@ -113,10 +113,33 @@ if (isset($_COOKIE["id_projet"])) {
 ?>
                     <td>
                       <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalModif<?php echo $row_sprints["SPR_id"];?>">Modifier</button>
-                      <form style="display: inline;" action="" method="post">
-                        <input type="hidden" name="suppr_sprint" value="<?php echo $id_spr;?>"/>
-                        <input class="btn btn-danger" type="submit" value="Supprimer"/>
-                      </form>
+
+
+
+                      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#supprimerModal<?php echo $id_spr; ?>">Supprimer</button>
+
+                      <!-- Modal Suppression -->
+                      <div id="supprimerModal<?php echo $id_spr; ?>" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                          <!-- Modal content-->
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              <h4 class="modal-title">Confirmation de suppression d'un sprint</h4>
+                            </div>
+                            <div class="modal-body">
+                              <p>Attention action irréversible</p>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                              <form style="display: inline;" action="" method="post">
+                                <input type="hidden" name="suppr_sprint" value="<?php echo $id_spr;?>"/>
+                                <input class="btn btn-danger" type="submit" value="Supprimer"/>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </td>
                     <!-- Modal Modification -->
                     <div id="modalModif<?php echo $row_sprints["SPR_id"];?>" class="modal fade" role="dialog">

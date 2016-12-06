@@ -43,14 +43,12 @@ ALTER TABLE `us`
   ADD CONSTRAINT `us_ibfk_2` FOREIGN KEY (`SPR_id`) REFERENCES `sprint` (`SPR_id`);
 
 INSERT INTO `developpeur` (`DEV_prenom`, `DEV_nom`, `DEV_pseudo`, `DEV_mdp`, `DEV_mail`, `DEV_urlAvatar`, `DEV_dateCreation`) VALUES
-("Thomas", "VIGUE", "tvigue", "mdp", "thomas.vigue@etu.u-bordeaux.fr", "https://cdn1.iconfinder.com/data/icons/ninja-things-1/1772/ninja-simple-512.png", Now()),
-("Nathalie", "CRAEYE", "ncraeye", "mdp", "nathalie.craeye@etu.u-bordeaux.fr", "https://cdn3.iconfinder.com/data/icons/avatars-9/145/Avatar_Panda-512.png", Now()),
-("Anthony", "CLERET", "acleret", "mdp", "anthony.cleret@etu.u-bordeaux.fr", "http://data-cache.abuledu.org/1024/icone-de-coq-5049c8fe.jpg", Now());
+("Thomas", "VIGU&#201", "tvigue", "mdpmdpmdp", "thomas.vigue@etu.u-bordeaux.fr", "https://cdn1.iconfinder.com/data/icons/ninja-things-1/1772/ninja-simple-512.png", Now()),
+("Nathalie", "CRAEYE", "ncraeye", "mdpmdpmdp", "nathalie.craeye@etu.u-bordeaux.fr", "https://cdn3.iconfinder.com/data/icons/avatars-9/145/Avatar_Panda-512.png", Now()),
+("Anthony", "CL&#201RET", "acleret", "mdpmdpmdp", "anthony.cleret@etu.u-bordeaux.fr", "http://data-cache.abuledu.org/1024/icone-de-coq-5049c8fe.jpg", Now());
 
 INSERT INTO `projet`(`PRO_nom`, `PRO_client`, `PRO_description`, `PRO_dateCreation`, `DEV_idProductOwner`, `DEV_idScrumMaster`) VALUES
-("projet SCRUM", "Xavier Blanc", "Un site web de gestion de projet qui utilise la m&#233thode scrum. Les utilisateur pourront s\'inscrire sur le site, inscrire un nouveau projet, lui affecter des d&#233veloppeurs (utilisateurs), &#233titer le backlog, organiser les sprints, affecter des user stories &#224 chaque sprint, &#233diter le kanban et visualiser l\'avanc&#233e du projet via le burndown chart. <br><br>
-
-lien github : https://github.com/acleret/CP_scrum_demo", Now(), 1, 3);
+("projet SCRUM", "Xavier Blanc", "Un site web de gestion de projet qui utilise la m&#233thode Scrum. Les utilisateur pourront : s&#39inscrire sur le site, inscrire un nouveau projet, lui affecter des d&#233veloppeurs (utilisateurs), &#233diter le backlog, organiser les sprints, affecter des user stories &#224 chaque sprint, &#233diter le kanban et la tra&#231abilit&#233 et visualiser l&#39avanc&#233e du projet via le burndown chart. Liens github : https://github.com/acleret/CP_scrum_demo, https://github.com/acleret/CP_scrum_demo.", Now(), 1, 3);
 
 INSERT IGNORE INTO `inter_dev_projet` (`DEV_id`, `PRO_id`) VALUES
 (1,1),(2,1),(3,1);

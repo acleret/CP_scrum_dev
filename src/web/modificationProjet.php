@@ -5,7 +5,7 @@ if (isset($_SESSION["session"])) {
 	if (isset($_POST["nom"]) && isset($_POST["client"]) && isset($_POST["descr"])) {
 		$nom = $_POST["nom"];
 		$client = $_POST["client"];
-		$description = $_POST["descr"];
+		$description = htmlspecialchars($_POST["descr"], ENT_QUOTES);
 	}
 	
 	if (isset($_POST["idPO"]))
@@ -14,10 +14,9 @@ if (isset($_SESSION["session"])) {
 		$id_PO = $_SESSION["id_co"];
 	
 	if (isset($_GET["action"]) && $_GET["action"]=="ajouter") {
-		//TODO ATTENTION aux apostrophes dans DESCRIPTION
-		
+        
 		//$devs = array(0 => $_SESSION['id_co'], 1 => 2, 2 => 3);
-		$id_projet = $db->ajouterProjetBDD($nom, $client, $description, $_POST['PO'], $_POST['SM'], $_POST['devs']); //TODO
+		$id_projet = $db->ajouterProjetBDD($nom, $client, $description, $_POST['PO'], $_POST['SM'], $_POST['devs']);
 		$expire = time() + 60 * 60 * 24; // 24 heures
 		setcookie("id_projet", $id_projet, $expire);
 		header("Location: projet.php");
