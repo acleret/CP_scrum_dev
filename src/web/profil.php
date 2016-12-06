@@ -294,10 +294,29 @@ if ((isset($_SESSION["session"]) && empty($_GET["profil"]))
 			  </form>
 			  <br>
               <br>
-			  <form style="display: inline;" action="" method="post">
-			    <input type="hidden" name="suppr_profil" value="<?php echo $_SESSION["id_co"]; ?>"/>
-			    <input class="btn btn-danger" type="submit" value="Supprimer"/>
-		  	  </form>
+              <!-- <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#supprimerModal">Supprimer</button>-->
+              <!-- Modal Suppression -->
+              <div style="text-align: left" id="supprimerModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Confirmation de suppression du profil</h4>
+                    </div>
+                    <div class="modal-body">
+                      <p>Attention action irréversible</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                      <form style="display: inline;" action="" method="post">
+        			    <input type="hidden" name="suppr_profil" value="<?php echo $_SESSION["id_co"]; ?>"/>
+        			    <input class="btn btn-danger" type="submit" value="Supprimer"/>
+        		  	  </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
 		    </div>
 		  </aside>
 <?php
