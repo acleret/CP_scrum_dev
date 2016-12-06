@@ -79,25 +79,25 @@ INSERT INTO `us` (`US_numero`, `US_nom`, `US_chiffrageAbstrait`, `US_priorite`, 
 (18, 'En tant que d&#233veloppeur je souhaite ajouter le commit et la date d&#39une US d&#39un projet auquel je suis associ&#233.', '3', '4', '2016-10-24', NULL, NULL, NULL, 1, 3),
 (19, 'En tant que visiteur/d&#233veloppeur je souhaite visualiser l&#39avancement (burndown chart) d&#39un projet en temps r&#233el.', '5', '4', '2016-10-24', NULL, NULL, NULL, 1, 3);
 
-UPDATE `us` SET `US_dateDernierCommit` = "04/11/16", `US_idDernierCommit` = "6177e9ff92e3d0da4726c17c17ac86f06e43c5be", `US_auteurDernierCommit` = "" WHERE `US_id` = 1;
-UPDATE `us` SET `US_dateDernierCommit` = "04/11/16", `US_idDernierCommit` = "fd8975c1550ae74ab9934d900ada299a941d985c", `US_auteurDernierCommit` = "" WHERE `US_id` = 2;
-UPDATE `us` SET `US_dateDernierCommit` = "04/11/16", `US_idDernierCommit` = "fd8975c1550ae74ab9934d900ada299a941d985c", `US_auteurDernierCommit` = "" WHERE `US_id` = 3;
-UPDATE `us` SET `US_dateDernierCommit` = "04/11/16", `US_idDernierCommit` = "d08d49ff98126941f3e066ef515430b0c641b308", `US_auteurDernierCommit` = "" WHERE `US_id` = 4;
-UPDATE `us` SET `US_dateDernierCommit` = "04/11/16", `US_idDernierCommit` = "d08d49ff98126941f3e066ef515430b0c641b308", `US_auteurDernierCommit` = "" WHERE `US_id` = 5;
-UPDATE `us` SET `US_dateDernierCommit` = "04/11/16", `US_idDernierCommit` = "6177e9ff92e3d0da4726c17c17ac86f06e43c5be", `US_auteurDernierCommit` = "" WHERE `US_id` = 6;
-UPDATE `us` SET `US_dateDernierCommit` = "22/11/16", `US_idDernierCommit` = "4d2e68d9147a6f693d54ea11d0da5451a134abe2", `US_auteurDernierCommit` = "" WHERE `US_id` = 7;
-UPDATE `us` SET `US_dateDernierCommit` = "25/11/16", `US_idDernierCommit` = "da0912316e04563585279ae1365dd3e941ceaaa1", `US_auteurDernierCommit` = "" WHERE `US_id` = 8;
-UPDATE `us` SET `US_dateDernierCommit` = "18/11/16", `US_idDernierCommit` = "dd147b8765632e2f6fec2434c71f82bb1920215b", `US_auteurDernierCommit` = "" WHERE `US_id` = 9;
-UPDATE `us` SET `US_dateDernierCommit` = "18/11/16", `US_idDernierCommit` = "dd147b8765632e2f6fec2434c71f82bb1920215b", `US_auteurDernierCommit` = "" WHERE `US_id` = 10;
-UPDATE `us` SET `US_dateDernierCommit` = "18/11/16", `US_idDernierCommit` = "dd147b8765632e2f6fec2434c71f82bb1920215b", `US_auteurDernierCommit` = "" WHERE `US_id` = 11;
-UPDATE `us` SET `US_dateDernierCommit` = "22/11/16", `US_idDernierCommit` = "de40c1b3c4ee124817645796056137b95a04f6b6", `US_auteurDernierCommit` = "" WHERE `US_id` = 12;
-UPDATE `us` SET `US_dateDernierCommit` = "22/11/16", `US_idDernierCommit` = "de40c1b3c4ee124817645796056137b95a04f6b6", `US_auteurDernierCommit` = "" WHERE `US_id` = 13;
-UPDATE `us` SET `US_dateDernierCommit` = "05/12/16", `US_idDernierCommit` = "cba77d8d4a4ce4be90abd0c1cbf4b309df226d1d", `US_auteurDernierCommit` = "" WHERE `US_id` = 14;
-UPDATE `us` SET `US_dateDernierCommit` = "05/12/16", `US_idDernierCommit` = "9a5e6f7caf3ecaa65208ad3ffb53718e2558e5e5", `US_auteurDernierCommit` = "" WHERE `US_id` = 15;
-UPDATE `us` SET `US_dateDernierCommit` = "05/12/16", `US_idDernierCommit` = "478aa9ad837ef226279f472a1dd315a40ae0c00f", `US_auteurDernierCommit` = "" WHERE `US_id` = 16;
-UPDATE `us` SET `US_dateDernierCommit` = "02/12/16", `US_idDernierCommit` = "5098ff70dd5fc1868a24b1ef2d03d32c4b0eb448", `US_auteurDernierCommit` = "" WHERE `US_id` = 17;
-UPDATE `us` SET `US_dateDernierCommit` = "02/12/16", `US_idDernierCommit` = "5098ff70dd5fc1868a24b1ef2d03d32c4b0eb448", `US_auteurDernierCommit` = "" WHERE `US_id` = 18;
-UPDATE `us` SET `US_dateDernierCommit` = "03/12/16", `US_idDernierCommit` = "a73b5f5277d70703b1e752cb1eaccafbfb9574aa", `US_auteurDernierCommit` = "" WHERE `US_id` = 19;
+UPDATE `us` SET `US_dateDernierCommit` = "16/11/04", `US_idDernierCommit` = "6177e9ff92e3d0da4726c17c17ac86f06e43c5be", `US_auteurDernierCommit` = "", `US_auteurDernierCommit` = "Nathalie" WHERE `US_id` = 1;
+UPDATE `us` SET `US_dateDernierCommit` = "16/11/04", `US_idDernierCommit` = "fd8975c1550ae74ab9934d900ada299a941d985c", `US_auteurDernierCommit` = "", `US_auteurDernierCommit` = "Thomas" WHERE `US_id` = 2;
+UPDATE `us` SET `US_dateDernierCommit` = "16/11/04", `US_idDernierCommit` = "fd8975c1550ae74ab9934d900ada299a941d985c", `US_auteurDernierCommit` = "", `US_auteurDernierCommit` = "Thomas" WHERE `US_id` = 3;
+UPDATE `us` SET `US_dateDernierCommit` = "16/11/04", `US_idDernierCommit` = "d08d49ff98126941f3e066ef515430b0c641b308", `US_auteurDernierCommit` = "", `US_auteurDernierCommit` = "Anthony" WHERE `US_id` = 4;
+UPDATE `us` SET `US_dateDernierCommit` = "16/11/04", `US_idDernierCommit` = "d08d49ff98126941f3e066ef515430b0c641b308", `US_auteurDernierCommit` = "", `US_auteurDernierCommit` = "Anthony" WHERE `US_id` = 5;
+UPDATE `us` SET `US_dateDernierCommit` = "16/11/04", `US_idDernierCommit` = "6177e9ff92e3d0da4726c17c17ac86f06e43c5be", `US_auteurDernierCommit` = "", `US_auteurDernierCommit` = "Nathalie" WHERE `US_id` = 6;
+UPDATE `us` SET `US_dateDernierCommit` = "16/11/22", `US_idDernierCommit` = "4d2e68d9147a6f693d54ea11d0da5451a134abe2", `US_auteurDernierCommit` = "", `US_auteurDernierCommit` = "Thomas" WHERE `US_id` = 7;
+UPDATE `us` SET `US_dateDernierCommit` = "16/11/25", `US_idDernierCommit` = "da0912316e04563585279ae1365dd3e941ceaaa1", `US_auteurDernierCommit` = "", `US_auteurDernierCommit` = "Thomas" WHERE `US_id` = 8;
+UPDATE `us` SET `US_dateDernierCommit` = "16/11/18", `US_idDernierCommit` = "dd147b8765632e2f6fec2434c71f82bb1920215b", `US_auteurDernierCommit` = "", `US_auteurDernierCommit` = "Anthony" WHERE `US_id` = 9;
+UPDATE `us` SET `US_dateDernierCommit` = "16/11/18", `US_idDernierCommit` = "dd147b8765632e2f6fec2434c71f82bb1920215b", `US_auteurDernierCommit` = "", `US_auteurDernierCommit` = "Anthony" WHERE `US_id` = 10;
+UPDATE `us` SET `US_dateDernierCommit` = "16/11/18", `US_idDernierCommit` = "dd147b8765632e2f6fec2434c71f82bb1920215b", `US_auteurDernierCommit` = "", `US_auteurDernierCommit` = "Anthony" WHERE `US_id` = 11;
+UPDATE `us` SET `US_dateDernierCommit` = "16/11/22", `US_idDernierCommit` = "de40c1b3c4ee124817645796056137b95a04f6b6", `US_auteurDernierCommit` = "", `US_auteurDernierCommit` = "Nathalie" WHERE `US_id` = 12;
+UPDATE `us` SET `US_dateDernierCommit` = "16/11/22", `US_idDernierCommit` = "de40c1b3c4ee124817645796056137b95a04f6b6", `US_auteurDernierCommit` = "", `US_auteurDernierCommit` = "Nathalie" WHERE `US_id` = 13;
+UPDATE `us` SET `US_dateDernierCommit` = "16/12/05", `US_idDernierCommit` = "cba77d8d4a4ce4be90abd0c1cbf4b309df226d1d", `US_auteurDernierCommit` = "", `US_auteurDernierCommit` = "Nathalie" WHERE `US_id` = 14;
+UPDATE `us` SET `US_dateDernierCommit` = "16/12/05", `US_idDernierCommit` = "9a5e6f7caf3ecaa65208ad3ffb53718e2558e5e5", `US_auteurDernierCommit` = "", `US_auteurDernierCommit` = "Thomas" WHERE `US_id` = 15;
+UPDATE `us` SET `US_dateDernierCommit` = "16/12/05", `US_idDernierCommit` = "478aa9ad837ef226279f472a1dd315a40ae0c00f", `US_auteurDernierCommit` = "", `US_auteurDernierCommit` = "Thomas" WHERE `US_id` = 16;
+UPDATE `us` SET `US_dateDernierCommit` = "16/12/02", `US_idDernierCommit` = "5098ff70dd5fc1868a24b1ef2d03d32c4b0eb448", `US_auteurDernierCommit` = "", `US_auteurDernierCommit` = "Nathalie" WHERE `US_id` = 17;
+UPDATE `us` SET `US_dateDernierCommit` = "16/12/02", `US_idDernierCommit` = "5098ff70dd5fc1868a24b1ef2d03d32c4b0eb448", `US_auteurDernierCommit` = "", `US_auteurDernierCommit` = "Nathalie" WHERE `US_id` = 18;
+UPDATE `us` SET `US_dateDernierCommit` = "16/12/03", `US_idDernierCommit` = "a73b5f5277d70703b1e752cb1eaccafbfb9574aa", `US_auteurDernierCommit` = "", `US_auteurDernierCommit` = "Anthony" WHERE `US_id` = 19;
 
 INSERT INTO `tache` (`TAC_numero`, `TAC_nom`, `TAC_description`, `TAC_dateDepart`, `TAC_etat`, `DEV_id`, `US_id`) VALUES
 (1, "T1", "menu import&#233 depuis un fichier s&#233par&#233 (on devra utiliser infosDeveloppeur(id_dev) et listeProjetsDeveloppeur(id_dev))", "2016-10-24", "DONE", 1, 1),
