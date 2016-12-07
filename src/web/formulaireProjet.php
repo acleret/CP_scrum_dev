@@ -183,7 +183,7 @@ if (isset($_SESSION["session"])) {
 											<option value="<?php echo $row_dev["DEV_id"]; ?>"><?php echo $row_dev["DEV_pseudo"]; ?></option>
 <?php 							}
 									} else if ($_POST["action"] == "éditer") {
-										if ($db->estDeveloppeurProjet($_COOKIE["id_projet"], $row_dev["DEV_id"])) {
+										if ($db->estDeveloppeurProjet($_POST["idProjet"], $row_dev["DEV_id"])) {
 ?>
 											<option selected value="<?php echo $row_dev["DEV_id"]; ?>"><?php echo $row_dev["DEV_pseudo"]; ?></option>
 <?php								} else { ?>

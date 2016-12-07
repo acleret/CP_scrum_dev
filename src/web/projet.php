@@ -73,6 +73,7 @@ if (isset($_COOKIE["id_projet"])) {
             <div class="col-sm-2 sidenav">
               <form style="display: inline;" action="../web/formulaireProjet.php" method="post">
                 <input type="hidden" name="action" value="éditer"/>
+                <input type="hidden" name="idProjet" value="<?php echo $row["PRO_id"];?>"/>
                 <input type="hidden" name="nom" value="<?php echo $row["PRO_nom"];?>"/>
                 <input type="hidden" name="client" value="<?php echo $row["PRO_client"];?>"/>
                 <input type="hidden" name="descr" value="<?php echo $row["PRO_description"];?>"/>
