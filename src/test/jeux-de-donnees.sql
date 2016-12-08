@@ -1,3 +1,4 @@
+USE cp_scrum;
 ALTER TABLE `burndown_chart`
   DROP FOREIGN KEY `burndown_chart_ibfk_1`,
   DROP FOREIGN KEY `burndown_chart_ibfk_2`;

@@ -1,3 +1,4 @@
+USE cp_scrum;
 ALTER TABLE `burndown_chart`
   DROP FOREIGN KEY `burndown_chart_ibfk_1`,
   DROP FOREIGN KEY `burndown_chart_ibfk_2`;
@@ -48,7 +49,7 @@ INSERT INTO `developpeur` (`DEV_prenom`, `DEV_nom`, `DEV_pseudo`, `DEV_mdp`, `DE
 ("Anthony", "CL&#201RET", "acleret", "mdpmdpmdp", "anthony.cleret@etu.u-bordeaux.fr", "http://data-cache.abuledu.org/1024/icone-de-coq-5049c8fe.jpg", Now());
 
 INSERT INTO `projet`(`PRO_nom`, `PRO_client`, `PRO_description`, `PRO_dateCreation`, `DEV_idProductOwner`, `DEV_idScrumMaster`) VALUES
-("projet SCRUM", "Xavier Blanc", "Un site web de gestion de projet qui utilise la m&#233thode Scrum. Les utilisateur pourront : s&#39inscrire sur le site, inscrire un nouveau projet, lui affecter des d&#233veloppeurs (utilisateurs), &#233diter le backlog, organiser les sprints, affecter des user stories &#224 chaque sprint, &#233diter le kanban et la tra&#231abilit&#233 et visualiser l&#39avanc&#233e du projet via le burndown chart. Liens github : https://github.com/acleret/CP_scrum_demo, https://github.com/acleret/CP_scrum_demo.", Now(), 1, 3);
+("projet SCRUM", "Xavier Blanc", "Un site web de gestion de projet qui utilise la m&#233thode Scrum. Les utilisateur pourront : s&#39inscrire sur le site, inscrire un nouveau projet, lui affecter des d&#233veloppeurs (utilisateurs), &#233diter le backlog, organiser les sprints, affecter des user stories &#224 chaque sprint, &#233diter le kanban et la tra&#231abilit&#233 et visualiser l&#39avanc&#233e du projet via le burndown chart. Liens github : https://github.com/acleret/CP_scrum_dev, https://github.com/acleret/CP_scrum_demo.", Now(), 1, 3);
 
 INSERT IGNORE INTO `inter_dev_projet` (`DEV_id`, `PRO_id`) VALUES
 (1,1),(2,1),(3,1);
