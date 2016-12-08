@@ -107,7 +107,7 @@ if (isset($_COOKIE["id_projet"])) {
 ?>
               <div class="alert alert-success alert-dismissible">
                 <a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>OK!</strong> User story supprimé.
+                <strong>OK!</strong> User story supprimée.
               </div>
 <?php
     }
@@ -127,7 +127,7 @@ if (isset($_COOKIE["id_projet"])) {
 ?>
               <div class="alert alert-success alert-dismissible">
                 <a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>OK!</strong> User story ajouté.
+                <strong>OK!</strong> User story ajoutée.
               </div>
 <?php
     }
