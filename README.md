@@ -25,7 +25,7 @@ Pour vérifier le sprint 2 ou le sprint 3 du projet, suivez la procédure décri
 
 
 Vous pouvez désormais gérer vos projets informatiques sur le site web résultant de ce projet, à cette adresse internet : 
-  http://nathalie.craeye.emi.u-bordeaux1.fr/cdp/projet2/CP_scrum_dev/src/web
+  http://nathalie.craeye.emi.u-bordeaux1.fr/cdp/projet2/CP_scrum_demo/src/web
 
 
 ## Infos utiles ##
